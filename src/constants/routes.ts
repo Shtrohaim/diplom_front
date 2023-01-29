@@ -1,0 +1,1 @@
+export const REGIONS_LIST_ROUTE_NAME = "regions_list";
