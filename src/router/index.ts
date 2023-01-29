@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RegionsList from '../views/RegionsListView.vue'
+import About from '../views/AboutView.vue'
 import { REGIONS_LIST_ROUTE_NAME } from '../constants/routes'
 
 const routes: Array<RouteRecordRaw> = [
@@ -13,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/regions_list',
     name: REGIONS_LIST_ROUTE_NAME,
     component: RegionsList
+  },
+  {
+    path: '/region_news/:tableName',
+    name: 'region_news',
+    component: About
   }
 ]
 
