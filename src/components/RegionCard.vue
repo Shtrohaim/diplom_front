@@ -1,5 +1,5 @@
 <template>
-      <div class="region-card" @click="$router.push({ name: 'region_news', params: {tableName: region.tableName}  });">
+      <div class="region-card" @click="goToRegion">
                     <img class="region-card__image" :src="`http://localhost:3000/img/${region.img}`" :alt="`Герб ${region.name}`"  />
                     <h3>{{ region.name }}</h3>
         </div>
@@ -12,6 +12,13 @@ export default defineComponent({
     props: {
         region: {} as any
     },
+    methods:{
+        goToRegion(){
+            localStorage.page = 1
+            localStorage.pageName = this.region.tableName
+            this.$router.push({ name: 'region_news', params: {tableName: this.region.tableName}  });
+        }
+    }
 
 });
 

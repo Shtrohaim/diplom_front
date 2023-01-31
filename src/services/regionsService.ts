@@ -6,8 +6,8 @@ export default {
     },
 
 
-    getRegion(tableName : string | string[]) {
-        return axios.get(`/table/${tableName}`);
+    getRegion(tableName : string | string[] , size = 10 as number , page = 1 as number) {
+        return axios.get(`/table/${tableName}`, { params: { size, page }});
     },
 
 };

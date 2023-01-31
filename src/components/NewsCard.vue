@@ -37,7 +37,7 @@ export default defineComponent({
 .news-card {
     display: flex;
 
-    width: 55%;
+    width: 100%;
     border: 1px solid black;
 
     padding: 25px;
