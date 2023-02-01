@@ -1,34 +1,50 @@
 <template>
-    <div class="news-card">
-        <div>
-            <img :src="news.image_url[0]" class="news-card__image" />
-            <p class="news-card__date">{{ news.date }}</p>
+    <div class="news-card" @click="goToNews">
+        <div class="news-card__info-wrapper">
+            <img v-if="news.image_url" :src="news.image_url" class="news-card__image" :alt="news.title" />
+            <div class="news-card__date" :class="noImageDateClass(!!news.image_url)">
+                <p class="news-card__date-day">{{ changeDayFormat(news.date) }}</p>
+                <p class="news-card__date-month">{{ changeMonthFormat(news.date) }}</p>
+            </div>
         </div>
         <div class="news-card__text-content">
             <h3 class="news-card__title">{{ news.title }}</h3>
-            <p class="news-card__description">{{ setTeaser }}</p>
+            <p class="news-card__description">{{ news.teaser }}</p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import NewsList from '@/types/newsListType';
+import { getRuShortMonth, getDayGeneralFormat } from '@/utils/dates';
 
 export default defineComponent({
     name: "NewsCard",
     props:{
-        news: {} as any
-    },
-    computed:{
-        setTeaser() : string {
-            if(Object.keys(this.news.description).length >= 2){
-                return `${this.news.description[0].replace(/(<br>)/gi, "")} ${this.news.description[1].replace(/(<br>)/gi, "")}`
-            }else{
-                return this.news.description[0].replace(/(<br>)/gi, "");
-            }
-            
+        news: {
+            type: Object as PropType<NewsList>,
+            default: () => { return {} },
         }
-    }
+    },
+    methods:{
+        changeMonthFormat(date : string) : string{
+           return getRuShortMonth(date)
+        },
+        changeDayFormat(date : string) : number{
+           return getDayGeneralFormat(date)
+        },
+        noImageDateClass(hasImage : boolean) : string{
+            if(hasImage){
+                return ""
+            }else{
+                return "news-card__date--no-image"
+            }
+        }, 
+        goToNews() {
+            this.$router.push({ name: 'news', params: {tableName: this.$route.params.tableName, id: this.news.id }  });
+        }
+    },
 })
 
 </script>
@@ -38,13 +54,59 @@ export default defineComponent({
     display: flex;
 
     width: 100%;
-    border: 1px solid black;
+    border-radius: 4px;
+
+    background-color: rgb(255 255 255);
+
+    box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
+    cursor: pointer;
 
     padding: 25px;
+
+    &__info-wrapper {
+        position: relative;
+    }
+
+    &__date {
+        position: absolute;
+        top: -2px;
+        left: -3px;
+
+        width: 60px;
+        height: 60px;
+
+        border-radius: 0 10px 0 10px;
+
+        padding: 5px;
+
+        color: rgb(255 255 255);
+        background: linear-gradient(150deg, rgba(72,110,242,1) 0%, rgba(74,110,233,1) 43%, rgba(160,132,236,1) 100%);
+
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+
+        font-weight: bold;
+        text-align: center;
+
+        &--no-image {
+            position: relative;
+            margin-right: 10px;
+        }
+
+    }
+
+    &__date-day {
+        font-size: 24px
+    }
+
+    &__date-month {
+        font-size: 18px;
+    }
 
     &__image {
         width: 180px; 
         height: 180px;
+
+        border-radius: 2px;
 
         object-fit: cover;
     }

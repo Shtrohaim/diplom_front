@@ -1,16 +1,21 @@
 <template>
       <div class="region-card" @click="goToRegion">
-                    <img class="region-card__image" :src="`http://localhost:3000/img/${region.img}`" :alt="`Герб ${region.name}`"  />
-                    <h3>{{ region.name }}</h3>
+            <img class="region-card__image" :src="`http://localhost:3000/img/${region.img}`" :alt="`Герб ${region.name}`"  />
+            <h3>{{ region.name }}</h3>
         </div>
 </template>
+
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import Regions from '@/types/regionsType';
 
 export default defineComponent({
     name: 'RegionCard',
     props: {
-        region: {} as any
+        region: {
+            type: Object as PropType<Regions>,
+            default: () => { return {} },
+        } 
     },
     methods:{
         goToRegion(){

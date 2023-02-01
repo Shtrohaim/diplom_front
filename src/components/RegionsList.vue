@@ -33,8 +33,8 @@ export default defineComponent({
         }
     },
     computed:{
-        filteredRegions() : any{
-            return this.data.filter((p : any) => {
+        filteredRegions() : Regions[]{
+            return this.data.filter((p : Regions) => {
                 return p.name.toLowerCase().indexOf(this.search.toLowerCase()) != -1;
             })
         }
