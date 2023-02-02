@@ -1,10 +1,10 @@
 <template>
-    <div class="news-card" @click="goToNews">
+    <div class="news-card" @click="goToNews" @click.middle="openInNewTab">
         <div class="news-card__info-wrapper">
             <img v-if="news.image_url" :src="news.image_url" class="news-card__image" :alt="news.title" />
             <div class="news-card__date" :class="noImageDateClass(!!news.image_url)">
-                <p class="news-card__date-day">{{ changeDayFormat(news.date) }}</p>
-                <p class="news-card__date-month">{{ changeMonthFormat(news.date) }}</p>
+                <p class="news-card__date-day">{{ changeDayFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, "").trim()) }}</p>
+                <p class="news-card__date-month">{{ changeMonthFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, "").trim()) }}</p>
             </div>
         </div>
         <div class="news-card__text-content">
@@ -43,6 +43,10 @@ export default defineComponent({
         }, 
         goToNews() {
             this.$router.push({ name: 'news', params: {tableName: this.$route.params.tableName, id: this.news.id }  });
+        },
+        openInNewTab (){
+            const routeData = this.$router.resolve({ name: 'news', params: {tableName: this.$route.params.tableName, id: this.news.id }  });
+            window.open(routeData.href, '_blank')
         }
     },
 })
@@ -80,9 +84,9 @@ export default defineComponent({
         padding: 5px;
 
         color: rgb(255 255 255);
-        background: linear-gradient(150deg, rgba(72,110,242,1) 0%, rgba(74,110,233,1) 43%, rgba(160,132,236,1) 100%);
+        background: linear-gradient(150deg, rgb(72 110 242) 0%, rgb(74 110 233) 43%, rgb(160 132 236) 100%);
 
-        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 5px 5px 15px rgba(0 0 0 / 50%);
 
         font-weight: bold;
         text-align: center;
@@ -118,6 +122,8 @@ export default defineComponent({
         align-items: center;
 
         margin-left: 30px;
+
+        width: 80%;
     }
 
     &__title {
@@ -126,7 +132,8 @@ export default defineComponent({
 
     &__description {
         position: relative;
-
+        width: 90%;
+        
         overflow: hidden;
         text-overflow: ellipsis;
         display: -moz-box;

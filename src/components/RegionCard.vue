@@ -1,5 +1,5 @@
 <template>
-      <div class="region-card" @click="goToRegion">
+      <div class="region-card" @click="goToRegion" @click.middle="openInNewTab">
             <img class="region-card__image" :src="`http://localhost:3000/img/${region.img}`" :alt="`Герб ${region.name}`"  />
             <h3>{{ region.name }}</h3>
         </div>
@@ -22,6 +22,10 @@ export default defineComponent({
             localStorage.page = 1
             localStorage.pageName = this.region.tableName
             this.$router.push({ name: 'region_news', params: {tableName: this.region.tableName}  });
+        },
+        openInNewTab (){
+            const routeData = this.$router.resolve({ name: 'region_news', params: {tableName: this.region.tableName}  });
+            window.open(routeData.href, '_blank')
         }
     }
 

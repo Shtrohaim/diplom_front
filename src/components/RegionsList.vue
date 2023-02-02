@@ -56,7 +56,7 @@ export default defineComponent({
         margin-bottom: 25px;
 
         border-radius: 100px;
-        border-color: rgb(0, 102, 150);
+        border-color: rgb(0 102 150);
 
         text-align: center;
 

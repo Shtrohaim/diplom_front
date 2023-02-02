@@ -15,13 +15,23 @@ const MONTH = {
 } as any
 
 function getDate (strDate : string) : Date {
-    let oldMonth = strDate.split(" ")[1].slice(0, 3)
+    let oldMonth = "" as string;
+    let oldDay = "" as string;
+    let oldYear = "" as string;
+    if(strDate.trim().split(" ")[1] === undefined){
+        oldMonth = strDate.slice(3, 6)
+        oldDay = strDate.slice(0, 2)
+        oldYear = strDate.slice(strDate.length - 4, strDate.length)
+    }else{
+        oldMonth = strDate.replace(/^ +| +$|( ) +/g,"$1").split(" ")[1].slice(0, 3)
+        oldDay = strDate.replace(/^ +| +$|( ) +/g,"$1").split(" ")[0]
+        oldYear = strDate.replace(/^ +| +$|( ) +/g,"$1").split(" ")[2]
+    }
     oldMonth = oldMonth.charAt(0).toUpperCase() + oldMonth.slice(1);
     if(oldMonth === "Май"){
         oldMonth = "Мая"
     }
-
-    return new Date(`${strDate.split(" ")[2]}-${MONTH[oldMonth]}-${strDate.split(" ")[0]}`) 
+    return new Date(`${oldYear}-${MONTH[oldMonth]}-${oldDay}`) 
 }
 
 export function getRuShortMonth(strDate : string) : string {
