@@ -70,7 +70,7 @@
             regionsService.getNews(this.$route.params.tableName, this.$route.params.id).then((res : ResponseData) => {
                 this.data = res.data[0] 
                 if (Object.keys(this.data.description).length > 3) {
-                    for(const [key, value] of Object.entries(this.data.description)) {
+                    for(const [key] of Object.entries(this.data.description)) {
                       if(this.data.description[key].replace(/(<br>)/gi, "").trim().length === 0){
                         delete this.data.description[key]
                       }

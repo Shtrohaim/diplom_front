@@ -3,7 +3,7 @@
         <button class="pagination__button pagination__button--begin" :class="firstPageClass" type="button" @click="pagination(1)"></button>
         <button class="pagination__button pagination__button--back" :class="firstPageClass" type="button" @click="pagination(page - 1)"></button>
         <ul class="pagination__page-list">
-        <li v-for="n in filteredItems" :key="n" class="pagination__page" :class="paginationClass(n)" @click="pagination(n)">{{ n }}</li>
+          <li v-for="n in filteredItems" :key="n" class="pagination__page" :class="paginationClass(n)" @click="pagination(n)">{{ n }}</li>
         </ul>
         <button class="pagination__button pagination__button--forward" :class="lastPageClass" type="button" @click="pagination(page + 1)"></button>
         <button class="pagination__button pagination__button--end" :class="lastPageClass" type="button" @click="pagination(totalPages[totalPages.length - 1])"></button>
@@ -18,17 +18,21 @@ export default defineComponent({
         totalPages: {
             type: Array as PropType<number[]>,
             default: () => [ ],
-        }
+        },
     },
     data(){
         return{
-            page: 0 as number,
+          page: 0 as number,
         }
     },
     methods: {
         pagination(n : number){
-            if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1])){
+            if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1]) && !this.$route.query.search){
                 this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
+                this.$router.push({ query: {page: this.page}})
+            }else if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1]) && this.$route.query.search){
+                this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
+                this.$router.push({ query: {search:this.$route.query.search, page: this.page}})
             }
         },
         paginationClass(pageNumber : number ) : string {
@@ -60,18 +64,16 @@ export default defineComponent({
         },
       },
       mounted() {
-        if(localStorage.page && localStorage.pageName === this.$route.params.tableName) 
-            this.page = Number(localStorage.page);
-        else{
-            this.page = 1
-            localStorage.pageName = this.$route.params.tableName
+        if(this.$route.query.page){
+          this.page = Number(this.$route.query.page);
+        }else{
+          this.page = 1
         }
       },
       watch:{
-        page(newPage) {
-          localStorage.page = newPage;
+        page() {
           this.$emit('pagination', {
-                page: this.page,
+              nextPage: this.page,
             })
         },
     },
