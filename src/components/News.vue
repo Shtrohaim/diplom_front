@@ -52,10 +52,10 @@
       name:'NewsPage',
       components:{ Swiper, SwiperSlide },
       setup() {
-      return {
-        modules: [Pagination, Autoplay ,A11y, EffectCoverflow],
-      };
-    },
+        return {
+          modules: [Pagination, Autoplay ,A11y, EffectCoverflow],
+        };
+      },
       data() {
           return {
               data: {} as News ,

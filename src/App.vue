@@ -1,7 +1,9 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/regions_list">About</router-link>
+    <router-link to="/regions_list">Регионы</router-link> |
+    <router-link to="/school/oge">ОГЭ</router-link> |
+    <router-link to="/school/ege">ЕГЭ</router-link>
   </nav>
   <router-view/>
 </template>
