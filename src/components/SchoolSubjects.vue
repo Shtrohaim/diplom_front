@@ -4,10 +4,7 @@
         <p class="school-subjects__description">{{ data.description }}</p>
         <ul class="school-subjects__list">
             <li class="school-subjects__list-item" v-for="subject in Object.keys(data.info)" :key="subject"> 
-                <div class="school-subjects__card subject-card">
-                    <h3 class="subject-card__title">{{ subject }}</h3>
-                    <a class="subject-card__link" v-for="link in Object.keys(data.info[subject])" :key="link" :href="data.info[subject][link]" target="_blank">{{ link }}</a>
-                </div>
+                <subject-card class="school-subjects__card" :data="data" :subject="subject" />
             </li>
         </ul>
     </div>
@@ -16,6 +13,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import SchoolData from '@/types/schoolDataType';
+import SubjectCard from './SubjectCard.vue';
 
 export default defineComponent({
     name: 'SchoolSubjects',
@@ -24,6 +22,33 @@ export default defineComponent({
             type: Object as PropType<SchoolData>,
             default: () => { return {} },
         }
+    },
+    components:{
+        SubjectCard,
     }
 });
 </script>
+<style lang="scss">
+    .school-subjects {
+        &__list {
+            columns: 3 450px;
+        }
+
+        &__list-item {
+            width: 450px;
+            margin: 0 auto;
+        }
+
+        &__title {
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        &__description {
+            margin: 0 auto;
+            width: 80%;
+            margin-bottom: 50px;
+            font-size: 24px;
+        }
+    }
+</style>

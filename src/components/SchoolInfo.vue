@@ -19,3 +19,32 @@ export default defineComponent({
     }
 });
 </script>
+
+<style lang="scss">
+    .school-info {
+        &__title {
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        &__description {
+            text-align: left;
+            margin: 0 auto;
+            font-size: 24px;
+            width: 75%;
+
+            a {
+                color: rgb(72 110 242);
+            }
+
+            ul {
+                margin-bottom: 20px;
+            }
+
+            li {
+                list-style-type: disc;
+                margin-left: 50px;
+            }
+        }
+    }
+</style>
