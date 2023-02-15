@@ -4,7 +4,8 @@ import RegionsList from '../views/RegionsListView.vue'
 import RegionNewsList from '../views/RegionNewsListView.vue'
 import NewsView from '../views/NewsView.vue'
 import SchoolView from '../views/SchoolView.vue'
-import { REGIONS_LIST_ROUTE_NAME, REGION_NEWS_ROUTE_NAME, NEWS_ROUTE_NAME, SCHOOL_ROUTE_NAME } from '../constants/routes'
+import StudentsView from '../views/StudentsView.vue'
+import { REGIONS_LIST_ROUTE_NAME, REGION_NEWS_ROUTE_NAME, NEWS_ROUTE_NAME, SCHOOL_ROUTE_NAME, STUDENTS_ROUTE_NAME } from '../constants/routes'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/school/:examName',
     name: SCHOOL_ROUTE_NAME,
     component: SchoolView
+  },
+  {
+    path: '/students',
+    name: STUDENTS_ROUTE_NAME,
+    component: StudentsView
   },
 ]
 

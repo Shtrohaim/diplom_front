@@ -19,6 +19,10 @@ export default defineComponent({
             type: Array as PropType<number[]>,
             default: () => [ ],
         },
+        isStartPagination: {
+          type: Boolean,
+          default: true
+        }
     },
     data(){
         return{
@@ -27,12 +31,13 @@ export default defineComponent({
     },
     methods: {
         pagination(n : number){
+          let curQuery = this.$route.query
             if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1]) && !this.$route.query.search){
-                this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
-                this.$router.push({ query: {page: this.page}})
+              this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
+              this.$router.push({ query: { page: this.page }})
             }else if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1]) && this.$route.query.search){
-                this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
-                this.$router.push({ query: {search:this.$route.query.search, page: this.page}})
+              this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
+              this.$router.push({ query: {...curQuery, page: this.page}})
             }
         },
         paginationClass(pageNumber : number ) : string {
@@ -64,9 +69,9 @@ export default defineComponent({
         },
       },
       mounted() {
-        if(this.$route.query.page){
+        if(this.$route.query.page && this.isStartPagination){
           this.page = Number(this.$route.query.page);
-        }else{
+        }else if(this.isStartPagination){
           this.page = 1
         }
       },

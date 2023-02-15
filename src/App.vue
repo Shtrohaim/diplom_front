@@ -3,7 +3,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/regions_list">Регионы</router-link> |
     <router-link to="/school/oge">ОГЭ</router-link> |
-    <router-link to="/school/ege">ЕГЭ</router-link>
+    <router-link to="/school/ege">ЕГЭ</router-link> |
+    <router-link to="/students">Студентам</router-link>
   </nav>
   <router-view/>
 </template>

@@ -7,7 +7,7 @@
         </form>
         <div v-if="$route.query.search" @click="dropSearch" class="news__drop-search">Сбросить поиск <span></span></div>
       </div>
-      <div v-if="loading" class="news__loading"></div>
+      <loading-screen v-if="loading" />
       <ul v-else-if="data[0]" class="news__list">
         <li v-for="news in data" :key="news.id" class="news__list-item">
             <news-card :news="news" />
@@ -16,22 +16,22 @@
       <div class="news__not-found" v-else>
         <p>По вашему запросу {{$route.query.search  }}, ничего не найдено.</p>
       </div>
-      <my-pagination ref="pagination" class="news__pagination" @pagination='onPagination' :sPage="page" :totalPages="totalPages" />
+      <my-pagination ref="pagination" class="news__pagination" @pagination='onPagination' :isStartPagination="true" :totalPages="totalPages" />
     </div>
-  </template>
+</template>
   
-  <script lang="ts">
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
+<script lang="ts">
   import { defineComponent } from 'vue'
   import regionsService from '@/services/regionsService';
   import NewsList from '@/types/newsListType'
   import ResponseData from '@/types/responseData';
   import NewsCard from '@/components/NewsCard.vue'
   import MyPagination from './common/pagination.vue';
+  import LoadingScreen from './common/loading.vue'
   
   export default defineComponent({
       name:'RegionsList',
-      components: { NewsCard, MyPagination },
+      components: { NewsCard, MyPagination, LoadingScreen },
       data() {
           return {
               data: [] as NewsList [],
@@ -50,20 +50,20 @@
               behavior: "smooth"
           })
         },
-        search(e : any) {
+        search(e : Event) {
           e.preventDefault();
-          if((this.$refs['searchInput'] as any).value.trim()){
-            this.searchText = (this.$refs['searchInput'] as any).value.trim()
+          if((this.$refs['searchInput'] as HTMLFormElement).value.trim()){
+            this.searchText = (this.$refs['searchInput'] as HTMLFormElement).value.trim()
             this.$router.push({query: {search: this.searchText}})
             if(this.page != 1) {
               this.page = 1;
-              (this.$refs['pagination'] as any).page = 1;
+              (this.$refs['pagination'] as HTMLFormElement).page = 1;
             }else{ this.fetchNewsList(); }
 
-            (this.$refs['searchInput'] as any).value = ""
+            (this.$refs['searchInput'] as HTMLFormElement).value = ""
             
           }else{
-            (this.$refs['searchInput'] as any).focus()
+            (this.$refs['searchInput'] as HTMLFormElement).focus()
           }
         
         },
@@ -73,7 +73,7 @@
           this.isDroped = true
           if(this.page != 1) {
               this.page = 1;
-              (this.$refs['pagination'] as any).page = 1;
+              (this.$refs['pagination'] as HTMLFormElement).page = 1;
           }else{
             this.fetchNewsList();
           }
@@ -219,31 +219,6 @@
 
   &__pagination{
     margin-top: 40px;
-  }
-
-  &__loading{
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid rgb(72 110 242);
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-
-    margin: auto;
-
-    margin-top: 10vh;
-    margin-bottom: 190vh;
-
-    @-webkit-keyframes spin {
-      0% { -webkit-transform: rotate(0deg); }
-      100% { -webkit-transform: rotate(360deg); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
   }
 }
 </style>
