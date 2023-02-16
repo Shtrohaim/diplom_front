@@ -1,19 +1,18 @@
 <template>
     <div class="subject-card" :class="subjectModifier">
         <h3 class="subject-card__title">{{ subject }}</h3>
-        <a class="subject-card__link" v-for="link in Object.keys(data.info[subject])" :key="link" :href="data.info[subject][link]" target="_blank">{{ link }}</a>
+        <a class="subject-card__link" v-for="value, index in data" :key="index" :href="value" target="_blank">{{ index }}</a>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import SchoolData from '@/types/schoolDataType';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'SubjectCard',
     props:{
         data:{
-            type: Object as PropType<SchoolData>,
+            type: Object,
             default: () => { return {} },
         },
         subject:{

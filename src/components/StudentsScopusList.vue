@@ -10,7 +10,12 @@
                 <option value="AUTHOR">Автор</option>
                 <option value="PUBLISHER">Издатель</option>
             </select>
+            <label>
+                Фильтр:
+                <input type="checkbox" @change="hasFilter=!hasFilter" />
+            </label>
             <button>Search</button>
+            <scopus-filter v-if="hasFilter" ref="filter" @filter="getFilter" />
         </form>
         <loading-screen v-if="loading" />
         <ul v-else>
@@ -27,16 +32,21 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Pagination from './common/pagination.vue';
+
 import scopusService from '@/services/scopusService'
+
 import ScopusList from '@/types/scopusList'
 import ResponseData from '@/types/responseData';
-import LoadingScreen from './common/loading.vue'
+import FilterType from '@/types/filterType'
+
+import LoadingScreen from './common/loading.vue'    
+import Pagination from './common/pagination.vue';
+import ScopusFilter from './ScopusFilter.vue';
 
 export default defineComponent({
     name: 'ScopusList',
     components:{
-        Pagination, LoadingScreen
+        Pagination, LoadingScreen, ScopusFilter
     },
     data(){
         return {
@@ -45,9 +55,10 @@ export default defineComponent({
             size: 25 as number,
             totalPages: [] as number [],
             loading: false as boolean,
-            search: {} as { type: string, field: string},
-            filter: {} as string,
-            isActivePagination: false as boolean,
+            hasFilter: false as boolean,                                                                                                
+            search: {} as { type: string, field: string},                        
+            filter: {} as FilterType,
+            isActivePagination: false as boolean,          
         }
     },
     methods:{
@@ -77,12 +88,21 @@ export default defineComponent({
           this.fetchScopusData();
           this.scrollView();
         },
+        getFilter(data : FilterType){
+            this.filter = data
+        },
         searchData(e : Event) {
           e.preventDefault();
+          if(this.hasFilter) (this.$refs['filter'] as HTMLFormElement).callEmit()
           if((this.$refs['searchInput'] as HTMLFormElement).value.trim()){
+            let operator, year;
+            if(this.filter['PUBYEAR']){
+                operator = this.filter['PUBYEAR']['operator']
+                year = this.filter['PUBYEAR']['year']
+            }
             this.search['type'] = (this.$refs['searchType'] as HTMLFormElement).value
             this.search['field'] = (this.$refs['searchInput'] as HTMLFormElement).value.trim()
-            this.$router.push({query: {search: this.search['field'], type: this.search['type']}})
+            this.$router.push({query: {search: this.search['field'], type: this.search['type'], openaccess: this.filter['OPENACCESS'], doctype: this.filter['DOCTYPE'], srctype: this.filter['SRCTYPE'], subjtype: this.filter['SUBJAREA'], pubyear_op: operator, pubyear_yr: year}})
             this.isActivePagination = true;
             this.loading = true;
             this.fetchScopusData();
@@ -97,18 +117,28 @@ export default defineComponent({
         }
     }, 
     mounted(){
-            if(this.$route.query.search && this.$route.query.type){
-                this.search['type'] = this.$route.query.type.toString();
-                this.search['field'] = this.$route.query.toString();
-                this.isActivePagination = true;
-                setTimeout(() => {
-                    if(this.$route.query.page){
-                        (this.$refs['pagination'] as HTMLFormElement).page = Number(this.$route.query.page);
-                    }else{
-                        (this.$refs['pagination'] as HTMLFormElement).page = 1;
-                    }
-                }, 0)
-            }
+        if(this.$route.query['openaccess']){
+            this.filter['PUBYEAR'] = {}
+            this.filter['OPENACCESS'] = Number(this.$route.query['openaccess'])
+            this.filter['DOCTYPE'] = String(this.$route.query['doctype'])
+            this.filter['SUBJAREA'] = String(this.$route.query['subjtype'])
+            this.filter['SRCTYPE'] = String(this.$route.query['srctype'])
+            this.filter['PUBYEAR']['operator'] = String(this.$route.query['pubyear_op'])
+            this.filter['PUBYEAR']['year'] = String(this.$route.query['pubyear_yr'])
+        }
+
+        if(this.$route.query.search && this.$route.query.type){
+            this.search['type'] = this.$route.query.type.toString();
+            this.search['field'] = this.$route.query.search.toString();
+            this.isActivePagination = true;
+            setTimeout(() => {
+                if(this.$route.query.page){
+                    (this.$refs['pagination'] as HTMLFormElement).page = Number(this.$route.query.page);
+                }else{
+                    (this.$refs['pagination'] as HTMLFormElement).page = 1;
+                }
+            }, 0)
+        }
         }
 });
 </script>

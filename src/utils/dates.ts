@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const MONTH = { 
+const MONTH : { [key: string] :string } = { 
     "Янв" : "01",
     "Фев" : "02",
     "Мар" : "03", 
@@ -12,7 +11,7 @@ const MONTH = {
     "Окт" : "10", 
     "Ноя" : "11", 
     "Дек" : "12"
-} as any
+}
 
 function getDate (strDate : string) : Date {
     let oldMonth = "" as string;

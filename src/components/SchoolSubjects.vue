@@ -3,8 +3,8 @@
         <h2 class="school-subjects__title">{{ data.title }}</h2>
         <p class="school-subjects__description">{{ data.description }}</p>
         <ul class="school-subjects__list">
-            <li class="school-subjects__list-item" v-for="subject in Object.keys(data.info)" :key="subject"> 
-                <subject-card class="school-subjects__card" :data="data" :subject="subject" />
+            <li class="school-subjects__list-item" v-for="value, index in data.info" :key="index"> 
+                <subject-card class="school-subjects__card" :data="value" :subject="index.toString()" />
             </li>
         </ul>
     </div>
