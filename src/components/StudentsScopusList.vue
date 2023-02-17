@@ -17,12 +17,19 @@
             <button>Search</button>
             <scopus-filter v-if="hasFilter" ref="filter" @filter="getFilter" />
         </form>
+        <button v-if="checkFilter">Сбросить фильтр</button>
         <loading-screen v-if="loading" />
         <ul v-else>
             <li v-for="item in data" :key="item.eid">
                 <div>
                     <h2>{{ item.title }}</h2>
-                    <p>{{ item.doi }}</p>
+                    <p>{{ item.issn }}</p>
+                    <p>{{ item.eIssn }}</p>
+                    <p>{{ item.publisher }}</p>
+                    <p>{{ item.creator }}</p>
+                    <p>{{ item.subtypeDescription }}</p>
+                    <p>{{ item['citedby-count'] }}</p>
+                    <p>{{ item.openaccessFlag}}</p>
                 </div>
             </li>
         </ul>
@@ -37,11 +44,12 @@ import scopusService from '@/services/scopusService'
 
 import ScopusList from '@/types/scopusList'
 import ResponseData from '@/types/responseData';
-import FilterType from '@/types/filterType'
 
 import LoadingScreen from './common/loading.vue'    
 import Pagination from './common/pagination.vue';
 import ScopusFilter from './ScopusFilter.vue';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default defineComponent({
     name: 'ScopusList',
@@ -57,8 +65,8 @@ export default defineComponent({
             loading: false as boolean,
             hasFilter: false as boolean,                                                                                                
             search: {} as { type: string, field: string},                        
-            filter: {} as FilterType,
-            isActivePagination: false as boolean,          
+            filter: {} as any,
+            isActivePagination: false as boolean,      
         }
     },
     methods:{
@@ -88,8 +96,17 @@ export default defineComponent({
           this.fetchScopusData();
           this.scrollView();
         },
-        getFilter(data : FilterType){
-            this.filter = data
+        getFilter(data : any){
+            for(let item in data){
+                this.filter[item] = []
+                for(let index in data[item]){
+                    this.filter[item].push(data[item][index].code);
+                } 
+            }
+            this.filter.OPENACCESS = data.OPENACCESS
+            if(data.PUBYEAR['year'] && data.PUBYEAR['operator']){
+                this.filter.PUBYEAR = data.PUBYEAR
+            }
         },
         searchData(e : Event) {
           e.preventDefault();
@@ -116,13 +133,26 @@ export default defineComponent({
         
         }
     }, 
+    computed: {
+        checkFilter() : boolean {
+            return Object.keys(this.filter).length !== 0
+        }
+    },
     mounted(){
         if(this.$route.query['openaccess']){
-            this.filter['PUBYEAR'] = {}
             this.filter['OPENACCESS'] = Number(this.$route.query['openaccess'])
-            this.filter['DOCTYPE'] = String(this.$route.query['doctype'])
-            this.filter['SUBJAREA'] = String(this.$route.query['subjtype'])
-            this.filter['SRCTYPE'] = String(this.$route.query['srctype'])
+        }
+        if(this.$route.query['doctype']){
+            this.filter['DOCTYPE'] = this.$route.query['doctype']
+        }
+        if(this.$route.query['subjtype']){
+            this.filter['SUBJAREA'] = this.$route.query['subjtype']
+        }
+        if(this.$route.query['srctype']){
+            this.filter['SRCTYPE'] = this.$route.query['srctype']
+        }
+        if(this.$route.query['pubyear']){
+            this.filter['PUBYEAR'] = {}
             this.filter['PUBYEAR']['operator'] = String(this.$route.query['pubyear_op'])
             this.filter['PUBYEAR']['year'] = String(this.$route.query['pubyear_yr'])
         }
@@ -139,6 +169,6 @@ export default defineComponent({
                 }
             }, 0)
         }
-        }
+    }
 });
 </script>
