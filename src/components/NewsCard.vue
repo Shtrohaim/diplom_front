@@ -1,17 +1,17 @@
 <template>
-    <div class="news-card" @click="goToNews" @click.middle="openInNewTab">
+    <RouterLink :to="{ name: 'news', params: {tableName: this.$route.params.tableName, id: this.news.id }}" class="news-card">
         <div class="news-card__info-wrapper">
             <img v-if="news.image_url" :src="news.image_url" class="news-card__image" :alt="news.title" />
-            <div class="news-card__date" :class="noImageDateClass(!!news.image_url)">
-                <p class="news-card__date-day">{{ changeDayFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, "").trim()) }}</p>
-                <p class="news-card__date-month">{{ changeMonthFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, "").trim()) }}</p>
+            <div class="news-card__date" :class="!!news.image_url && 'news-card__date--no-image'">
+                <p class="news-card__date-day">{{ getDayGeneralFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, "").trim()) }}</p>
+                <p class="news-card__date-month">{{ getRuShortMonth(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, "").trim()) }}</p>
             </div>
         </div>
         <div class="news-card__text-content">
             <h3 class="news-card__title">{{ news.title }}</h3>
             <p class="news-card__description">{{ news.teaser }}</p>
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script lang="ts">
@@ -24,31 +24,12 @@ export default defineComponent({
     props:{
         news: {
             type: Object as PropType<NewsList>,
-            default: () => { return {} },
+            default: () => ({}),
         }
     },
-    methods:{
-        changeMonthFormat(date : string) : string{
-           return getRuShortMonth(date)
-        },
-        changeDayFormat(date : string) : number{
-           return getDayGeneralFormat(date)
-        },
-        noImageDateClass(hasImage : boolean) : string{
-            if(hasImage){
-                return ""
-            }else{
-                return "news-card__date--no-image"
-            }
-        }, 
-        goToNews() {
-            this.$router.push({ name: 'news', params: {tableName: this.$route.params.tableName, id: this.news.id }  });
-        },
-        openInNewTab (){
-            const routeData = this.$router.resolve({ name: 'news', params: {tableName: this.$route.params.tableName, id: this.news.id }  });
-            window.open(routeData.href, '_blank')
-        }
-    },
+  setup() {
+      return {getDayGeneralFormat, getRuShortMonth}
+  }
 })
 
 </script>
