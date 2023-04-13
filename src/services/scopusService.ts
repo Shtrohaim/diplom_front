@@ -12,4 +12,7 @@ export default {
     getSubjectsList() {
         return axios.get(`/elsevier/subjects`);
     },
+    getScopusIssn(id : string | string[]) {
+        return axios.get(`/elsevier/publisher/${id}`);
+    },
 };

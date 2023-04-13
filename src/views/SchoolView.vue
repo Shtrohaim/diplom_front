@@ -18,11 +18,12 @@ import schoolService from '@/services/schoolService'
 import SchoolInfo from '@/components/SchoolInfo.vue';
 import SchoolSubjects from '@/components/SchoolSubjects.vue';
 
+
 export default defineComponent({
   name: 'SchoolView',
   components: {
     SchoolInfo,
-    SchoolSubjects
+    SchoolSubjects,
   },
   data(){
     return {

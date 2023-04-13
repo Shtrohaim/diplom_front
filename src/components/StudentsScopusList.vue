@@ -10,27 +10,18 @@
                 <option value="AUTHOR">Автор</option>
                 <option value="PUBLISHER">Издатель</option>
             </select>
+            <button>Поиск</button>
             <label>
                 Фильтр:
                 <input type="checkbox" @change="hasFilter=!hasFilter" />
             </label>
-            <button>Search</button>
             <scopus-filter v-if="hasFilter" ref="filter" @filter="getFilter" />
         </form>
         <button v-if="checkFilter">Сбросить фильтр</button>
         <loading-screen v-if="loading" />
-        <ul v-else>
-            <li v-for="item in data" :key="item.eid">
-                <div>
-                    <h2>{{ item.title }}</h2>
-                    <p>{{ item.issn }}</p>
-                    <p>{{ item.eIssn }}</p>
-                    <p>{{ item.publisher }}</p>
-                    <p>{{ item.creator }}</p>
-                    <p>{{ item.subtypeDescription }}</p>
-                    <p>{{ item['citedby-count'] }}</p>
-                    <p>{{ item.openaccessFlag}}</p>
-                </div>
+        <ul v-else class="scopus-card__list">
+            <li class="scopus-card__list-item" v-for="item in data" :key="item.eid">
+                <students-scopus-card  :data="item"/>
             </li>
         </ul>
         <pagination v-if="isActivePagination" ref="pagination" :isStartPagination="false" :totalPages="totalPages" @pagination="onPagination"  />
@@ -48,13 +39,14 @@ import ResponseData from '@/types/responseData';
 import LoadingScreen from './common/loading.vue'    
 import Pagination from './common/pagination.vue';
 import ScopusFilter from './ScopusFilter.vue';
+import StudentsScopusCard from './StudentsScopusCard.vue';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default defineComponent({
     name: 'ScopusList',
     components:{
-        Pagination, LoadingScreen, ScopusFilter
+        Pagination, LoadingScreen, ScopusFilter, StudentsScopusCard
     },
     data(){
         return {
@@ -73,8 +65,9 @@ export default defineComponent({
         fetchScopusData() {
             scopusService.getScopusData(this.size, this.page, this.search, this.filter).then((res : ResponseData) => {
                 this.data = res.data.data
+                this.translatePublications()
                 this.getAllPagesList(res.data.totalPages)
-                this.loading = false
+                this.loading = false     
             })
         },
         getAllPagesList(pages: number) {
@@ -131,6 +124,54 @@ export default defineComponent({
             (this.$refs['searchInput'] as HTMLFormElement).focus()
           }
         
+        },
+        translatePublications(){
+            for(let i = 0; i < this.data.length; i++){ 
+                switch(this.data[i].subtypeDescription){
+                    case "Article":
+                        this.data[i].subtypeDescription = "Статья"
+                        break;
+                    case "Abstract Report":
+                        this.data[i].subtypeDescription = "Выдержка из доклада"
+                        break;
+                    case "Book":
+                        this.data[i].subtypeDescription = "Книга"
+                        break;
+                    case "Business Article":
+                        this.data[i].subtypeDescription = "Бизнес статья"
+                        break;
+                    case "Book Chapter":
+                        this.data[i].subtypeDescription = "Глава книги"
+                        break;
+                    case "Conference Paper":
+                        this.data[i].subtypeDescription = "Материал конференции"
+                        break;
+                    case "Conference Review":
+                        this.data[i].subtypeDescription = "Отзыв конференции"
+                        break;
+                    case "Editorial":
+                        this.data[i].subtypeDescription = "Редакция"
+                        break;
+                    case "Erratum":
+                        this.data[i].subtypeDescription = "Исправление"
+                        break;
+                    case "Letter":
+                        this.data[i].subtypeDescription = "Письмо"
+                        break;
+                    case "Note":
+                        this.data[i].subtypeDescription = "Заметка"
+                        break;
+                    case "Press Release":
+                        this.data[i].subtypeDescription = "Пресс-релиз"
+                        break;
+                    case "Review":
+                        this.data[i].subtypeDescription = "Отзыв"
+                        break;
+                    case "Short Survey":
+                        this.data[i].subtypeDescription = "Краткий обзор"
+                        break;
+                }
+            }
         }
     }, 
     computed: {

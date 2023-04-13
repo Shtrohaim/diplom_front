@@ -1,31 +1,31 @@
 <template>
-    <div>
-        <label>
-            В открытом доступе:
-            <input v-model="hasOpenAccess" type="checkbox" />
-        </label>
+    <div class="filter">
         <label>
             Тип предмета:
-            <multi-select v-model="subjType" :options="subjectType" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="code" />
+            <multi-select class="filter__multiselector" v-model="subjType" :options="subjectType" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Выберите предметы" label="name" track-by="code" />
         </label>
         <label>
             Тип источника:
-            <multi-select v-model="srcType" :options="srcTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false"  placeholder="Pick some" label="name" track-by="code" />
+            <multi-select class="filter__multiselector" v-model="srcType" :options="srcTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false"  placeholder="Выберите источники" label="name" track-by="code" />
         </label>
         <label>
-            Тип документа:
-            <multi-select v-model="docType" :options="docTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false"  placeholder="Pick some" label="name" track-by="code" />
+            Тип публикации:
+            <multi-select class="filter__multiselector" v-model="docType" :options="docTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false"  placeholder="Выбирите тип публикации" label="name" track-by="code" />
         </label>
         <label>
             Опубликован 
-            <select v-model="pubYear['operator']">
+            <select class="filter__input" v-model="pubYear['operator']">
                 <option value="">Не выбрано</option>
                 <option value="equal">в</option>
                 <option value="greater">после</option>
                 <option value="less">до</option>
             </select>
-            <input v-model="pubYear['year']" type="number" />
-        </label>               
+            <input placeholder="Введите год" class="filter__input" v-model="pubYear['year']" type="number" />
+        </label>  
+        <label>
+            В открытом доступе:
+            <input class="filter__check-access" v-model="hasOpenAccess" type="checkbox" />
+        </label>             
     </div>
 </template>
 
@@ -138,5 +138,35 @@ export default defineComponent({
 <style src="/home/deorel/diplom_app/diplom_front/node_modules/vue-multiselect/dist/vue3-multiselect.css"></style>
 
 <style lang="scss">
+    .filter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
+        &__multiselector {
+            width: 550px;
+
+            .multiselect__tag{
+                background-color: #486ef2;
+            }
+
+            .multiselect__option--highlight {
+                background-color: #486ef2;
+            }
+        }
+
+        &__input {
+            min-height: 20px;
+            line-height: 20px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            padding: 0 0 0 5px;
+            transition: border .1s ease;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+            vertical-align: top;
+        }
+    }
 </style>

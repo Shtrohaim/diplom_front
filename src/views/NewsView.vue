@@ -9,7 +9,7 @@ import NewsPage from '@/components/News.vue';
 export default defineComponent({
   name: 'NewsView',
   components: {
-      NewsPage,
+      NewsPage
   },
 });
 </script>
