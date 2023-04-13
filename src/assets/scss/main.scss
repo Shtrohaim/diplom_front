@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  color: #000;
+}
+
+button {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.container {
+  padding: 0 20px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.content {
+  padding: 64px 0;
+  flex-grow: 1;
+}
+
+.icon28 {
+  width: 28px;
+  height: 28px;
+}
+
+.icon36 {
+  width: 36px;
+  height: 36px;
+}
+
+.fill-white {
+  fill: #ffffff;
+}
+
+.fill-primary {
+  fill: #486ef2;
+}
+
+.fill-disabled {
+  fill: rgb(160, 160, 160);
+}

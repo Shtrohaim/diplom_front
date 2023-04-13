@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 
-<svg width="800px" height="800px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+<svg id="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 
 <defs>
 
@@ -10,7 +10,7 @@
 
 <title/>
 
-<g id="chevron-top">
+<g>
 
 <line class="cls-1" x1="16" x2="25" y1="10.5" y2="20.5"/>
 
