@@ -1,14 +1,14 @@
-import { fileURLToPath, URL } from "node:url";
+import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   server: {
     port: 8000,
-    host: "0.0.0.0",
+    host: '0.0.0.0'
   },
   css: {
     preprocessorOptions: {
@@ -16,13 +16,13 @@ export default defineConfig({
         // additionalData: `
         //       @import "./src/assets/scss/variables.scss";
         //     `,
-      },
-    },
+      }
+    }
   },
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     },
-    extensions: ["*", ".js", "ts", ".vue", ".json"],
-  },
-});
+    extensions: ['*', '.js', 'ts', '.vue', '.json']
+  }
+})

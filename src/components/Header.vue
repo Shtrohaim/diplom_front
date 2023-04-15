@@ -8,20 +8,16 @@
             @click="goToPreviousPage()"
             title="Вернутся на предыдущую страницу"
           >
-              <svg class="fill-white icon36">
-                  <use href="@/assets/images/back_icon.svg#icon"></use>
-              </svg>
+            <svg class="fill-white icon36">
+              <use href="@/assets/images/back_icon.svg#icon"></use>
+            </svg>
           </button>
         </li>
         <li class="header__list-item">
-          <button
-            class="header__button"
-            @click="goToMainPage()"
-            title="На главную страницу"
-          >
-              <svg class="fill-white icon28">
-                  <use href="@/assets/images/home_icon.svg#icon"></use>
-              </svg>
+          <button class="header__button" @click="goToMainPage()" title="На главную страницу">
+            <svg class="fill-white icon28">
+              <use href="@/assets/images/home_icon.svg#icon"></use>
+            </svg>
           </button>
         </li>
       </ul>

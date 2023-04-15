@@ -75,7 +75,7 @@ export default defineComponent({
   },
   data() {
     return {
-        value: null,
+      value: null,
       docTypeList: [
         { label: 'Статьи', value: 'ar' },
         { label: 'Выдержки из докладов', value: 'ab' },

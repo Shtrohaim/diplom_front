@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type SchoolData from '@/types/schoolDataType'
+// import type SchoolData from '@/types/schoolDataType'
 import SubjectCard from './SubjectCard.vue'
 
 export default defineComponent({
   name: 'SchoolSubjects',
   props: {
     data: {
-      type: Object as PropType<SchoolData>,
+      type: Object as any,
       default: () => {
         return {}
       }

@@ -4,40 +4,35 @@
       <figure class="main__news">
         <figcaption class="main__news-caption">Новости образования</figcaption>
         <ul class="main__news-list">
-          <li
-            class="main__news-list-item main__news-list-item--minobr"
-            @click="$router.push({ path: '/news/news_rus_mno' })"
-          >
-            <h2 class="main__route">Министерство науки и высшего образования РФ</h2>
+          <li class="main__news-list-item main__news-list-item--minobr">
+            <router-link :to="$router.push({ path: '/news/news_rus_mno' })">
+              <h2 class="main__route">Министерство науки и высшего образования РФ</h2>
+            </router-link>
           </li>
-          <li
-            class="main__news-list-item main__news-list-item--minpros"
-            @click="$router.push({ path: '/news/news_rus_minprof' })"
-          >
-            <h2 class="main__route">Министерство просвещения РФ</h2>
+          <li class="main__news-list-item main__news-list-item--minpros">
+            <router-link :to="$router.push({ path: '/news/news_rus_minprof' })">
+              <h2 class="main__route">Министерство просвещения РФ</h2>
+            </router-link>
           </li>
-          <li
-            class="main__news-list-item main__news-list-item--regions"
-            @click="$router.push({ path: '/regions_list' })"
-          >
-            <h2 class="main__route">Регионы</h2>
+          <li class="main__news-list-item main__news-list-item--regions">
+            <router-link :to="$router.push({ path: '/regions_list' })">
+              <h2 class="main__route">Регионы</h2>
+            </router-link>
           </li>
         </ul>
       </figure>
       <figure class="main__services">
         <figcaption class="main__services-caption">Информация и сервисы</figcaption>
         <ul class="main__services-list">
-          <li
-            class="main__services-list-item main__services-list-item--school"
-            @click="$router.push({ path: '/school' })"
-          >
-            <h2 class="main__route">Школьникам</h2>
+          <li class="main__services-list-item main__services-list-item--school">
+            <router-link :to="$router.push({ path: '/school' })">
+              <h2 class="main__route">Школьникам</h2>
+            </router-link>
           </li>
-          <li
-            class="main__services-list-item main__services-list-item--student"
-            @click="$router.push({ path: '/students' })"
-          >
-            <h2 class="main__route">Студентам</h2>
+          <li class="main__services-list-item main__services-list-item--student">
+            <router-link :to="$router.push({ path: '/students' })">
+              <h2 class="main__route">Студентам</h2>
+            </router-link>
           </li>
         </ul>
       </figure>

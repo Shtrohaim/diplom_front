@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type Regions from '@/types/regionsType'
+// import type Regions from '@/types/regionsType'
 
 export default defineComponent({
   name: 'RegionCard',

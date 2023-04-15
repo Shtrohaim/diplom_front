@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type NewsList from '@/types/newsListType'
+// import type NewsList from '@/types/newsListType'
 import { getRuShortMonth, getDayGeneralFormat } from '@/utils/dates'
 
 export default defineComponent({

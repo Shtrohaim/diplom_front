@@ -5,18 +5,18 @@
       type="button"
       @click="pagination(1)"
     >
-        <svg class="fill-primary icon36" :class="{ 'fill-disabled' : page === 1 }">
-            <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
-        </svg>
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === 1 }">
+        <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
+      </svg>
     </button>
     <button
       class="pagination__button pagination__button--reverse"
       type="button"
       @click="pagination(page - 1)"
     >
-        <svg class="fill-primary icon36" :class="{ 'fill-disabled' : page === 1 }" >
-            <use href="@/assets/images/arrow_enable.svg#icon"></use>
-        </svg>
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === 1 }">
+        <use href="@/assets/images/arrow_enable.svg#icon"></use>
+      </svg>
     </button>
     <ul class="pagination__page-list">
       <li
@@ -34,18 +34,24 @@
       type="button"
       @click="pagination(page + 1)"
     >
-        <svg class="fill-primary icon36" :class="{ 'fill-disabled' : page === totalPages[totalPages.length - 1] }">
-            <use href="@/assets/images/arrow_enable.svg#icon"></use>
-        </svg>
+      <svg
+        class="fill-primary icon36"
+        :class="{ 'fill-disabled': page === totalPages[totalPages.length - 1] }"
+      >
+        <use href="@/assets/images/arrow_enable.svg#icon"></use>
+      </svg>
     </button>
     <button
       class="pagination__button pagination__button--end"
       type="button"
       @click="pagination(totalPages[totalPages.length - 1])"
     >
-        <svg class="fill-primary icon36" :class="{ 'fill-disabled' : page === totalPages[totalPages.length - 1] }">
-            <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
-        </svg>
+      <svg
+        class="fill-primary icon36"
+        :class="{ 'fill-disabled': page === totalPages[totalPages.length - 1] }"
+      >
+        <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
+      </svg>
     </button>
   </div>
 </template>
@@ -106,23 +112,23 @@ export default defineComponent({
   },
   computed: {
     filteredItems(): number[] {
-        let begin = 0
-        let step = 6
-        let end = step
-        if (this.page - 1 > 1 && this.page + 2 < this.totalPages[this.totalPages.length - 1]) {
-            begin = this.page - step / 2
-            end = this.page + step / 2
-        } else if (this.page - 1 <= 1) {
-            begin = 0
-            end = step
-        } else if (this.page + 2 >= this.totalPages[this.totalPages.length - 1]) {
-            begin =
-                this.totalPages[this.totalPages.length - 1] - step >= 0
-                    ? this.totalPages[this.totalPages.length - 1] - step
-                    : 0
-            end = this.totalPages[this.totalPages.length - 1]
-        }
-        return this.totalPages.slice(begin, end)
+      let begin = 0
+      let step = 6
+      let end = step
+      if (this.page - 1 > 1 && this.page + 2 < this.totalPages[this.totalPages.length - 1]) {
+        begin = this.page - step / 2
+        end = this.page + step / 2
+      } else if (this.page - 1 <= 1) {
+        begin = 0
+        end = step
+      } else if (this.page + 2 >= this.totalPages[this.totalPages.length - 1]) {
+        begin =
+          this.totalPages[this.totalPages.length - 1] - step >= 0
+            ? this.totalPages[this.totalPages.length - 1] - step
+            : 0
+        end = this.totalPages[this.totalPages.length - 1]
+      }
+      return this.totalPages.slice(begin, end)
     }
   },
   mounted() {
@@ -172,7 +178,7 @@ export default defineComponent({
     color: rgb(255 255 255);
     background: #486ef2;
 
-    &:first-child{
+    &:first-child {
       margin-left: 10px;
     }
 

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type SchoolData from '@/types/schoolDataType'
+// import type SchoolData from '@/types/schoolDataType'
 
 export default defineComponent({
   name: 'SchoolInfo',

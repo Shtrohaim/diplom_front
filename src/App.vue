@@ -1,7 +1,7 @@
 <template>
   <site-header />
   <router-view :key="$route.fullPath" />
-  <div class="page-top" v-show="scY > 300" @click="goToTop()" title="На вверх страницы"></div>
+  <button class="page-top" v-show="scY > 300" @click="goToTop()" title="На вверх страницы"></button>
 </template>
 
 <script lang="ts">
@@ -41,7 +41,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
 .page-top {
   position: fixed;
   bottom: 20px;
