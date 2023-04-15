@@ -3,22 +3,18 @@
     <nav v-if="$route.name !== 'main'" class="header__navigation">
       <ul class="header__list">
         <li class="header__list-item">
-          <button
-            class="header__button"
-            @click="goToPreviousPage()"
-            title="Вернутся на предыдущую страницу"
-          >
+          <a class="header__button" @click="$router.go(-1)" title="Вернутся на предыдущую страницу">
             <svg class="fill-white icon36">
               <use href="@/assets/images/back_icon.svg#icon"></use>
             </svg>
-          </button>
+          </a>
         </li>
         <li class="header__list-item">
-          <button class="header__button" @click="goToMainPage()" title="На главную страницу">
+          <router-link class="header__button" :to="{ name: 'main' }" title="На главную страницу">
             <svg class="fill-white icon28">
               <use href="@/assets/images/home_icon.svg#icon"></use>
             </svg>
-          </button>
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -30,15 +26,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: 'SiteHeader',
-  methods: {
-    goToMainPage() {
-      this.$router.push({ name: 'main' })
-    },
-    goToPreviousPage() {
-      this.$router.go(-1)
-    }
-  }
+  name: 'SiteHeader'
 })
 </script>
 
@@ -77,6 +65,8 @@ export default defineComponent({
   }
 
   &__button {
+    display: block;
+
     width: 50px;
     height: 50px;
 

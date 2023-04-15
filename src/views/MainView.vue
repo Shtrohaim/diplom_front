@@ -5,17 +5,17 @@
         <figcaption class="main__news-caption">Новости образования</figcaption>
         <ul class="main__news-list">
           <li class="main__news-list-item main__news-list-item--minobr">
-            <router-link :to="$router.push({ path: '/news/news_rus_mno' })">
+            <router-link :to="{ name: 'region_news', params: { tableName: 'news_rus_mno' } }">
               <h2 class="main__route">Министерство науки и высшего образования РФ</h2>
             </router-link>
           </li>
           <li class="main__news-list-item main__news-list-item--minpros">
-            <router-link :to="$router.push({ path: '/news/news_rus_minprof' })">
+            <router-link :to="{ name: 'region_news', params: { tableName: 'news_rus_minprof' } }">
               <h2 class="main__route">Министерство просвещения РФ</h2>
             </router-link>
           </li>
           <li class="main__news-list-item main__news-list-item--regions">
-            <router-link :to="$router.push({ path: '/regions_list' })">
+            <router-link :to="{ name: 'regions_list' }">
               <h2 class="main__route">Регионы</h2>
             </router-link>
           </li>
@@ -25,12 +25,12 @@
         <figcaption class="main__services-caption">Информация и сервисы</figcaption>
         <ul class="main__services-list">
           <li class="main__services-list-item main__services-list-item--school">
-            <router-link :to="$router.push({ path: '/school' })">
+            <router-link :to="{ name: 'school' }">
               <h2 class="main__route">Школьникам</h2>
             </router-link>
           </li>
           <li class="main__services-list-item main__services-list-item--student">
-            <router-link :to="$router.push({ path: '/students' })">
+            <router-link :to="{ name: 'students' }">
               <h2 class="main__route">Студентам</h2>
             </router-link>
           </li>

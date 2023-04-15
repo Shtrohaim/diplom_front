@@ -1,40 +1,27 @@
 <template>
-  <div class="region-card" @click="goToRegion" @click.middle="openInNewTab">
+  <router-link
+    class="region-card"
+    :to="{ name: 'region_news', params: { tableName: this.region.tableName } }"
+  >
     <img
       class="region-card__image"
-      :src="`http://localhost:3000/img/${region.img}`"
-      :alt="`Герб ${region.name}`"
+      :src="`http://localhost:3000/img/${region?.img}`"
+      :alt="`Герб ${region?.name}`"
     />
     <h3>{{ region.name }}</h3>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-// import type Regions from '@/types/regionsType'
+import type Regions from '@/types/regionsType'
 
 export default defineComponent({
   name: 'RegionCard',
   props: {
     region: {
-      type: Object as any,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  methods: {
-    goToRegion() {
-      localStorage.page = 1
-      localStorage.pageName = this.region.tableName
-      this.$router.push({ name: 'region_news', params: { tableName: this.region.tableName } })
-    },
-    openInNewTab() {
-      const routeData = this.$router.resolve({
-        name: 'region_news',
-        params: { tableName: this.region.tableName }
-      })
-      window.open(routeData.href, '_blank')
+      type: Object as () => Regions,
+      default: () => ({})
     }
   }
 })

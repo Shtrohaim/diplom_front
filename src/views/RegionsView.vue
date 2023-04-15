@@ -15,37 +15,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import regionsServices from '../services/regionsService'
-import type Regions from '@/types/regionsType'
-import type ResponseData from '@/types/responseData'
+import { defineComponent, ref, onMounted, computed } from 'vue'
 import RegionCard from '@/components/RegionCard.vue'
+import type Regions from '@/types/regionsType'
+import regionsServices from '@/services/regionsService'
+import type ResponseData from '@/types/responseData'
 
 export default defineComponent({
-  name: 'RegionsList',
-  components: { RegionCard },
-  data() {
-    return {
-      data: [] as Regions[],
-      search: ''
-    }
+  name: 'RegionsListView',
+  components: {
+    RegionCard
   },
-  methods: {
-    fetchRegions() {
-      return regionsServices.getAllRegions().then((data: ResponseData) => {
-        this.data = data.data
+  setup() {
+    const regions = ref([] as Regions[])
+    const search = ref('')
+    const fetchRegions = () => {
+      regionsServices.getAllRegions().then((response: ResponseData) => {
+        regions.value = response.data
       })
     }
-  },
-  computed: {
-    filteredRegions(): Regions[] {
-      return this.data.filter((p: Regions) => {
-        return p.name.toLowerCase().indexOf(this.search.toLowerCase()) != -1
+
+    const filteredRegions = computed(() => {
+      return regions.value.filter((p: Regions) => {
+        return p.name.toLowerCase().indexOf(search.value.toLowerCase()) != -1
       })
-    }
-  },
-  mounted() {
-    this.fetchRegions()
+    })
+
+    onMounted(async () => {
+      await fetchRegions()
+    })
+    return { filteredRegions, search }
   }
 })
 </script>

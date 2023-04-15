@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import RegionsList from '../views/RegionsListView.vue'
+import HomeView from '../views/MainView.vue'
+import RegionsList from '../views/RegionsView.vue'
 import RegionNewsList from '../views/RegionNewsListView.vue'
 import NewsView from '../views/NewsView.vue'
 import SchoolView from '../views/SchoolView.vue'
@@ -16,7 +16,7 @@ import {
   EXAM_ROUTE_NAME,
   SCOPUS_LIST_ROUTE_NAME,
   SCOPUS_ROUTE_NAME
-} from '../constants/routes'
+} from '@/constants/routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -1,7 +1,7 @@
 <template>
   <site-header />
   <router-view :key="$route.fullPath" />
-  <button class="page-top" v-show="scY > 300" @click="goToTop()" title="На вверх страницы"></button>
+  <div class="page-top" v-show="scY > 300" @click="goToTop()" title="На вверх страницы"></div>
 </template>
 
 <script lang="ts">
