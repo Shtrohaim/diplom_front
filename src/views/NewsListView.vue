@@ -9,108 +9,108 @@
         Сбросить поиск <span></span>
       </div>
     </div>
-    <loading-screen v-if="loading" />
-    <ul v-else-if="data[0]" class="news__list">
-      <li v-for="news in data" :key="news.id" class="news__list-item">
-        <news-card :news="news" />
+    <loading-screen v-if="isLoading" />
+    <ul v-else-if="news[0]" class="news__list">
+      <li v-for="item in news" :key="item.id" class="news__list-item">
+        <news-card :news="item" />
       </li>
     </ul>
     <div class="news__not-found" v-else>
-      <p>По вашему запросу {{ $route.query.search }}, ничего не найдено.</p>
+      <p>По вашему запросу {{ route.query.search }}, ничего не найдено.</p>
     </div>
     <my-pagination
-      ref="pagination"
       class="news__pagination"
       @pagination="onPagination"
-      :isStartPagination="true"
+      :page="currentPage"
       :totalPages="totalPages"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import regionsService from '@/services/regionsService'
 import type NewsList from '@/types/newsListType'
 import type ResponseData from '@/types/responseData'
 import NewsCard from '@/components/NewsCard.vue'
-import MyPagination from './common/pagination.vue'
-import LoadingScreen from './common/loading.vue'
+import MyPagination from '@/components/common/pagination.vue'
+import LoadingScreen from '@/components/common/loading.vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'RegionsList',
+  name: 'NewsListPage',
   components: { NewsCard, MyPagination, LoadingScreen },
-  data() {
-    return {
-      data: [] as NewsList[],
-      page: 1 as number,
-      size: 10 as number,
-      totalPages: [] as number[],
-      loading: true as boolean,
-      searchText: '' as string,
-      isDroped: false as boolean
+  setup() {
+    const news = ref([] as NewsList[])
+    const size = 10 as number
+    const currentPage = ref(1)
+    const totalPages = ref(1)
+    const isLoading = ref(true)
+    let isDropped = false
+
+    const route = useRoute()
+    const router = useRouter()
+
+    const searchInput = ref()
+
+    const fetchNewsList = () => {
+      let tableName = route.params.tableName
+      let page = currentPage.value
+      let qSearch = String(route.query.search).trim()
+      let search =
+        route.query.search && qSearch.length !== 0 && searchInput.value.value === '' && !isDropped
+          ? qSearch
+          : searchInput.value.value.trim()
+      return regionsService
+        .getRegion({ tableName, size, page, search })
+        .then((res: ResponseData) => {
+          news.value = res.data.news
+          isLoading.value = false
+          totalPages.value = res.data.totalPages
+        })
     }
-  },
-  methods: {
-    scrollView() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    },
-    search(e: Event) {
-      e.preventDefault()
-      if ((this.$refs['searchInput'] as HTMLFormElement).value.trim()) {
-        this.searchText = (this.$refs['searchInput'] as HTMLFormElement).value.trim()
-        this.$router.push({ query: { search: this.searchText } })
-        if (this.page != 1) {
-          this.page = 1
-          ;(this.$refs['pagination'] as HTMLFormElement).page = 1
+
+    const search = (event: any) => {
+      event.preventDefault()
+      if (searchInput.value.value.trim()) {
+        router.push({ query: { search: searchInput.value.value.trim() } })
+        if (currentPage.value != 1) {
+          currentPage.value = 1
         } else {
-          this.fetchNewsList()
+          fetchNewsList()
         }
 
-        ;(this.$refs['searchInput'] as HTMLFormElement).value = ''
+        searchInput.value = ''
       } else {
-        ;(this.$refs['searchInput'] as HTMLFormElement).focus()
+        searchInput.value.focus()
       }
-    },
-    dropSearch() {
-      this.$router.push(this.$route.path)
-      this.searchText = ''
-      this.isDroped = true
-      if (this.page != 1) {
-        this.page = 1
-        ;(this.$refs['pagination'] as HTMLFormElement).page = 1
+    }
+
+    const onPagination = (data: { nextPage: number }) => {
+      currentPage.value = data.nextPage
+      isLoading.value = true
+      fetchNewsList()
+    }
+
+    const dropSearch = () => {
+      router.push(route.path)
+      isDropped = true
+      if (currentPage.value != 1) {
+        currentPage.value = 1
       } else {
-        this.fetchNewsList()
+        fetchNewsList()
       }
-    },
-    onPagination(data: { nextPage: number }) {
-      this.page = data.nextPage
-      this.loading = true
-      this.fetchNewsList()
-      this.scrollView()
-    },
-    getAllPagesList(pages: number) {
-      let newPages = [] as number[]
-      for (let n = 1; n <= pages; n++) {
-        newPages.push(n)
-      }
-      this.totalPages = newPages
-    },
-    fetchNewsList() {
-      let search =
-        this.$route.query.search && this.searchText === '' && !this.isDroped
-          ? this.$route.query.search
-          : this.searchText
-      return regionsService
-        .getRegion(this.$route.params.tableName, this.size, this.page, search)
-        .then((res: ResponseData) => {
-          this.data = res.data.news
-          this.loading = false
-          this.getAllPagesList(res.data.totalPages)
-        })
+    }
+    return {
+      dropSearch,
+      onPagination,
+      searchInput,
+      search,
+      isLoading,
+      totalPages,
+      currentPage,
+      route,
+      news
     }
   }
 })

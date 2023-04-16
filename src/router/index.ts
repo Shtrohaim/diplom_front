@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/MainView.vue'
 import RegionsList from '../views/RegionsView.vue'
-import RegionNewsList from '../views/RegionNewsListView.vue'
+import RegionNewsList from '../views/NewsListView.vue'
 import NewsView from '../views/NewsView.vue'
 import SchoolView from '../views/SchoolView.vue'
 import ScopusListView from '../views/ScopusListView.vue'

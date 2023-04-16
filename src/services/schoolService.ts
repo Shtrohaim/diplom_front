@@ -1,7 +1,7 @@
-import axios from '../http/axios'
+import axios from '@/http/axios'
 
 export default {
-  getFipiInfo(examName: string | string[]) {
-    return axios.get(`/${examName}`)
+  async getFipiInfo(examName: string | string[]) {
+    return await axios.get(`/${examName}`)
   }
 }

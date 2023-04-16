@@ -27,7 +27,7 @@
     <pagination
       v-if="isActivePagination"
       ref="pagination"
-      :isStartPagination="false"
+      :page="page"
       :totalPages="totalPages"
       @pagination="onPagination"
     />
@@ -62,7 +62,7 @@ export default defineComponent({
       data: [] as ScopusList[],
       page: 1 as number,
       size: 25 as number,
-      totalPages: [] as number[],
+      totalPages: 0 as number,
       loading: false as boolean,
       hasFilter: false as boolean,
       search: {} as { type: string; field: string },
@@ -77,16 +77,9 @@ export default defineComponent({
         .then((res: ResponseData) => {
           this.data = res.data.data
           this.translatePublications()
-          this.getAllPagesList(res.data.totalPages)
+          this.totalPages = res.data.totalPages
           this.loading = false
         })
-    },
-    getAllPagesList(pages: number) {
-      let newPages = [] as number[]
-      for (let n = 1; n <= pages; n++) {
-        newPages.push(n)
-      }
-      this.totalPages = newPages
     },
     scrollView() {
       window.scrollTo({

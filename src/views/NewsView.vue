@@ -27,7 +27,10 @@
       </swiper-slide>
     </Swiper>
     <img v-else-if="news.image_url[0]" class="news__image" :src="news.image_url[0]" />
-    <div class="news__text-content" :class="noImageTextClass">
+    <div
+      class="news__text-content"
+      :class="{ 'news__text-content--no-image': news.image_url.length === 0 }"
+    >
       <p
         class="news__paragraph"
         v-for="paragraph in news.description"
@@ -43,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import regionsService from '@/services/regionsService'
 import type News from '@/types/newsType'
 import type ResponseData from '@/types/responseData'
@@ -92,21 +95,12 @@ export default defineComponent({
       })
     }
 
-    const noImageTextClass = computed(() => {
-      return rendered.value
-        ? news.value.image_url.length === 0
-          ? 'news__text-content--no-image'
-          : ''
-        : ''
-    })
-
     onMounted(async () => {
       await fetchNews()
     })
     return {
       rendered,
       news,
-      noImageTextClass,
       modules: [Pagination, Autoplay, A11y, EffectCoverflow]
     }
   }

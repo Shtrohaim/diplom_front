@@ -23,7 +23,7 @@
         v-for="n in filteredItems"
         :key="n"
         class="pagination__page"
-        :class="paginationClass(n)"
+        :class="{ 'pagination__page--active': this.page === n }"
         @click="pagination(n)"
       >
         {{ n }}
@@ -34,116 +34,96 @@
       type="button"
       @click="pagination(page + 1)"
     >
-      <svg
-        class="fill-primary icon36"
-        :class="{ 'fill-disabled': page === totalPages[totalPages.length - 1] }"
-      >
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === totalPages }">
         <use href="@/assets/images/arrow_enable.svg#icon"></use>
       </svg>
     </button>
     <button
       class="pagination__button pagination__button--end"
       type="button"
-      @click="pagination(totalPages[totalPages.length - 1])"
+      @click="pagination(Number(totalPages))"
     >
-      <svg
-        class="fill-primary icon36"
-        :class="{ 'fill-disabled': page === totalPages[totalPages.length - 1] }"
-      >
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === totalPages }">
         <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
       </svg>
     </button>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent, onMounted, ref, toRefs, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'MyPagination',
   props: {
     totalPages: {
-      type: Array as any,
-      default: () => []
+      type: Number,
+      default: () => 1
     },
-    isStartPagination: {
-      type: Boolean,
-      default: true
+    page: {
+      type: Number,
+      default: () => 1
     }
   },
-  data() {
-    return {
-      page: 0 as number
-    }
-  },
-  methods: {
-    pagination(n: number) {
-      let curQuery = this.$route.query
-      if (
-        n !== this.page &&
-        n > 0 &&
-        n <= this.totalPages[this.totalPages.length - 1] &&
-        !this.$route.query.search
-      ) {
-        this.page =
-          n > this.totalPages[this.totalPages.length - 1]
-            ? this.totalPages[this.totalPages.length - 1]
-            : n < 1
-            ? 1
-            : n
-        this.$router.push({ query: { page: this.page } })
-      } else if (
-        n !== this.page &&
-        n > 0 &&
-        n <= this.totalPages[this.totalPages.length - 1] &&
-        this.$route.query.search
-      ) {
-        this.page =
-          n > this.totalPages[this.totalPages.length - 1]
-            ? this.totalPages[this.totalPages.length - 1]
-            : n < 1
-            ? 1
-            : n
-        this.$router.push({ query: { ...curQuery, page: this.page } })
+  emits: ['pagination'],
+  setup(props, { emit }) {
+    const nextPage = ref(0)
+    const route = useRoute()
+    const router = useRouter()
+    const { totalPages, page } = toRefs(props)
+
+    const pagination = (n: number) => {
+      let curQuery = route.query
+      if (n !== page.value && n > 0 && n <= totalPages.value && !route.query.search) {
+        nextPage.value = n > totalPages.value ? totalPages.value : n < 1 ? 1 : n
+        router.push({ query: { page: nextPage.value } })
+      } else if (n !== page.value && n > 0 && n <= totalPages.value && route.query.search) {
+        nextPage.value = n > totalPages.value ? totalPages.value : n < 1 ? 1 : n
+        router.push({ query: { ...curQuery, page: nextPage.value } })
       }
-    },
-    paginationClass(pageNumber: number): string {
-      return this.page === pageNumber ? 'pagination__page--active' : ''
     }
-  },
-  computed: {
-    filteredItems(): number[] {
-      let begin = 0
+
+    const filteredItems = computed(() => {
+      let begin = 1
       let step = 6
       let end = step
-      if (this.page - 1 > 1 && this.page + 2 < this.totalPages[this.totalPages.length - 1]) {
-        begin = this.page - step / 2
-        end = this.page + step / 2
-      } else if (this.page - 1 <= 1) {
-        begin = 0
-        end = step
-      } else if (this.page + 2 >= this.totalPages[this.totalPages.length - 1]) {
+      if (page.value - 1 > 1 && page.value + 2 < totalPages.value) {
+        begin = page.value - step / 2 === 0 ? 1 : page.value - step / 2
+        end = page.value + step / 2
+      } else if (page.value + 2 >= totalPages.value) {
         begin =
-          this.totalPages[this.totalPages.length - 1] - step >= 0
-            ? this.totalPages[this.totalPages.length - 1] - step
-            : 0
-        end = this.totalPages[this.totalPages.length - 1]
+          totalPages.value - step !== 0
+            ? totalPages.value - step > 0
+              ? totalPages.value - step
+              : 1
+            : 1
+        end = totalPages.value
       }
-      return this.totalPages.slice(begin, end)
-    }
-  },
-  mounted() {
-    if (this.$route.query.page && this.isStartPagination) {
-      this.page = Number(this.$route.query.page)
-    } else if (this.isStartPagination) {
-      this.page = 1
-    }
-  },
-  watch: {
-    page() {
-      this.$emit('pagination', {
-        nextPage: this.page
+      return Array.from({ length: end - begin + 1 }, (value, index) => begin + index)
+    })
+    const scrollView = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       })
     }
+
+    onMounted(() => {
+      if (route.query.page) {
+        nextPage.value = Number(route.query.page)
+      } else {
+        nextPage.value = 1
+      }
+    })
+
+    watch(nextPage, () => {
+      emit('pagination', {
+        nextPage: nextPage.value
+      })
+      scrollView()
+    })
+
+    return { filteredItems, pagination }
   }
 })
 </script>
