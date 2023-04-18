@@ -5,7 +5,7 @@
       <multi-select
         class="filter__multiselector"
         v-model="subjType"
-        :options="subjectType"
+        :options="subjTypeList"
         mode="tags"
         :close-on-select="false"
         :searchable="true"
@@ -62,114 +62,119 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import scopusService from '@/services/scopusService'
-import type ResponseData from '@/types/responseData'
+import { defineComponent, onMounted, ref, toRefs } from 'vue'
 
 import MultiSelect from '@vueform/multiselect'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'ScopusFilter',
   components: {
     MultiSelect
   },
-  data() {
-    return {
-      value: null,
-      docTypeList: [
-        { label: 'Статьи', value: 'ar' },
-        { label: 'Выдержки из докладов', value: 'ab' },
-        { label: 'Бизнес статьи', value: 'bz' },
-        { label: 'Главы книг', value: 'ch' },
-        { label: 'Материалы конференций', value: 'cp' },
-        { label: 'Отзывы конференций', value: 'cr' },
-        { label: 'Редакции', value: 'ed' },
-        { label: 'Исправления', value: 'er' },
-        { label: 'Письма', value: 'le' },
-        { label: 'Заметки', value: 'no' },
-        { label: 'Пресс-релизы', value: 'pe' },
-        { label: 'Отзывы', value: 're' },
-        { label: 'Краткий обзор', value: 'sh' }
-      ] as { label: string; value: string }[],
-      srcTypeList: [
-        { label: 'Журнал', value: 'j' },
-        { label: 'Книга', value: 'b' },
-        { label: 'Серия  книг', value: 'k' },
-        { label: 'Материалы конференции', value: 'p' },
-        { label: 'Доклад', value: 'r' },
-        { label: 'Ревю', value: 'd' }
-      ] as { label: string; value: string }[],
-      subjectType: [] as { label: string; value: string }[],
-      hasOpenAccess: false as boolean,
-      docType: [] as { name: string; code: string }[],
-      subjType: null,
-      srcType: null,
-      pubYear: { operator: '' } as { [key: string]: string },
-      data: {} as { [key: string]: { abbrev: string }[] }
+  props: {
+    subjectsList: {
+      type: Object as () => { [key: string]: { [key: string]: { abbrev: string } }[] },
+      default: () => ({})
     }
   },
-  methods: {
-    fetchSubjectList() {
-      scopusService.getSubjectsList().then((res: ResponseData) => {
-        this.data = res.data
+  emits: ['filter'],
+  setup(props, { emit }) {
+    const docTypeList = [
+      { label: 'Статьи', value: 'ar' },
+      { label: 'Выдержки из докладов', value: 'ab' },
+      { label: 'Бизнес статьи', value: 'bz' },
+      { label: 'Главы книг', value: 'ch' },
+      { label: 'Материалы конференций', value: 'cp' },
+      { label: 'Отзывы конференций', value: 'cr' },
+      { label: 'Редакции', value: 'ed' },
+      { label: 'Исправления', value: 'er' },
+      { label: 'Письма', value: 'le' },
+      { label: 'Заметки', value: 'no' },
+      { label: 'Пресс-релизы', value: 'pe' },
+      { label: 'Отзывы', value: 're' },
+      { label: 'Краткий обзор', value: 'sh' }
+    ] as { label: string; value: string }[]
+
+    const srcTypeList = [
+      { label: 'Журнал', value: 'j' },
+      { label: 'Книга', value: 'b' },
+      { label: 'Серия  книг', value: 'k' },
+      { label: 'Материалы конференции', value: 'p' },
+      { label: 'Доклад', value: 'r' },
+      { label: 'Ревю', value: 'd' }
+    ] as { label: string; value: string }[]
+
+    const hasOpenAccess = ref(false)
+    const { subjectsList } = toRefs(props)
+    const subjTypeList = ref([] as { label: string; value: string }[])
+    const docType = ref([])
+    const subjType = ref([])
+    const srcType = ref([])
+    const pubYear = ref({ operator: '' } as { [key: string]: string })
+
+    const route = useRoute()
+    const callEmit = () => {
+      emit('filter', {
+        OPENACCESS: Number(hasOpenAccess.value),
+        DOCTYPE: docType.value,
+        SUBJAREA: subjType.value,
+        SRCTYPE: srcType.value,
+        PUBYEAR: pubYear.value
       })
-    },
-    callEmit() {
-      this.$emit('filter', {
-        OPENACCESS: Number(this.hasOpenAccess),
-        DOCTYPE: this.docType,
-        SUBJAREA: this.subjType,
-        SRCTYPE: this.srcType,
-        PUBYEAR: this.pubYear
-      })
-    },
-    fillInput(
-      query: any,
-      list: { name: string; code: string }[],
-      value: { name: string; code: string }[]
-    ) {
+    }
+    const fillInput = (query: any, list: { label: string; value: string }[], value: string[]) => {
       if (typeof query === 'string' && query) {
-        value.push({
-          name: String(list.find((el) => el.code === query)?.name),
-          code: String(query)
-        })
+        value.push(String(query))
       } else if (query) {
         for (let i = 0; i < query.length; i++) {
-          value.push({
-            name: String(list.find((el) => el.code === query[i])?.name),
-            code: String(query[i])
-          })
+          value.push(String(query[i]))
         }
       }
     }
-  },
-  mounted() {
-    this.fetchSubjectList()
-    if (this.$route.query['doctype']) {
-      let query = this.$route.query['doctype']
-      this.fillInput(query, this.docTypeList, this.docType)
-    }
-    if (this.$route.query['srctype']) {
-      let query = this.$route.query['srctype']
-      this.fillInput(query, this.srcTypeList, this.srcType)
-    }
-    if (this.$route.query['openaccess']) {
-      this.hasOpenAccess = Boolean(this.$route.query['openaccess'])
-    }
-    if (this.$route.query['pubyear']) {
-      this.pubYear['operator'] = String(this.$route.query['pubyear_op'])
-      this.pubYear['year'] = String(this.$route.query['pubyear_yr'])
-    }
-  },
-  watch: {
-    data() {
-      for (let index in this.data) {
-        this.subjectType.push({ label: index, value: String(this.data[index][0]['abbrev']) })
+
+    onMounted(() => {
+      transformSubjects()
+      if (route.query['doctype']) {
+        let query = route.query['doctype']
+        fillInput(query, docTypeList, docType.value)
       }
-      if (this.$route.query['subjtype']) {
-        let query = this.$route.query['subjtype']
-        this.fillInput(query, this.subjectType, this.subjType)
+      if (route.query['srctype']) {
+        let query = route.query['srctype']
+        fillInput(query, srcTypeList, srcType.value)
       }
+      if (route.query['openaccess']) {
+        hasOpenAccess.value = Boolean(route.query['openaccess'])
+      }
+      if (route.query['pubyear_yr']) {
+        pubYear.value['operator'] = String(route.query['pubyear_op'])
+        pubYear.value['year'] = String(route.query['pubyear_yr'])
+      }
+    })
+
+    const transformSubjects = () => {
+      for (let index in subjectsList.value) {
+        subjTypeList.value.push({
+          label: index,
+          value: String(subjectsList.value[index][0]['abbrev'])
+        })
+      }
+      if (route.query['subjtype']) {
+        let query = route.query['subjtype']
+        fillInput(query, subjTypeList.value, subjType.value)
+      }
+    }
+
+    return {
+      subjType,
+      subjTypeList,
+      hasOpenAccess,
+      pubYear,
+      docType,
+      docTypeList,
+      srcType,
+      srcTypeList,
+      callEmit
     }
   }
 })

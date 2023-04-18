@@ -75,11 +75,9 @@ export default defineComponent({
     const pagination = (n: number) => {
       let curQuery = route.query
       if (n !== page.value && n > 0 && n <= totalPages.value && !route.query.search) {
-        nextPage.value = n > totalPages.value ? totalPages.value : n < 1 ? 1 : n
-        router.push({ query: { page: nextPage.value } })
+        router.push({ query: { page: n } })
       } else if (n !== page.value && n > 0 && n <= totalPages.value && route.query.search) {
-        nextPage.value = n > totalPages.value ? totalPages.value : n < 1 ? 1 : n
-        router.push({ query: { ...curQuery, page: nextPage.value } })
+        router.push({ query: { ...curQuery, page: n } })
       }
     }
 

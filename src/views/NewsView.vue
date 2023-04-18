@@ -26,10 +26,10 @@
         <img class="news__swiper-image" :src="slide" alt="" />
       </swiper-slide>
     </Swiper>
-    <img v-else-if="news.image_url[0]" class="news__image" :src="news.image_url[0]" />
+    <img v-else-if="news.image_url[0]" class="news__image" :src="news.image_url[0]" alt="" />
     <div
       class="news__text-content"
-      :class="{ 'news__text-content--no-image': news.image_url.length === 0 }"
+      :class="{ 'news__text-content--no-image': news.image_url?.length === 0 }"
     >
       <p
         class="news__paragraph"

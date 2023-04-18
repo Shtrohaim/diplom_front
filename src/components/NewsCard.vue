@@ -1,13 +1,21 @@
 <template>
-  <div class="news-card" @click="goToNews" @click.middle="openInNewTab">
+  <router-link
+    class="news-card"
+    :to="{ name: 'news', params: { tableName: route.params.tableName, id: news?.id } }"
+  >
     <div class="news-card__info-wrapper">
-      <img v-if="news.image_url" :src="news.image_url" class="news-card__image" :alt="news.title" />
-      <div class="news-card__date" :class="noImageDateClass(!!news.image_url)">
+      <img
+        v-if="news?.image_url"
+        :src="news.image_url"
+        class="news-card__image"
+        :alt="news.title"
+      />
+      <div class="news-card__date" :class="{ 'news-card__date--no-image': !news?.image_url }">
         <p class="news-card__date-day">
-          {{ changeDayFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, '').trim()) }}
+          {{ getDayGeneralFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, '').trim()) }}
         </p>
         <p class="news-card__date-month">
-          {{ changeMonthFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, '').trim()) }}
+          {{ getRuShortMonth(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, '').trim()) }}
         </p>
       </div>
     </div>
@@ -15,51 +23,28 @@
       <h3 class="news-card__title">{{ news.title }}</h3>
       <p class="news-card__description">{{ news.teaser }}</p>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-// import type NewsList from '@/types/newsListType'
+import type NewsList from '@/types/newsListType'
 import { getRuShortMonth, getDayGeneralFormat } from '@/utils/dates'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'NewsCard',
   props: {
     news: {
-      type: Object as any,
+      type: Object as () => NewsList,
       default: () => {
         return {}
       }
     }
   },
-  methods: {
-    changeMonthFormat(date: string): string {
-      return getRuShortMonth(date)
-    },
-    changeDayFormat(date: string): number {
-      return getDayGeneralFormat(date)
-    },
-    noImageDateClass(hasImage: boolean): string {
-      if (hasImage) {
-        return ''
-      } else {
-        return 'news-card__date--no-image'
-      }
-    },
-    goToNews() {
-      this.$router.push({
-        name: 'news',
-        params: { tableName: this.$route.params.tableName, id: this.news.id }
-      })
-    },
-    openInNewTab() {
-      const routeData = this.$router.resolve({
-        name: 'news',
-        params: { tableName: this.$route.params.tableName, id: this.news.id }
-      })
-      window.open(routeData.href, '_blank')
-    }
+  setup() {
+    const route = useRoute()
+    return { getRuShortMonth, getDayGeneralFormat, route }
   }
 })
 </script>

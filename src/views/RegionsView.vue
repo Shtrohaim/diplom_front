@@ -22,7 +22,7 @@ import regionsServices from '@/services/regionsService'
 import type ResponseData from '@/types/responseData'
 
 export default defineComponent({
-  name: 'RegionsListView',
+  name: 'RegionsListPage',
   components: {
     RegionCard
   },

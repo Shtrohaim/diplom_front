@@ -1,22 +1,20 @@
 <template>
   <div class="school-info">
     <h2 class="school-info__title">{{ data.title }}</h2>
-    <p class="school-info__description" v-html="data.description"></p>
+    <p class="school-info__description" v-html="data?.description"></p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-// import type SchoolData from '@/types/schoolDataType'
+import type SchoolData from '@/types/schoolDataType'
 
 export default defineComponent({
   name: 'SchoolInfo',
   props: {
     data: {
-      type: Object as any,
-      default: () => {
-        return {}
-      }
+      type: Object as () => SchoolData,
+      default: () => ({})
     }
   }
 })

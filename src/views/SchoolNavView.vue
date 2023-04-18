@@ -1,9 +1,16 @@
 <template>
   <div class="school-navigation">
-    <button class="school-navigation__button school-navigation__button--oge" @click="goToOge()">
+    <router-link
+      class="school-navigation__button school-navigation__button--oge"
+      :to="{ name: 'exam', params: { examName: 'oge' } }"
+    >
       ОГЭ
-    </button>
-    <button class="school-navigation__button" @click="goToEge()">ЕГЭ</button>
+    </router-link>
+    <router-link
+      class="school-navigation__button"
+      :to="{ name: 'exam', params: { examName: 'ege' } }"
+      >ЕГЭ</router-link
+    >
   </div>
 </template>
 
@@ -11,15 +18,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'SchoolView',
-  methods: {
-    goToOge() {
-      this.$router.push({ name: 'exam', params: { examName: 'oge' } })
-    },
-    goToEge() {
-      this.$router.push({ name: 'exam', params: { examName: 'ege' } })
-    }
-  }
+  name: 'SchoolNavigationPage'
 })
 </script>
 

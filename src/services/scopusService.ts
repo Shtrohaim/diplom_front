@@ -4,15 +4,12 @@ import axios from '@/http/axios'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default {
-  async getScopusData(
-    limit = 10 as number,
-    offset = 1 as number,
-    search = {} as { type: string; field: string },
-    queryFilter = {} as any
-  ) {
-    const filter = Object.fromEntries(
-      Object.entries(queryFilter).filter(([_, v]) => v != 'undefined')
-    )
+  async getScopusData(query: any) {
+    const limit = query.size
+    const offset = query.page
+    const qFilter = query.qFilter
+    const search = query.qSearch
+    const filter = Object.fromEntries(Object.entries(qFilter).filter(([_, v]) => v != 'undefined'))
     return await axios.get(`/elsevier/scopusList`, { params: { limit, offset, search, filter } })
   },
   async getSubjectsList() {

@@ -22,9 +22,7 @@ export default defineComponent({
   props: {
     data: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => ({})
     }
   },
   data() {
