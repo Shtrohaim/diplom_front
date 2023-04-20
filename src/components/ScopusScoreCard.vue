@@ -1,25 +1,24 @@
 <template>
-  <div v-if="data.SNIP" class="score-card">
-    <h3 class="score-card__title">Очки цитирований за {{ data.SNIP['@year'] }} год</h3>
+  <div v-if="publisherInfo?.SNIP" class="score-card">
+    <h3 class="score-card__title">Очки цитирований за {{ publisherInfo.SNIP['@year'] }} год</h3>
     <p class="score-card__info">
-      Очки CiteScore: {{ data.citeScoreYearInfoList.citeScoreCurrentMetric }}
+      Очки CiteScore: {{ publisherInfo.citeScoreYearInfoList.citeScoreCurrentMetric }}
     </p>
-    <p class="score-card__info">Очки SNIP: {{ data.SNIP['$'] }}</p>
-    <p class="score-card__info">Очки SJR: {{ data.SJR['$'] }}</p>
+    <p class="score-card__info">Очки SNIP: {{ publisherInfo.SNIP['$'] }}</p>
+    <p class="score-card__info">Очки SJR: {{ publisherInfo.SJR['$'] }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import type publisherInfoType from '@/types/publisherInfoType'
 
 export default defineComponent({
   name: 'ScopusScoreCard',
   props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
+    publisherInfo: {
+      type: Object as () => publisherInfoType,
+      default: () => ({})
     }
   }
 })

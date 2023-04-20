@@ -37,9 +37,7 @@ export default defineComponent({
   props: {
     news: {
       type: Object as () => NewsList,
-      default: () => {
-        return {}
-      }
+      default: () => ({})
     }
   },
   setup() {

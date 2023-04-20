@@ -6,7 +6,8 @@
       v-model="search"
       placeholder="Республика Хакасия"
     />
-    <ul class="regions__list">
+    <loading-screen v-if="isLoading" />
+    <ul v-else class="regions__list">
       <li v-for="region in filteredRegions" :key="region.id" class="regions__list-item">
         <region-card :region="region" />
       </li>
@@ -20,18 +21,22 @@ import RegionCard from '@/components/RegionCard.vue'
 import type Regions from '@/types/regionsType'
 import regionsServices from '@/services/regionsService'
 import type ResponseData from '@/types/responseData'
+import LoadingScreen from '@/components/common/loading.vue'
 
 export default defineComponent({
   name: 'RegionsListPage',
   components: {
+    LoadingScreen,
     RegionCard
   },
   setup() {
     const regions = ref([] as Regions[])
     const search = ref('')
+    const isLoading = ref(true)
     const fetchRegions = () => {
       regionsServices.getAllRegions().then((response: ResponseData) => {
         regions.value = response.data
+        isLoading.value = false
       })
     }
 
@@ -42,9 +47,10 @@ export default defineComponent({
     })
 
     onMounted(async () => {
+      isLoading.value = true
       await fetchRegions()
     })
-    return { filteredRegions, search }
+    return { filteredRegions, search, isLoading }
   }
 })
 </script>

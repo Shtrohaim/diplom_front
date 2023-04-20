@@ -1,39 +1,37 @@
 <template>
-  <div v-if="data.title && $route.query.doi" class="article-card">
+  <div v-if="publication.title && $route.query.doi" class="article-card">
     <h3 class="article-card__title">Информация о публикации</h3>
-    <p class="article-card__info">Название публикации: {{ data.title }}</p>
-    <p class="article-card__info">Автор: {{ data.creator }}</p>
-    <p class="article-card__info">DOI: {{ data.doi }}</p>
-    <p class="article-card__info">Количество цитирований: {{ data['citedby-count'] }}</p>
-    <p class="article-card__info">Тип публикации: {{ data.subtypeDescription }}</p>
-    <p class="article-card__info">Том: {{ data.volume }}</p>
-    <p class="article-card__info">Доступ: {{ openaccessText }}</p>
+    <p class="article-card__info">Название публикации: {{ publication.title }}</p>
+    <p class="article-card__info">Автор: {{ publication.creator }}</p>
+    <p class="article-card__info">DOI: {{ publication.doi }}</p>
+    <p class="article-card__info">Количество цитирований: {{ publication['citedby-count'] }}</p>
+    <p class="article-card__info">Тип публикации: {{ publication.subtypeDescription }}</p>
+    <p class="article-card__info">Том: {{ publication.volume }}</p>
+    <p class="article-card__info">Доступ: {{ openAccessText }}</p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useCookies } from 'vue3-cookies'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
+  name: 'ScopusArticleCard',
   setup() {
     const { cookies } = useCookies()
-    return { cookies }
-  },
-  name: 'ScopusArticleCard',
-  data() {
-    return {
-      data: {} as any
-    }
-  },
-  computed: {
-    openaccessText(): string {
-      if (this.data.openaccessFlag) return 'Открытый'
+    const publication = ref({} as any)
+    const route = useRoute()
+
+    const openAccessText = computed(() => {
+      if (publication.value.openaccessFlag) return 'Открытый'
       else return 'Ограниченный'
-    }
-  },
-  mounted() {
-    if (this.$route.query.doi) this.data = this.cookies.get(this.$route.query.doi.toString())
+    })
+
+    onMounted(() => {
+      if (route.query.doi) publication.value = cookies.get(route.query.doi.toString())
+    })
+    return { publication, openAccessText }
   }
 })
 </script>

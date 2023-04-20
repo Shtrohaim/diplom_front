@@ -1,20 +1,22 @@
 <template>
   <div class="scopus-info">
     <scopus-article-card class="scopus-info__article-card" />
-    <scopus-score-card :data="data" class="scopus-info__score-card" />
-    <scopus-coverage-card :data="data" class="scopus-info__coverage-card" />
-    <scopus-journal-card :data="data" class="scopus-info__journal-card" />
+    <scopus-score-card :publisherInfo="publisherInfo" class="scopus-info__score-card" />
+    <scopus-coverage-card :publisherInfo="publisherInfo" class="scopus-info__coverage-card" />
+    <scopus-journal-card :publisherInfo="publisherInfo" class="scopus-info__journal-card" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import ScopusScoreCard from '@/components/ScopusScoreCard.vue'
 import ScopusCoverageCard from '@/components/ScopusCoverageCard.vue'
 import ScopusArticleCard from '@/components/ScopusArticleCard.vue'
 import ScopusJournalCard from '@/components/ScopusJournalCard.vue'
 
 import scopusService from '@/services/scopusService'
+import type publisherInfoType from '@/types/publisherInfoType'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'ScopusView',
@@ -24,37 +26,20 @@ export default defineComponent({
     ScopusArticleCard,
     ScopusJournalCard
   },
-  data() {
-    return {
-      data: [] as any
-    }
-  },
-  methods: {
-    fetchData() {
-      scopusService.getScopusIssn(this.$route.params.id).then((res) => {
-        this.data = res.data
-        this.translateTypes()
+  setup() {
+    const publisherInfo = ref({} as publisherInfoType)
+    const route = useRoute()
+    const fetchData = () => {
+      scopusService.getScopusIssn(route.params.id).then((res) => {
+        publisherInfo.value = res.data
       })
-    },
-    translateTypes() {
-      switch (this.data.aggregationType) {
-        case 'tradejournal':
-          this.data.aggregationType = 'Ревю'
-          break
-        case 'journal':
-          this.data.aggregationType = 'Журнал'
-          break
-        case 'conferenceproceeding':
-          this.data.aggregationType = 'Материалы конференции'
-          break
-        case 'bookseries':
-          this.data.aggregationType = 'Серия книг'
-          break
-      }
     }
-  },
-  mounted() {
-    this.fetchData()
+
+    onMounted(async () => {
+      await fetchData()
+    })
+
+    return { publisherInfo }
   }
 })
 </script>

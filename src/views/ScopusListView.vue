@@ -26,7 +26,7 @@
     <loading-screen v-if="isLoading" />
     <ul v-else class="scopus-card__list">
       <li class="scopus-card__list-item" v-for="item in publications" :key="item.eid">
-        <students-scopus-card :data="item" />
+        <students-scopus-card :publication="item" />
       </li>
     </ul>
     <pagination
@@ -43,13 +43,13 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 
 import scopusService from '@/services/scopusService'
 
-import type ScopusList from '@/types/scopusList'
+import type ScopusListType from '@/types/scopusListType'
 import type ResponseData from '@/types/responseData'
 
 import LoadingScreen from '@/components/common/loading.vue'
 import Pagination from '@/components/common/pagination.vue'
 import ScopusFilter from '@/components/ScopusFilter.vue'
-import StudentsScopusCard from '@/components/StudentsScopusCard.vue'
+import StudentsScopusCard from '@/components/ScopusCard.vue'
 import { useRoute, useRouter } from 'vue-router'
 export default defineComponent({
   name: 'ScopusListPage',
@@ -60,7 +60,7 @@ export default defineComponent({
     StudentsScopusCard
   },
   setup() {
-    const publications = ref([] as ScopusList[])
+    const publications = ref([] as ScopusListType[])
     const subjectsList = ref({} as { [key: string]: { [key: string]: { abbrev: string } }[] })
 
     const currentPage = ref(1)

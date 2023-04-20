@@ -1,51 +1,51 @@
 <template>
-  <div v-if="data.coverageEndYear" class="coverage-card">
+  <div v-if="publisherInfo?.coverageEndYear" class="coverage-card">
     <h3 class="coverage-card__title">Период покрытия Scopus</h3>
-    <div v-if="data.coverageEndYear >= currentYear" class="coverage-card__wrapper">
-      <p>{{ data.coverageStartYear }}</p>
+    <div v-if="publisherInfo?.coverageEndYear >= currentYear" class="coverage-card__wrapper">
+      <p>{{ publisherInfo.coverageStartYear }}</p>
       <div class="coverage-card__bar">
         <div class="coverage-card__progress" :style="{ width: progressBar + '%' }">
           {{ currentYear }}
         </div>
       </div>
-      <p>{{ data.coverageEndYear }}</p>
+      <p>{{ publisherInfo.coverageEndYear }}</p>
     </div>
     <div v-else class="coverage-card__message">Более не поддерживается!</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, toRefs, watch } from 'vue'
+import type publisherInfoType from '@/types/publisherInfoType'
 
 export default defineComponent({
   name: 'ScopusCoverageCard',
   props: {
-    data: {
-      type: Object,
+    publisherInfo: {
+      type: Object as () => publisherInfoType,
       default: () => ({})
     }
   },
-  data() {
-    return {
-      progressBar: 0 as number,
-      currentYear: new Date().getFullYear() as number
-    }
-  },
-  methods: {
-    progressYears() {
-      const currentProcent =
-        ((this.currentYear - this.data.coverageStartYear) * 100) /
-        (this.data.coverageEndYear - this.data.coverageStartYear)
-      if (this.progressBar < currentProcent) {
-        this.progressBar++
-        setTimeout(() => this.progressYears(), 15)
+  setup(props) {
+    const { publisherInfo } = toRefs(props)
+    const progressBar = ref(0)
+    const currentYear = new Date().getFullYear() as number
+
+    const progressYears = () => {
+      const currentPercent =
+        ((currentYear - publisherInfo.value.coverageStartYear) * 100) /
+        (publisherInfo.value.coverageEndYear - publisherInfo.value.coverageStartYear)
+      if (progressBar.value < currentPercent) {
+        progressBar.value++
+        setTimeout(() => progressYears(), 15)
       }
     }
-  },
-  watch: {
-    data() {
-      this.progressYears()
-    }
+
+    watch(publisherInfo, () => {
+      progressYears()
+    })
+
+    return { currentYear, progressBar }
   }
 })
 </script>

@@ -13,25 +13,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent, toRefs } from 'vue'
 
 export default defineComponent({
   name: 'SubjectCard',
   props: {
     data: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => ({})
     },
     subject: {
       type: String,
       default: ''
     }
   },
-  computed: {
-    subjectModifier(): string {
-      switch (this.subject) {
+  setup(props) {
+    const { subject } = toRefs(props)
+
+    const subjectModifier = computed(() => {
+      switch (subject.value) {
         case 'Русский язык':
           return 'subject-card--russian'
         case 'Химия':
@@ -68,7 +68,8 @@ export default defineComponent({
           return 'subject-card--foreign-language'
       }
       return ''
-    }
+    })
+    return { subjectModifier }
   }
 })
 </script>

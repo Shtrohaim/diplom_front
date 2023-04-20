@@ -1,4 +1,4 @@
-export default interface ScopusList {
+export default interface ScopusListType {
   title: string
   'scopus-id': string
   eid: string
