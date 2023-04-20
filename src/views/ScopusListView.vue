@@ -1,7 +1,6 @@
 <template>
   <div>
-    <form @submit="searchData">
-      <input ref="searchInput" type="text" />
+    <base-search :has-filter="true" @search="searchData">
       <select ref="searchType">
         <option value="ALL">Все</option>
         <option value="DOI">DOI</option>
@@ -10,10 +9,9 @@
         <option value="AUTHOR">Автор</option>
         <option value="PUBLISHER">Издатель</option>
       </select>
-      <button>Поиск</button>
       <label>
         Фильтр:
-        <input type="checkbox" @change="hasFilter = !hasFilter" />
+        <input type="checkbox" v-model="hasFilter" @change="hasFilter = !hasFilter" />
       </label>
       <scopus-filter
         v-if="hasFilter"
@@ -21,7 +19,7 @@
         ref="filterElement"
         @filter="getFilter"
       />
-    </form>
+    </base-search>
     <button v-if="checkFilter">Сбросить фильтр</button>
     <loading-screen v-if="isLoading" />
     <ul v-else class="scopus-card__list">
@@ -51,9 +49,11 @@ import Pagination from '@/components/common/pagination.vue'
 import ScopusFilter from '@/components/ScopusFilter.vue'
 import StudentsScopusCard from '@/components/ScopusCard.vue'
 import { useRoute, useRouter } from 'vue-router'
+import BaseSearch from '@/components/common/search.vue'
 export default defineComponent({
   name: 'ScopusListPage',
   components: {
+    BaseSearch,
     Pagination,
     LoadingScreen,
     ScopusFilter,
@@ -71,7 +71,6 @@ export default defineComponent({
     const search = ref({} as { type: string; field: string })
     const filter = ref({} as any)
 
-    const searchInput = ref()
     const searchType = ref()
     const filterElement = ref()
 
@@ -92,6 +91,9 @@ export default defineComponent({
     const fetchSubjectList = () => {
       scopusService.getSubjectsList().then((res: ResponseData) => {
         subjectsList.value = res.data
+        if (Object.keys(filter.value).length > 0) {
+          hasFilter.value = true
+        }
       })
     }
     const onPagination = (data: { nextPage: number }) => {
@@ -111,18 +113,16 @@ export default defineComponent({
         filter.value.PUBYEAR = data.PUBYEAR
       }
     }
-
-    const searchData = (event: any) => {
-      event.preventDefault()
+    const searchData = (data: { searchText: any }) => {
       if (hasFilter.value) filterElement.value.callEmit()
-      if (searchInput.value.value.trim()) {
+      if (data.searchText) {
         let operator, year
         if (filter.value['PUBYEAR']) {
           operator = filter.value['PUBYEAR']['operator']
           year = filter.value['PUBYEAR']['year']
         }
         search.value['type'] = searchType.value.value
-        search.value['field'] = searchInput.value.value.trim()
+        search.value['field'] = data.searchText
         router.push({
           query: {
             search: search.value['field'],
@@ -136,9 +136,6 @@ export default defineComponent({
           }
         })
         isLoading.value = true
-        searchInput.value.value = ''
-      } else {
-        searchInput.value.focus()
       }
     }
 
@@ -176,7 +173,6 @@ export default defineComponent({
       currentPage,
       totalPages,
       onPagination,
-      searchInput,
       searchType,
       route,
       checkFilter,

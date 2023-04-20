@@ -144,8 +144,9 @@ export default defineComponent({
         fillInput(query, srcTypeList, srcType.value)
       }
       if (route.query['openaccess']) {
-        hasOpenAccess.value = Boolean(route.query['openaccess'])
+        hasOpenAccess.value = !!Number(route.query['openaccess'])
       }
+
       if (route.query['pubyear_yr']) {
         pubYear.value['operator'] = String(route.query['pubyear_op'])
         pubYear.value['year'] = String(route.query['pubyear_yr'])
