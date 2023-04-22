@@ -41,18 +41,20 @@
     </label>
     <label>
       Опубликован
-      <select class="filter__input" v-model="pubYear['operator']">
-        <option value="">Не выбрано</option>
-        <option value="equal">в</option>
-        <option value="greater">после</option>
-        <option value="less">до</option>
-      </select>
+      <multi-select
+        placeholder="Не выбрано"
+        v-model="pubYear['operator']"
+        :options="{ equal: 'в', greater: 'после', less: 'до' }"
+      />
+    </label>
+    <label>
       <input
         placeholder="Введите год"
-        class="filter__input"
+        class="filter__input filter__input--year"
         v-model="pubYear['year']"
         type="number"
       />
+      году
     </label>
     <label>
       В открытом доступе:
@@ -182,7 +184,7 @@ export default defineComponent({
 
 <style src="@vueform/multiselect/themes/default.css"></style>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .filter {
   display: flex;
   flex-direction: column;
@@ -198,14 +200,24 @@ export default defineComponent({
   &__input {
     min-height: 20px;
     line-height: 20px;
-    border: none;
     border-radius: 5px;
     background: #fff;
-    padding: 0 0 0 5px;
     transition: border 0.1s ease;
     box-sizing: border-box;
     margin-bottom: 8px;
     vertical-align: top;
+
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    font-size: inherit;
+    outline: none;
+
+    &--year::-webkit-outer-spin-button,
+    &--year::-webkit-inner-spin-button {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
   }
 }
 </style>
