@@ -1,88 +1,129 @@
 <template>
-    <div class="pagination">
-        <button class="pagination__button pagination__button--begin" :class="firstPageClass" type="button" @click="pagination(1)"></button>
-        <button class="pagination__button pagination__button--back" :class="firstPageClass" type="button" @click="pagination(page - 1)"></button>
-        <ul class="pagination__page-list">
-          <li v-for="n in filteredItems" :key="n" class="pagination__page" :class="paginationClass(n)" @click="pagination(n)">{{ n }}</li>
-        </ul>
-        <button class="pagination__button pagination__button--forward" :class="lastPageClass" type="button" @click="pagination(page + 1)"></button>
-        <button class="pagination__button pagination__button--end" :class="lastPageClass" type="button" @click="pagination(totalPages[totalPages.length - 1])"></button>
-    </div>
+  <div class="pagination">
+    <button
+      class="pagination__button pagination__button--reverse"
+      type="button"
+      @click="pagination(1)"
+    >
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === 1 }">
+        <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
+      </svg>
+    </button>
+    <button
+      class="pagination__button pagination__button--reverse"
+      type="button"
+      @click="pagination(page - 1)"
+    >
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === 1 }">
+        <use href="@/assets/images/arrow_enable.svg#icon"></use>
+      </svg>
+    </button>
+    <ul class="pagination__page-list">
+      <li
+        v-for="n in filteredItems"
+        :key="n"
+        class="pagination__page"
+        :class="{ 'pagination__page--active': this.page === n }"
+        @click="pagination(n)"
+      >
+        {{ n }}
+      </li>
+    </ul>
+    <button
+      class="pagination__button pagination__button--forward"
+      type="button"
+      @click="pagination(page + 1)"
+    >
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === totalPages }">
+        <use href="@/assets/images/arrow_enable.svg#icon"></use>
+      </svg>
+    </button>
+    <button
+      class="pagination__button pagination__button--end"
+      type="button"
+      @click="pagination(Number(totalPages))"
+    >
+      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === totalPages }">
+        <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
+      </svg>
+    </button>
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { computed, defineComponent, onMounted, ref, toRefs, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
-    name: "MyPagination",
-    props: {
-        totalPages: {
-            type: Array as PropType<number[]>,
-            default: () => [ ],
-        },
-        isStartPagination: {
-          type: Boolean,
-          default: true
-        }
+  name: 'SitePagination',
+  props: {
+    totalPages: {
+      type: Number,
+      default: () => 1
     },
-    data(){
-        return{
-          page: 0 as number,
-        }
-    },
-    methods: {
-        pagination(n : number){
-          let curQuery = this.$route.query
-            if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1]) && !this.$route.query.search){
-              this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
-              this.$router.push({ query: { page: this.page }})
-            }else if(n !== this.page && (n > 0 && n <= this.totalPages[this.totalPages.length - 1]) && this.$route.query.search){
-              this.page = n > this.totalPages[this.totalPages.length - 1] ? this.totalPages[this.totalPages.length - 1] : n < 1 ? 1 : n; 
-              this.$router.push({ query: {...curQuery, page: this.page}})
-            }
-        },
-        paginationClass(pageNumber : number ) : string {
-            return this.page === pageNumber ? 'pagination__page--active' : ''
-        },
-    },
-    computed: {
-        filteredItems() : number[] {
-          let begin = 0; 
-          let step = 6;
-          let end = step;
-          if(this.page - 1 > 1 && this.page + 2 < this.totalPages[this.totalPages.length - 1]){
-            begin = this.page - step / 2;
-            end = this.page + step / 2;
-          }else if(this.page - 1 <= 1){
-            begin = 0
-            end = step
-          }else if(this.page + 2 >= this.totalPages[this.totalPages.length - 1]){
-            begin = this.totalPages[this.totalPages.length - 1] - step >= 0 ? this.totalPages[this.totalPages.length - 1] - step : 0
-            end = this.totalPages[this.totalPages.length - 1]
-          }
-          return this.totalPages.slice(begin, end)
-        }, 
-        firstPageClass() : string {
-            return this.page === 1 ? 'pagination__button--disabled' : ''
-        },
-        lastPageClass() : string {
-          return this.page === this.totalPages[this.totalPages.length - 1] ? 'pagination__button--disabled' : ''
-        },
-      },
-      mounted() {
-        if(this.$route.query.page && this.isStartPagination){
-          this.page = Number(this.$route.query.page);
-        }else if(this.isStartPagination){
-          this.page = 1
-        }
-      },
-      watch:{
-        page() {
-          this.$emit('pagination', {
-              nextPage: this.page,
-            })
-        },
-    },
-});
+    page: {
+      type: Number,
+      default: () => 1
+    }
+  },
+  emits: ['pagination'],
+  setup(props, { emit }) {
+    const nextPage = ref(0)
+    const route = useRoute()
+    const router = useRouter()
+    const { totalPages, page } = toRefs(props)
+
+    const pagination = (n: number) => {
+      let curQuery = route.query
+      if (n !== page.value && n > 0 && n <= totalPages.value && !route.query.search) {
+        router.push({ query: { page: n } })
+      } else if (n !== page.value && n > 0 && n <= totalPages.value && route.query.search) {
+        router.push({ query: { ...curQuery, page: n } })
+      }
+    }
+
+    const filteredItems = computed(() => {
+      let begin = 1
+      let step = 6
+      let end = step
+      if (page.value - 1 > 1 && page.value + 2 < totalPages.value) {
+        begin = page.value - step / 2 === 0 ? 1 : page.value - step / 2
+        end = page.value + step / 2
+      } else if (page.value + 2 >= totalPages.value) {
+        begin =
+          totalPages.value - step !== 0
+            ? totalPages.value - step > 0
+              ? totalPages.value - step
+              : 1
+            : 1
+        end = totalPages.value
+      }
+      return Array.from({ length: end - begin + 1 }, (value, index) => begin + index)
+    })
+    const scrollView = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }
+
+    onMounted(() => {
+      if (route.query.page) {
+        nextPage.value = Number(route.query.page)
+      } else {
+        nextPage.value = 1
+      }
+    })
+
+    watch(nextPage, () => {
+      emit('pagination', {
+        nextPage: nextPage.value
+      })
+      scrollView()
+    })
+
+    return { filteredItems, pagination }
+  }
+})
 </script>
 <style lang="scss">
 .pagination {
@@ -94,13 +135,15 @@ export default defineComponent({
     display: flex;
   }
 
-  &__page{
+  &__page {
     height: 40px;
 
     text-align: center;
 
     margin-right: 10px;
-    padding-top: 3px;
+    margin-bottom: 2px;
+
+    padding-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
 
@@ -112,6 +155,10 @@ export default defineComponent({
 
     color: rgb(255 255 255);
     background: #486ef2;
+
+    &:first-child {
+      margin-left: 10px;
+    }
 
     &:hover {
       opacity: 80%;
@@ -127,60 +174,36 @@ export default defineComponent({
       color: #486ef2;
       background: rgb(255 255 255);
 
-      &:hover,:active {
-        cursor:default;
+      &:hover,
+      :active {
+        cursor: default;
         background: rgb(255 255 255);
         opacity: 100%;
       }
     }
-    
   }
 
   &__button {
     position: relative;
     width: 40px;
     height: 40px;
-    
+
     border: none;
 
-    background: #486ef2;
-
-    mask-repeat: no-repeat;
-    mask-position: center;
-
-    &:hover{
+    &:hover {
       opacity: 80%;
       cursor: pointer;
     }
 
     &--disabled {
-      background-color: rgb(160, 160, 160);
-
-      &:hover{
+      &:hover {
+        opacity: 100%;
         cursor: default;
       }
     }
 
-    &--forward {
-      mask-image: url('@/assets/arrow_enable.svg');
-      mask-size: 18px;
-    }
-
-    &--end {
-      mask-image: url('@/assets/double_arrow_enable.svg');
-      mask-size: 35px;
-    }
-
-    &--back {
-      mask-image: url('@/assets/arrow_enable.svg');
+    &--reverse {
       transform: scale(-1, 1);
-      mask-size: 18px;
-    }
-
-    &--begin {
-      mask-image: url('@/assets/double_arrow_enable.svg');
-      transform: scale(-1, 1);
-      mask-size: 35px;
     }
   }
 }

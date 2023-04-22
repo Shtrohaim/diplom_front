@@ -1,109 +1,112 @@
 <template>
-     <div v-if="data.coverageEndYear" class="coverage-card">
-        <h3 class="coverage-card__title">Период покрытия Scopus</h3>
-        <div v-if="data.coverageEndYear >= currentYear" class="coverage-card__wrapper">
-            <p>{{ data.coverageStartYear }}</p>
-            <div class="coverage-card__bar">
-                <div class="coverage-card__progress" :style="{ width: progressBar + '%' }" >{{ currentYear }} </div>
-            </div>
-            <p>{{ data.coverageEndYear }}</p>
+  <div v-if="publisherInfo?.coverageEndYear" class="coverage-card">
+    <h3 class="coverage-card__title">Период покрытия Scopus</h3>
+    <div v-if="publisherInfo?.coverageEndYear >= currentYear" class="coverage-card__wrapper">
+      <p>{{ publisherInfo.coverageStartYear }}</p>
+      <div class="coverage-card__bar">
+        <div class="coverage-card__progress" :style="{ width: progressBar + '%' }">
+          {{ currentYear }}
         </div>
-        <div v-else class="coverage-card__message">
-            Более не поддерживается!
-        </div>
+      </div>
+      <p>{{ publisherInfo.coverageEndYear }}</p>
     </div>
+    <div v-else class="coverage-card__message">Более не поддерживается!</div>
+  </div>
 </template>
 
 <script lang="ts">
-    import { defineComponent } from 'vue';
+import { defineComponent, ref, toRefs, watch } from 'vue'
+import type publisherInfoType from '@/types/publisherInfoType'
 
-    export default defineComponent({
-        name: "ScopusCoverageCard",
-        props:{
-            data: {
-                type: Object,
-                default: () => { return {} },
-            },
-        },
-        data(){
-            return{
-                progressBar: 0 as number,
-                currentYear: new Date().getFullYear() as number,
-            }
-        },
-        methods:{
-            progressYears(){ 
-                const currentProcent = ((this.currentYear - this.data.coverageStartYear) * 100) / (this.data.coverageEndYear - this.data.coverageStartYear) 
-                if(this.progressBar < currentProcent){
-                    this.progressBar++
-                    setTimeout(() => this.progressYears(), 15);
-                }
-            }
-        },
-        watch: {
-            data(){
-                this.progressYears()
-            }  
-        }
-    });
+export default defineComponent({
+  name: 'ScopusCoverageCard',
+  props: {
+    publisherInfo: {
+      type: Object as () => publisherInfoType,
+      default: () => ({})
+    }
+  },
+  setup(props) {
+    const { publisherInfo } = toRefs(props)
+    const progressBar = ref(0)
+    const currentYear = new Date().getFullYear() as number
+
+    const progressYears = () => {
+      const currentPercent =
+        ((currentYear - publisherInfo.value.coverageStartYear) * 100) /
+        (publisherInfo.value.coverageEndYear - publisherInfo.value.coverageStartYear)
+      if (progressBar.value < currentPercent) {
+        progressBar.value++
+        setTimeout(() => progressYears(), 15)
+      }
+    }
+
+    watch(publisherInfo, () => {
+      progressYears()
+    })
+
+    return { currentYear, progressBar }
+  }
+})
 </script>
 
 <style lang="scss">
-    .coverage-card{
-        width: 700px;
+.coverage-card {
+  width: 700px;
 
-        padding-top: 20px;
-        padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
-        background-color: #ffffff;
-        border-radius: 4px;
+  background-color: #ffffff;
+  border-radius: 4px;
 
-        box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
+  box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
-        &__title {
-            margin-bottom: 50px;
+  &__title {
+    margin-bottom: 50px;
 
-            font-size: 26px;
-        }
-        
-        &__wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    text-align: center;
 
-        &__bar{
-            border: 3px solid black;
-            width: 500px;
-            height: 30px;
+    font-size: 26px;
+  }
 
-            margin: 0 8px;
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-            border-radius: 10px;
+  &__bar {
+    border: 3px solid black;
+    width: 500px;
+    height: 30px;
 
-            z-index: 10;
-        }
+    margin: 0 8px;
 
-        &__progress{
-            height: 100%;
-            padding-top: 6px;
-            padding-right: 15px;
+    border-radius: 10px;
 
-            color: #ffffff;
+    z-index: 10;
+  }
 
-            background-color:#486ef2;
-            text-align: end;
+  &__progress {
+    height: 100%;
+    padding-top: 6px;
+    padding-right: 15px;
 
-            font-size: 12px;
-            
-            border-radius: 5px;
+    color: #ffffff;
 
-            z-index: 0;
-        }
+    background-color: #486ef2;
+    text-align: end;
 
-        &__message {
-            font-size: 32px;
-        }
-    }
-    
+    font-size: 12px;
+
+    border-radius: 5px;
+
+    z-index: 0;
+  }
+
+  &__message {
+    font-size: 32px;
+  }
+}
 </style>

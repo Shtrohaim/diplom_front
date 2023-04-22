@@ -2,103 +2,108 @@
   <div class="school-page">
     <nav class="school-page__nav">
       <ul class="school-page__list">
-        <li class="school-page__list-item" :class="activeTab(item)" v-for="item in data" :key="item.id" @click="tabulation(item)">{{ item.title }}</li>
+        <li
+          class="school-page__list-item"
+          :class="{ 'school-page__list-item--active': item.title === this.propData.title }"
+          v-for="item in data"
+          :key="item.id"
+          @click="tabulation(item)"
+        >
+          {{ item.title }}
+        </li>
       </ul>
     </nav>
-    <school-info class="school-page__info" v-if="isInfo" :data="propData" />
+    <school-info class="school-page__info" v-if="hasInfo" :data="propData" />
     <school-subjects class="school-page__subjects" v-else :data="propData" />
   </div>
-  
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import SchoolData from '@/types/schoolDataType';
+import { defineComponent, onMounted, ref } from 'vue'
+import type SchoolData from '@/types/schoolDataType'
 import schoolService from '@/services/schoolService'
-import SchoolInfo from '@/components/SchoolInfo.vue';
-import SchoolSubjects from '@/components/SchoolSubjects.vue';
-
+import SchoolInfo from '@/components/SchoolInfo.vue'
+import SchoolSubjects from '@/components/SchoolSubjects.vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
-  name: 'SchoolView',
+  name: 'SchoolPage',
   components: {
     SchoolInfo,
-    SchoolSubjects,
+    SchoolSubjects
   },
-  data(){
-    return {
-      data: [] as SchoolData [],
-      isInfo: true as boolean,
-      propData: {} as SchoolData,
-    }
-  },
-  methods: {
-    getFipiData() {
-      schoolService.getFipiInfo(this.$route.params.examName).then((res)=>{
-        this.data = res.data
-        this.propData = this.data[0]
+  setup() {
+    const data = ref([] as SchoolData[])
+    const hasInfo = ref(true)
+    const propData = ref({} as SchoolData)
+    const route = useRoute()
+
+    const getExamData = () => {
+      schoolService.getFipiInfo(route.params.examName).then((res) => {
+        data.value = res.data
+        propData.value = data.value[0]
       })
-    },
-    tabulation(item : SchoolData) {
-      if(typeof(item.info) !== "object"){
-        this.isInfo = true;
-      }else{
-        this.isInfo = false;
-      }
-      this.propData = item;
-    },
-    activeTab(item : SchoolData) : string {
-      return item.title === this.propData.title ? "school-page__list-item--active" : ""
     }
-  },
-  mounted(){
-    this.getFipiData();
+
+    const tabulation = (item: SchoolData) => {
+      if (typeof item.info !== 'object') {
+        hasInfo.value = true
+      } else {
+        hasInfo.value = false
+      }
+      propData.value = item
+    }
+
+    onMounted(async () => {
+      await getExamData()
+    })
+
+    return { tabulation, data, propData, hasInfo }
   }
-});
+})
 </script>
 
 <style lang="scss">
-  .school-page {
-    &__list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+.school-page {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-    &__nav {
-      width: 80%;
-      margin: 0 auto;
+  &__nav {
+    width: 80%;
+    margin: 0 auto;
 
-      text-align: center;
+    text-align: center;
 
-      padding: 0;
+    padding: 0;
 
-      margin-bottom: 60px;
-    }
+    margin-bottom: 60px;
+  }
 
-    &__list-item {
+  &__list-item {
+    padding: 12px;
 
-      padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 12px -5px rgb(0 0 0 / 0.5);
 
-      border-radius: 8px;
-      box-shadow: 0 8px 12px -5px rgb(0 0 0 / 0.5);
-      
-      z-index: 10px;
+    z-index: 10;
 
-      break-inside: none;
-      page-break-inside: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
 
-      cursor:pointer;
+    cursor: pointer;
 
-      &--active {
-        margin: -2px -5px;
-        padding: 12px 18px;
-        box-shadow: 0 15px 20px -5px rgb(0 0 0 / 0.5);
-        cursor: default;
+    &--active {
+      margin: -2px -5px;
+      padding: 12px 18px;
+      box-shadow: 0 15px 20px -5px rgb(0 0 0 / 0.5);
+      cursor: default;
 
-        background: #fbfbfb;
-        z-index: 12;
-      } 
+      background: #fbfbfb;
+      z-index: 12;
     }
   }
+}
 </style>
