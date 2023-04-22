@@ -17,30 +17,32 @@ import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'BaseSearch',
-  emits: ['search'],
   props: {
     hasFilter: {
       type: Boolean,
       default: false
+    },
+    filterData: {
+      type: Object,
+      default: () => ({})
     }
   },
-  setup(props, { emit }) {
+  setup(props) {
     const searchInput = ref()
     const router = useRouter()
     const route = useRoute()
-    const { hasFilter } = toRefs(props)
+    const { hasFilter, filterData } = toRefs(props)
 
     const search = (event) => {
       event.preventDefault()
-      if (hasFilter.value) {
-        emit('search', {
-          searchText: searchInput.value.value
-        })
-      } else if (searchInput.value.value.trim()) {
+      if (!searchInput.value.value.trim()) {
+        searchInput.value.focus()
+      } else if (hasFilter.value) {
+        filterData.value.search = searchInput.value.value.trim()
+        router.push({ query: filterData.value })
+      } else {
         router.push({ query: { search: searchInput.value.value.trim() } })
         searchInput.value = ''
-      } else {
-        searchInput.value.focus()
       }
     }
     const dropSearch = () => {
@@ -85,8 +87,7 @@ export default defineComponent({
     position: relative;
     display: inline-block;
 
-    padding: 15px;
-    padding-right: 35px;
+    padding: 15px 35px 15px 15px;
 
     border-radius: 25px;
 

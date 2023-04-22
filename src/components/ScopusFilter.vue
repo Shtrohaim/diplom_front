@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, toRefs } from 'vue'
+import { defineComponent, onMounted, ref, toRefs, watchEffect } from 'vue'
 
 import MultiSelect from '@vueform/multiselect'
 import { useRoute } from 'vue-router'
@@ -114,15 +114,6 @@ export default defineComponent({
     const pubYear = ref({ operator: '' } as { [key: string]: string })
 
     const route = useRoute()
-    const callEmit = () => {
-      emit('filter', {
-        OPENACCESS: Number(hasOpenAccess.value),
-        DOCTYPE: docType.value,
-        SUBJAREA: subjType.value,
-        SRCTYPE: srcType.value,
-        PUBYEAR: pubYear.value
-      })
-    }
     const fillInput = (query: any, list: { label: string; value: string }[], value: string[]) => {
       if (typeof query === 'string' && query) {
         value.push(String(query))
@@ -133,26 +124,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      transformSubjects()
-      if (route.query['doctype']) {
-        let query = route.query['doctype']
-        fillInput(query, docTypeList, docType.value)
-      }
-      if (route.query['srctype']) {
-        let query = route.query['srctype']
-        fillInput(query, srcTypeList, srcType.value)
-      }
-      if (route.query['openaccess']) {
-        hasOpenAccess.value = !!Number(route.query['openaccess'])
-      }
-
-      if (route.query['pubyear_yr']) {
-        pubYear.value['operator'] = String(route.query['pubyear_op'])
-        pubYear.value['year'] = String(route.query['pubyear_yr'])
-      }
-    })
-
     const transformSubjects = () => {
       for (let index in subjectsList.value) {
         subjTypeList.value.push({
@@ -160,11 +131,40 @@ export default defineComponent({
           value: String(subjectsList.value[index][0]['abbrev'])
         })
       }
-      if (route.query['subjtype']) {
-        let query = route.query['subjtype']
+      if (route.query['SUBJAREA']) {
+        let query = route.query['SUBJAREA']
         fillInput(query, subjTypeList.value, subjType.value)
       }
     }
+
+    onMounted(() => {
+      transformSubjects()
+      if (route.query['DOCTYPE']) {
+        let query = route.query['DOCTYPE']
+        fillInput(query, docTypeList, docType.value)
+      }
+      if (route.query['SRCTYPE']) {
+        let query = route.query['SRCTYPE']
+        fillInput(query, srcTypeList, srcType.value)
+      }
+      if (route.query['OPENACCESS']) {
+        hasOpenAccess.value = !!Number(route.query['OPENACCESS'])
+      }
+      if (route.query['pubyear_yr']) {
+        pubYear.value['operator'] = String(route.query['pubyear_op'])
+        pubYear.value['year'] = String(route.query['pubyear_yr'])
+      }
+    })
+
+    watchEffect(() => {
+      emit('filter', {
+        OPENACCESS: Number(hasOpenAccess.value),
+        DOCTYPE: docType.value,
+        SUBJAREA: subjType.value,
+        SRCTYPE: srcType.value,
+        PUBYEAR: pubYear.value
+      })
+    })
 
     return {
       subjType,
@@ -174,8 +174,7 @@ export default defineComponent({
       docType,
       docTypeList,
       srcType,
-      srcTypeList,
-      callEmit
+      srcTypeList
     }
   }
 })

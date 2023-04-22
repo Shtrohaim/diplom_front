@@ -1,26 +1,20 @@
 <template>
-  <div>
-    <base-search :has-filter="true" @search="searchData">
-      <select ref="searchType">
+  <div v-if="Object.keys(subjectsList).length > 0">
+    <base-search :has-filter="true" :filter-data="queryFilter">
+      <select v-model="queryFilter.type">
         <option value="ALL">Все</option>
         <option value="DOI">DOI</option>
         <option value="ISSN">ISSN</option>
         <option value="EISSN">EISSN</option>
-        <option value="AUTHOR">Автор</option>
+        <option value="AUTH">Автор</option>
         <option value="PUBLISHER">Издатель</option>
       </select>
       <label>
         Фильтр:
-        <input type="checkbox" v-model="hasFilter" @change="hasFilter = !hasFilter" />
+        <input type="checkbox" v-model="hasFilter" />
       </label>
-      <scopus-filter
-        v-if="hasFilter"
-        :subjectsList="subjectsList"
-        ref="filterElement"
-        @filter="getFilter"
-      />
+      <scopus-filter v-if="hasFilter" :subjectsList="subjectsList" @filter="getFilter" />
     </base-search>
-    <button v-if="checkFilter">Сбросить фильтр</button>
     <loading-screen v-if="isLoading" />
     <ul v-else class="scopus-card__list">
       <li class="scopus-card__list-item" v-for="item in publications" :key="item.eid">
@@ -37,7 +31,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import scopusService from '@/services/scopusService'
 
@@ -48,7 +43,6 @@ import LoadingScreen from '@/components/common/loading.vue'
 import Pagination from '@/components/common/pagination.vue'
 import ScopusFilter from '@/components/ScopusFilter.vue'
 import StudentsScopusCard from '@/components/ScopusCard.vue'
-import { useRoute, useRouter } from 'vue-router'
 import BaseSearch from '@/components/common/search.vue'
 export default defineComponent({
   name: 'ScopusListPage',
@@ -60,28 +54,25 @@ export default defineComponent({
     StudentsScopusCard
   },
   setup() {
+    const route = useRoute()
+
     const publications = ref([] as ScopusListType[])
     const subjectsList = ref({} as { [key: string]: { [key: string]: { abbrev: string } }[] })
 
     const currentPage = ref(1)
     const size = 25 as number
     const totalPages = ref(1)
+
     const isLoading = ref(false)
     const hasFilter = ref(false)
-    const search = ref({} as { type: string; field: string })
-    const filter = ref({} as any)
 
-    const searchType = ref()
-    const filterElement = ref()
+    const requestFilter = ref({} as any)
+    const queryFilter = ref({ type: route.query.type ? route.query.type : 'ALL' } as any)
 
-    const router = useRouter()
-    const route = useRoute()
-
-    const checkFilter = computed(() => Object.keys(filter.value).length !== 0)
     const fetchScopusData = () => {
       let page = currentPage.value
-      let qSearch = search.value
-      let qFilter = filter.value
+      let qSearch = { type: queryFilter.value.type, field: route.query.search }
+      let qFilter = requestFilter.value
       scopusService.getScopusData({ size, page, qSearch, qFilter }).then((res: ResponseData) => {
         publications.value = res.data.data
         totalPages.value = res.data.totalPages
@@ -91,7 +82,7 @@ export default defineComponent({
     const fetchSubjectList = () => {
       scopusService.getSubjectsList().then((res: ResponseData) => {
         subjectsList.value = res.data
-        if (Object.keys(filter.value).length > 0) {
+        if (Object.keys(route.query).length > 2) {
           hasFilter.value = true
         }
       })
@@ -103,81 +94,39 @@ export default defineComponent({
     }
     const getFilter = (data: any) => {
       for (let item in data) {
-        filter.value[item] = []
-        for (let index in data[item]) {
-          filter.value[item].push(data[item][index])
-        }
-      }
-      filter.value.OPENACCESS = data.OPENACCESS
-      if (data.PUBYEAR['year'] && data.PUBYEAR['operator']) {
-        filter.value.PUBYEAR = data.PUBYEAR
-      }
-    }
-    const searchData = (data: { searchText: any }) => {
-      if (hasFilter.value) filterElement.value.callEmit()
-      if (data.searchText) {
-        let operator, year
-        if (filter.value['PUBYEAR']) {
-          operator = filter.value['PUBYEAR']['operator']
-          year = filter.value['PUBYEAR']['year']
-        }
-        search.value['type'] = searchType.value.value
-        search.value['field'] = data.searchText
-        router.push({
-          query: {
-            search: search.value['field'],
-            type: search.value['type'],
-            openaccess: filter.value['OPENACCESS'],
-            doctype: filter.value['DOCTYPE'],
-            srctype: filter.value['SRCTYPE'],
-            subjtype: filter.value['SUBJAREA'],
-            pubyear_op: operator,
-            pubyear_yr: year
+        queryFilter.value[item] = []
+        if (Array.isArray(data[item])) {
+          for (let index in data[item]) {
+            queryFilter.value[item].push(data[item][index])
           }
-        })
-        isLoading.value = true
+        }
+      }
+      queryFilter.value.OPENACCESS = data.OPENACCESS
+      requestFilter.value = Object.assign({}, queryFilter.value)
+      delete requestFilter.value.type
+
+      if (data.PUBYEAR['operator'] && data.PUBYEAR['year']) {
+        requestFilter.value.PUBYEAR = data.PUBYEAR
+        queryFilter.value.pubyear_yr = data.PUBYEAR['year']
+        queryFilter.value.pubyear_op = data.PUBYEAR['operator']
       }
     }
 
     onMounted(() => {
       fetchSubjectList()
-      if (route.query['openaccess']) {
-        filter.value['OPENACCESS'] = Number(route.query['openaccess'])
-      }
-      if (route.query['doctype']) {
-        filter.value['DOCTYPE'] = route.query['doctype']
-      }
-      if (route.query['subjtype']) {
-        filter.value['SUBJAREA'] = route.query['subjtype']
-      }
-      if (route.query['srctype']) {
-        filter.value['SRCTYPE'] = route.query['srctype']
-      }
-      if (route.query['pubyear']) {
-        filter.value['PUBYEAR'] = {}
-        filter.value['PUBYEAR']['operator'] = String(route.query['pubyear_op'])
-        filter.value['PUBYEAR']['year'] = String(route.query['pubyear_yr'])
-      }
-      if (route.query.search && route.query.type) {
-        search.value['type'] = route.query.type.toString()
-        search.value['field'] = route.query.search.toString()
-      }
     })
 
     return {
       publications,
-      searchData,
       isLoading,
       hasFilter,
       getFilter,
       currentPage,
       totalPages,
       onPagination,
-      searchType,
       route,
-      checkFilter,
-      filterElement,
-      subjectsList
+      subjectsList,
+      queryFilter
     }
   }
 })
