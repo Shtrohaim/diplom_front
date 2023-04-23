@@ -1,23 +1,35 @@
 <template>
-  <div v-if="Object.keys(subjectsList).length > 0">
-    <base-search :has-filter="true" :filter-data="queryFilter">
-      <select v-model="queryFilter.type">
-        <option value="ALL">Все</option>
-        <option value="DOI">DOI</option>
-        <option value="ISSN">ISSN</option>
-        <option value="EISSN">EISSN</option>
-        <option value="AUTH">Автор</option>
-        <option value="PUBLISHER">Издатель</option>
-      </select>
-      <label>
-        Фильтр:
-        <input type="checkbox" v-model="hasFilter" />
+  <div class="scopus-list" v-if="Object.keys(subjectsList).length > 0">
+    <base-search class="scopus-list__search" :has-filter="true" :filter-data="queryFilter">
+      <multi-select
+        class="scopus-list__select"
+        :canClear="false"
+        :canDeselect="false"
+        placeholder="Не выбрано"
+        v-model="queryFilter.type"
+        :options="{
+          ALL: 'Все',
+          DOI: 'DOI',
+          ISSN: 'ISSN',
+          EISSN: 'EISSN',
+          AUTH: 'Автор',
+          PUBLISHER: 'Издатель'
+        }"
+      />
+      <label class="scopus-list__open-filter">
+        {{ hasFilter ? 'Скрыть фильтр' : 'Показать фильтр' }}
+        <input class="visually-hidden" type="checkbox" v-model="hasFilter" />
       </label>
-      <scopus-filter v-if="hasFilter" :subjectsList="subjectsList" @filter="getFilter" />
+      <scopus-filter
+        class="scopus-list__filter"
+        v-if="hasFilter"
+        :subjectsList="subjectsList"
+        @filter="getFilter"
+      />
     </base-search>
     <loading-screen v-if="isLoading" />
-    <ul v-else class="scopus-card__list">
-      <li class="scopus-card__list-item" v-for="item in publications" :key="item.eid">
+    <ul v-else class="scopus-list__list">
+      <li class="scopus-list__list-item" v-for="item in publications" :key="item.eid">
         <students-scopus-card :publication="item" />
       </li>
     </ul>
@@ -44,6 +56,7 @@ import Pagination from '@/components/common/pagination.vue'
 import ScopusFilter from '@/components/ScopusFilter.vue'
 import StudentsScopusCard from '@/components/ScopusCard.vue'
 import BaseSearch from '@/components/common/search.vue'
+import MultiSelect from '@vueform/multiselect'
 export default defineComponent({
   name: 'ScopusListPage',
   components: {
@@ -51,7 +64,8 @@ export default defineComponent({
     Pagination,
     LoadingScreen,
     ScopusFilter,
-    StudentsScopusCard
+    StudentsScopusCard,
+    MultiSelect
   },
   setup() {
     const route = useRoute()
@@ -131,3 +145,86 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss">
+.scopus-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__search {
+    width: 100%;
+    margin-bottom: 50px;
+    form {
+      display: grid;
+      grid-template-columns: 35% 30% 35%;
+      align-items: center;
+    }
+    .search__bar {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      justify-self: start;
+    }
+
+    .search__drop {
+      width: 180px;
+
+      margin-right: 10px;
+
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+
+      justify-self: end;
+    }
+  }
+
+  &__select {
+    width: 150px;
+
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    justify-self: start;
+    margin: 0 0 0 10px;
+
+    --ms-ring-color: none;
+    --ms-option-bg-selected: #486ef2;
+    --ms-option-bg-selected-pointed: #486ef2;
+  }
+
+  &__filter {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    justify-self: center;
+  }
+
+  &__open-filter {
+    user-select: none;
+    cursor: pointer;
+
+    opacity: 55%;
+    text-decoration: underline dotted;
+    text-underline-offset: 6px;
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    justify-self: center;
+    margin-top: 20px;
+
+    &:hover {
+      opacity: 75%;
+    }
+  }
+}
+</style>

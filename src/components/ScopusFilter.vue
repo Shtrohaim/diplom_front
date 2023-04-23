@@ -1,62 +1,64 @@
 <template>
   <div class="filter">
-    <label>
-      Тип предмета:
-      <multi-select
-        class="filter__multiselector"
-        v-model="subjType"
-        :options="subjTypeList"
-        mode="tags"
-        :close-on-select="false"
-        :searchable="true"
-        :create-option="true"
-        placeholder="Выберите предметы"
-      />
-    </label>
-    <label>
-      Тип источника:
-      <multi-select
-        class="filter__multiselector"
-        v-model="srcType"
-        :options="srcTypeList"
-        mode="tags"
-        :close-on-select="false"
-        :searchable="true"
-        :create-option="true"
-        placeholder="Выберите источники"
-      />
-    </label>
-    <label>
-      Тип публикации:
-      <multi-select
-        class="filter__multiselector"
-        v-model="docType"
-        :options="docTypeList"
-        mode="tags"
-        :close-on-select="false"
-        :searchable="true"
-        :create-option="true"
-        placeholder="Выбирите тип публикации"
-      />
-    </label>
-    <label>
-      Опубликован
-      <multi-select
-        placeholder="Не выбрано"
-        v-model="pubYear['operator']"
-        :options="{ equal: 'в', greater: 'после', less: 'до' }"
-      />
-    </label>
-    <label>
-      <input
-        placeholder="Введите год"
-        class="filter__input filter__input--year"
-        v-model="pubYear['year']"
-        type="number"
-      />
-      году
-    </label>
-    <label>
+    <div class="filter__selector-wrapper">
+      <label class="filter__label">
+        Тип предмета:
+        <multi-select
+          class="filter__multiselector"
+          v-model="subjType"
+          :options="subjTypeList"
+          mode="tags"
+          :close-on-select="false"
+          :create-option="true"
+          placeholder="Выберите предметы"
+        />
+      </label>
+      <label class="filter__label">
+        Тип источника:
+        <multi-select
+          class="filter__multiselector"
+          v-model="srcType"
+          :options="srcTypeList"
+          mode="tags"
+          :close-on-select="false"
+          :create-option="true"
+          placeholder="Выберите источники"
+        />
+      </label>
+      <label class="filter__label">
+        Тип публикации:
+        <multi-select
+          class="filter__multiselector"
+          v-model="docType"
+          :options="docTypeList"
+          mode="tags"
+          :close-on-select="false"
+          :create-option="true"
+          placeholder="Выбирите тип публикации"
+        />
+      </label>
+    </div>
+    <div class="filter__year-wrapper">
+      <label class="filter__label">
+        Опубликован:
+        <multi-select
+          class="filter__multiselector filter__multiselector--operator"
+          placeholder="Не выбрано"
+          v-model="pubYear['operator']"
+          :options="{ equal: 'в', greater: 'после', less: 'до' }"
+        />
+      </label>
+      <label class="filter__label">
+        <input
+          placeholder="Введите год"
+          class="filter__input filter__input--year"
+          v-model="pubYear['year']"
+          type="number"
+        />
+        {{ declensionWord }}
+      </label>
+    </div>
+    <label class="filter__label">
       В открытом доступе:
       <input class="filter__check-access" v-model="hasOpenAccess" type="checkbox" />
     </label>
@@ -64,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, toRefs, watchEffect } from 'vue'
+import { computed, defineComponent, onMounted, ref, toRefs, watchEffect } from 'vue'
 
 import MultiSelect from '@vueform/multiselect'
 import { useRoute } from 'vue-router'
@@ -126,6 +128,15 @@ export default defineComponent({
       }
     }
 
+    const declensionWord = computed(() => {
+      return pubYear.value['operator'] === 'equal' && pubYear.value['year']
+        ? 'году'
+        : (pubYear.value['operator'] === 'greater' || pubYear.value['operator'] === 'less') &&
+          pubYear.value['year']
+        ? 'года'
+        : ''
+    })
+
     const transformSubjects = () => {
       for (let index in subjectsList.value) {
         subjTypeList.value.push({
@@ -166,6 +177,13 @@ export default defineComponent({
         SRCTYPE: srcType.value,
         PUBYEAR: pubYear.value
       })
+
+      if (Number(pubYear.value['year']) < 0) {
+        pubYear.value['year'] = String(Number(pubYear.value['year']) * -1)
+      }
+      if (Number(pubYear.value['year']) > new Date().getFullYear()) {
+        pubYear.value['year'] = String(new Date().getFullYear())
+      }
     })
 
     return {
@@ -176,7 +194,8 @@ export default defineComponent({
       docType,
       docTypeList,
       srcType,
-      srcTypeList
+      srcTypeList,
+      declensionWord
     }
   }
 })
@@ -191,10 +210,80 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__year-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
   &__multiselector {
+    margin: 10px;
     width: 550px;
     --ms-tag-bg: #486ef2;
     --ms-ring-color: none;
+    --ms-option-bg-selected: #486ef2;
+    --ms-option-bg-selected-pointed: #486ef2;
+
+    &--operator {
+      width: 170px;
+    }
+  }
+
+  &__check-access {
+    position: relative;
+
+    width: 30px;
+    height: 30px;
+
+    margin-left: 10px;
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+
+    background: #f24848;
+    transition: 0.3s linear;
+
+    border-radius: 4px;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 4px;
+      transition: 0.2s linear 0.2s;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &:checked {
+      background: #486ef2;
+      &::before {
+        width: 10px;
+        transform: translate(-50%, -50%) translate(-4px, 3px) rotate(45deg);
+      }
+
+      &::after {
+        width: 18px;
+        transform: translate(-50%, -50%) translate(4px, 0) rotate(-45deg);
+      }
+    }
   }
 
   &__input {
@@ -211,6 +300,14 @@ export default defineComponent({
     border: 1px solid #d1d5db;
     font-size: inherit;
     outline: none;
+
+    &--year {
+      margin: 10px;
+    }
+
+    &--year::placeholder {
+      color: #9ca3af;
+    }
 
     &--year::-webkit-outer-spin-button,
     &--year::-webkit-inner-spin-button {

@@ -1,13 +1,15 @@
 <template>
   <div class="search">
     <form class="search__form" @submit="search">
-      <input ref="searchInput" class="search__input" type="text" placeholder="Искать..." />
-      <button class="search__form-button"></button>
+      <div class="search__bar">
+        <input ref="searchInput" class="search__input" type="text" placeholder="Искать..." />
+        <button class="search__form-button"></button>
+      </div>
+      <div v-if="$route.query.search" @click="dropSearch" class="search__drop">
+        Сбросить поиск <span></span>
+      </div>
+      <slot></slot>
     </form>
-    <slot></slot>
-    <div v-if="$route.query.search" @click="dropSearch" class="search__drop">
-      Сбросить поиск <span></span>
-    </div>
   </div>
 </template>
 
@@ -62,8 +64,12 @@ export default defineComponent({
 <style lang="scss">
 .search {
   &__form {
-    position: relative;
     margin-right: 10px;
+    width: 100%;
+  }
+
+  &__bar {
+    position: relative;
     width: 100%;
   }
 
