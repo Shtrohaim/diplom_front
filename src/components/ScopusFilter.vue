@@ -60,7 +60,7 @@
     </div>
     <label class="filter__label">
       В открытом доступе:
-      <input class="filter__check-access" v-model="hasOpenAccess" type="checkbox" />
+      <checkbox-tristate class="filter__check-access" v-model="hasOpenAccess" />
     </label>
   </div>
 </template>
@@ -69,12 +69,15 @@
 import { computed, defineComponent, onMounted, ref, toRefs, watchEffect } from 'vue'
 
 import MultiSelect from '@vueform/multiselect'
+import CheckboxTristate from '@/components/common/checkboxTristate.vue'
+
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'ScopusFilter',
   components: {
-    MultiSelect
+    MultiSelect,
+    CheckboxTristate
   },
   props: {
     subjectsList: {
@@ -109,7 +112,7 @@ export default defineComponent({
       { label: 'Ревю', value: 'd' }
     ] as { label: string; value: string }[]
 
-    const hasOpenAccess = ref(false)
+    const hasOpenAccess = ref(null)
     const { subjectsList } = toRefs(props)
     const subjTypeList = ref([] as { label: string; value: string }[])
     const docType = ref([])
@@ -170,8 +173,14 @@ export default defineComponent({
     })
 
     watchEffect(() => {
+      let openacces = null
+      if (hasOpenAccess.value === true) {
+        openacces = 1
+      } else if (hasOpenAccess.value === false) {
+        openacces = 0
+      }
       emit('filter', {
-        OPENACCESS: Number(hasOpenAccess.value),
+        OPENACCESS: openacces,
         DOCTYPE: docType.value,
         SUBJAREA: subjType.value,
         SRCTYPE: srcType.value,
@@ -231,58 +240,6 @@ export default defineComponent({
 
     &--operator {
       width: 170px;
-    }
-  }
-
-  &__check-access {
-    position: relative;
-
-    width: 30px;
-    height: 30px;
-
-    margin-left: 10px;
-
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-
-    background: #f24848;
-    transition: 0.3s linear;
-
-    border-radius: 4px;
-
-    &::before,
-    &::after {
-      position: absolute;
-      content: '';
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 3px;
-      background-color: #fff;
-      border-radius: 4px;
-      transition: 0.2s linear 0.2s;
-    }
-
-    &::before {
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    &::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    &:checked {
-      background: #486ef2;
-      &::before {
-        width: 10px;
-        transform: translate(-50%, -50%) translate(-4px, 3px) rotate(45deg);
-      }
-
-      &::after {
-        width: 18px;
-        transform: translate(-50%, -50%) translate(4px, 0) rotate(-45deg);
-      }
     }
   }
 

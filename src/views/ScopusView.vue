@@ -4,6 +4,7 @@
     <scopus-score-card :publisherInfo="publisherInfo" class="scopus-info__score-card" />
     <scopus-coverage-card :publisherInfo="publisherInfo" class="scopus-info__coverage-card" />
     <scopus-journal-card :publisherInfo="publisherInfo" class="scopus-info__journal-card" />
+    <div v-if="Object.keys(publisherInfo).length === 0">Данные об издателе не найдены</div>
   </div>
 </template>
 

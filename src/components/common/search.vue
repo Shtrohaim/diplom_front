@@ -41,6 +41,7 @@ export default defineComponent({
         searchInput.value.focus()
       } else if (hasFilter.value) {
         filterData.value.search = searchInput.value.value.trim()
+        if (filterData.value.OPENACCESS == null) delete filterData.value.OPENACCESS
         router.push({ query: filterData.value })
       } else {
         router.push({ query: { search: searchInput.value.value.trim() } })

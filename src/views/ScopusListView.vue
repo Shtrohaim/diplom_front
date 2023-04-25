@@ -1,5 +1,9 @@
 <template>
-  <div class="scopus-list" v-if="Object.keys(subjectsList).length > 0">
+  <div
+    class="scopus-list"
+    :class="{ 'scopus-list--no-publication': publications.length === 0 }"
+    v-if="Object.keys(subjectsList).length > 0"
+  >
     <base-search class="scopus-list__search" :has-filter="true" :filter-data="queryFilter">
       <multi-select
         class="scopus-list__select"
@@ -22,11 +26,14 @@
       </label>
       <scopus-filter
         class="scopus-list__filter"
-        v-if="hasFilter"
+        :class="{ 'visually-hidden': !hasFilter }"
         :subjectsList="subjectsList"
         @filter="getFilter"
       />
     </base-search>
+    <div v-if="route.query.search && publications.length === 0">
+      По вашему запросу {{ route.query.search }}, ничего не найдено!
+    </div>
     <loading-screen v-if="isLoading" />
     <ul v-else class="scopus-list__list">
       <li class="scopus-list__list-item" v-for="item in publications" :key="item.eid">
@@ -40,6 +47,7 @@
       @pagination="onPagination"
     />
   </div>
+  <loading-screen v-else />
 </template>
 
 <script lang="ts">
@@ -87,18 +95,20 @@ export default defineComponent({
       let page = currentPage.value
       let qSearch = { type: queryFilter.value.type, field: route.query.search }
       let qFilter = requestFilter.value
-      scopusService.getScopusData({ size, page, qSearch, qFilter }).then((res: ResponseData) => {
-        publications.value = res.data.data
-        totalPages.value = res.data.totalPages
-        isLoading.value = false
-      })
+      scopusService
+        .getScopusData({ size, page, qSearch, qFilter })
+        .then((res: ResponseData) => {
+          publications.value = res.data.data
+          totalPages.value = res.data.totalPages
+          isLoading.value = false
+        })
+        .catch((err) => {
+          isLoading.value = false
+        })
     }
     const fetchSubjectList = () => {
       scopusService.getSubjectsList().then((res: ResponseData) => {
         subjectsList.value = res.data
-        if (Object.keys(route.query).length > 2) {
-          hasFilter.value = true
-        }
       })
     }
     const onPagination = (data: { nextPage: number }) => {
@@ -152,6 +162,10 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
+  &--no-publication {
+    height: 85vh;
+  }
+
   &__search {
     width: 100%;
     margin-bottom: 50px;
@@ -180,6 +194,10 @@ export default defineComponent({
 
       justify-self: end;
     }
+  }
+
+  &__list {
+    width: 70%;
   }
 
   &__select {

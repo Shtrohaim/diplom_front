@@ -131,6 +131,8 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
 
+  margin: 25px;
+
   &__page-list {
     display: flex;
   }

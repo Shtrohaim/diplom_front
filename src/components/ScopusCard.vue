@@ -4,19 +4,28 @@
     :to="{ name: 'students_id', params: { id: checkId }, query: { doi: publication?.doi } }"
     @click="sendCookie"
   >
-    <h2>{{ publication.title }}</h2>
-    <div>
+    <h2 class="scopus-card__title">{{ publication.title }}</h2>
+    <div class="scopus-card__id-info">
       <p v-if="publication?.issn">ISSN: {{ publication.issn }}</p>
       <p v-if="publication?.eIssn">EISSN: {{ publication.eIssn }}</p>
     </div>
-    <div>
+    <div class="scopus-card__creator-info">
       <p>Автор: {{ publication.creator }}</p>
       <p>Издатель: {{ publication.publisher }}</p>
     </div>
-    <div>
+    <div class="scopus-card__publication-info">
       <p>Вид публикации: {{ publication.subtypeDescription }}</p>
       <p>Количество цитирований: {{ publication['citedby-count'] }}</p>
-      <p>Открытый доступ: {{ publication.openaccessFlag }}</p>
+      <p class="scopus-card__openaccess">
+        Открытый доступ:
+        <svg class="icon28">
+          <use
+            v-if="publication?.openaccessFlag"
+            href="@/assets/images/icon_correct.svg#icon"
+          ></use>
+          <use v-else href="@/assets/images/icon_incorrect.svg#icon"></use>
+        </svg>
+      </p>
     </div>
   </router-link>
 </template>
@@ -57,20 +66,68 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  width: 80%;
+  align-items: center;
+  width: 90%;
 
-  padding: 45px 50px;
-  padding-right: 25px;
-  margin-bottom: 20px;
+  padding: 50px;
+  margin: 0 auto 20px;
 
   border-radius: 2px;
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
   cursor: pointer;
 
+  color: #000000;
+
+  &__title {
+    align-self: center;
+    text-align: center;
+
+    font-size: 22px;
+
+    margin-bottom: 20px;
+  }
+
+  &__id-info {
+    display: flex;
+    justify-content: space-around;
+
+    width: 50%;
+
+    font-size: 18px;
+
+    margin-bottom: 20px;
+  }
+
+  &__creator-info {
+    text-align: center;
+    font-size: 20px;
+
+    margin-bottom: 25px;
+
+    line-height: 30px;
+  }
+
+  &__publication-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+    font-size: 20px;
+  }
+
+  &__openaccess {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-left: 8px;
+    }
+  }
+
   &:hover {
-    width: 85%;
+    width: 91%;
     box-shadow: 0 0 25px rgb(0 0 0 / 0.5);
   }
 }

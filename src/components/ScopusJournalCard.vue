@@ -4,8 +4,10 @@
     <p class="journal-card__info">Название: {{ publisherInfo.title }}</p>
     <p class="journal-card__info">Тип издателя: {{ publisherInfo.aggregationType }}</p>
     <p class="journal-card__info">Публикуется в {{ publisherInfo.publisher }}</p>
-    <p v-if="publisherInfo?.eIssn" class="journal-card__info">EISSN: {{ publisherInfo.eIssn }}</p>
-    <p v-if="publisherInfo?.issn" class="journal-card__info">ISSN: {{ publisherInfo.issn }}</p>
+    <div class="journal-card__id-wrapper">
+      <p v-if="publisherInfo?.eIssn" class="journal-card__info">EISSN: {{ publisherInfo.eIssn }}</p>
+      <p v-if="publisherInfo?.issn" class="journal-card__info">ISSN: {{ publisherInfo.issn }}</p>
+    </div>
     <p class="journal-card__info">Отрасль знаний: {{ publisherInfo['subject-area'][0]['$'] }}</p>
     <p v-if="publisherInfo?.['subject-area'].length > 1" class="journal-card__info">
       Подотрасль:
@@ -51,10 +53,7 @@ export default defineComponent({
 .journal-card {
   width: 400px;
 
-  padding-top: 40px;
-  padding-bottom: 55px;
-  padding-left: 40px;
-  padding-right: 20px;
+  padding: 40px 20px 55px 90px;
 
   background-color: #ffffff;
 
@@ -67,6 +66,14 @@ export default defineComponent({
     text-align: center;
 
     font-size: 26px;
+
+    transform: translateX(-5%);
+  }
+
+  &__id-wrapper {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
   }
 
   &__info {
@@ -91,10 +98,11 @@ export default defineComponent({
   &__link {
     display: block;
 
-    margin-top: 40px;
+    margin-top: 35px;
     font-size: 26px;
 
-    color: #486ef2;
+    text-align: center;
+    transform: translateX(-5%);
   }
 }
 </style>
