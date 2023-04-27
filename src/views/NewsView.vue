@@ -1,7 +1,7 @@
 <template>
-  <div class="news">
-    <h1 class="news__title">{{ news.title }}</h1>
-    <div class="news__date">
+  <div class="news content">
+    <h3 class="news__title h_lg">{{ news.title }}</h3>
+    <div class="news__date p_sm">
       Дата публикации: <span>{{ news.date }}</span>
     </div>
     <Swiper
@@ -32,13 +32,13 @@
       :class="{ 'news__text-content--no-image': news.image_url?.length === 0 }"
     >
       <p
-        class="news__paragraph"
+        class="news__paragraph p_md"
         v-for="paragraph in news.description"
         :key="paragraph"
         v-html="paragraph"
       ></p>
     </div>
-    <div>
+    <div class="news__source p_md">
       Источник:
       <a :href="news.url">{{ news.url }}</a>
     </div>
@@ -107,24 +107,20 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .news {
   width: 100%;
 
   &__title {
-    font-size: 28px;
-
-    margin-bottom: 8px;
+    text-align: center;
+    margin: 0 auto 8px;
   }
 
   &__image {
     display: block;
     float: left;
 
-    margin-top: 20px;
-    margin-right: 40px;
-    margin-bottom: 10px;
-    margin-left: 25%;
+    margin: 40px 40px 10px 15%;
 
     width: 400px;
 
@@ -132,12 +128,9 @@ export default defineComponent({
   }
 
   &__text-content {
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 50px;
+    width: 70%;
+    margin: 50px auto 0;
     text-align: left;
-
-    font-size: 24px;
 
     &--no-image {
       margin-top: 0;
@@ -149,6 +142,7 @@ export default defineComponent({
   }
 
   &__date {
+    text-align: center;
     span {
       text-transform: lowercase;
     }
@@ -156,8 +150,7 @@ export default defineComponent({
 
   &__list-item {
     width: 55%;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
   }
 
   &__pagination {
@@ -166,6 +159,9 @@ export default defineComponent({
 
   &__swiper {
     padding-bottom: 40px;
+
+    margin-top: 40px;
+
     width: 70%;
 
     .swiper-pagination-bullet-active {
@@ -183,6 +179,10 @@ export default defineComponent({
 
   &__swiper-slide {
     align-self: center;
+  }
+
+  &__source {
+    text-align-last: end;
   }
 }
 </style>

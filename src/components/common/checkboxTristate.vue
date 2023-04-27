@@ -56,7 +56,7 @@ export default defineComponent({
   transition: 0.3s linear;
 
   border-radius: 4px;
-  border: 3px solid #d1d5db;
+  border: 3px solid $gray-light;
 
   background: transparent;
 
@@ -69,7 +69,7 @@ export default defineComponent({
     left: 50%;
     width: 20px;
     height: 3px;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 4px;
     transition: 0.2s linear 0.2s;
   }
@@ -84,7 +84,7 @@ export default defineComponent({
 
   &--negative {
     border: none;
-    background: #f24848;
+    background: $red;
 
     &::before {
       display: inline;
@@ -99,7 +99,7 @@ export default defineComponent({
 
   &--positive {
     border: none;
-    background: #486ef2;
+    background: $primary;
     transition: 0.2s linear 0.2s;
 
     &::before {

@@ -1,5 +1,5 @@
 <template>
-  <div class="news">
+  <div class="news content">
     <div class="news__filter">
       <base-search class="news__search" />
     </div>
@@ -81,20 +81,17 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .news {
   &__list-item {
-    width: 55%;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    width: 65%;
+    margin: 0 auto 10px;
   }
 
   &__filter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 500px;
 
-    margin-bottom: 40px;
+    margin: 0 auto 40px;
   }
 
   &__not-found {

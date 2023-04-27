@@ -40,12 +40,9 @@ export default defineComponent({
 .article-card {
   width: 400px;
 
-  padding-top: 40px;
-  padding-bottom: 55px;
-  padding-left: 40px;
-  padding-right: 20px;
+  padding: 40px 20px 55px 40px;
 
-  background-color: #ffffff;
+  background-color: $white;
 
   border-radius: 2px;
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);

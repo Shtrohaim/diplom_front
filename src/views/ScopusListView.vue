@@ -1,6 +1,6 @@
 <template>
   <div
-    class="scopus-list"
+    class="scopus-list content"
     :class="{ 'scopus-list--no-publication': publications.length === 0 }"
     v-if="Object.keys(subjectsList).length > 0"
   >
@@ -20,7 +20,7 @@
           PUBLISHER: 'Издатель'
         }"
       />
-      <label class="scopus-list__open-filter">
+      <label class="scopus-list__open-filter p_sm">
         {{ hasFilter ? 'Скрыть фильтр' : 'Показать фильтр' }}
         <input class="visually-hidden" type="checkbox" v-model="hasFilter" />
       </label>
@@ -102,7 +102,7 @@ export default defineComponent({
           totalPages.value = res.data.totalPages
           isLoading.value = false
         })
-        .catch((err) => {
+        .catch(() => {
           isLoading.value = false
         })
     }
@@ -214,6 +214,8 @@ export default defineComponent({
     --ms-ring-color: none;
     --ms-option-bg-selected: #486ef2;
     --ms-option-bg-selected-pointed: #486ef2;
+    --ms-font-size: 18px;
+    --ms-option-font-size: 18px;
   }
 
   &__filter {

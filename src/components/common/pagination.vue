@@ -135,6 +135,8 @@ export default defineComponent({
 
   &__page-list {
     display: flex;
+
+    font-family: sans-serif;
   }
 
   &__page {
@@ -149,14 +151,14 @@ export default defineComponent({
     padding-left: 10px;
     padding-right: 10px;
 
-    border: 4px solid #486ef2;
+    border: 4px solid $primary;
     border-radius: 1000px;
 
     font-size: 22px;
     font-weight: bold;
 
     color: rgb(255 255 255);
-    background: #486ef2;
+    background: $primary;
 
     &:first-child {
       margin-left: 10px;
@@ -168,12 +170,12 @@ export default defineComponent({
     }
 
     &:active {
-      color: #486ef2;
+      color: $primary;
       background: rgb(255 255 255);
     }
 
     &--active {
-      color: #486ef2;
+      color: $primary;
       background: rgb(255 255 255);
 
       &:hover,

@@ -1,8 +1,8 @@
 <template>
   <div class="subject-card" :class="subjectModifier">
-    <h3 class="subject-card__title">{{ subject }}</h3>
+    <h3 class="subject-card__title h_md">{{ subject }}</h3>
     <a
-      class="subject-card__link"
+      class="subject-card__link p_sm"
       v-for="(value, index) in data"
       :key="index"
       :href="value"
@@ -82,8 +82,7 @@ export default defineComponent({
   align-items: flex-end;
   width: 100%;
 
-  padding: 45px 50px;
-  padding-right: 25px;
+  padding: 35px 35px 45px 35px;
   margin-bottom: 20px;
 
   border-radius: 2px;

@@ -57,7 +57,7 @@ export default defineComponent({
   padding-top: 20px;
   padding-bottom: 20px;
 
-  background-color: #ffffff;
+  background-color: $white;
   border-radius: 4px;
 
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
@@ -93,9 +93,9 @@ export default defineComponent({
     padding-top: 6px;
     padding-right: 15px;
 
-    color: #ffffff;
+    color: $white;
 
-    background-color: #486ef2;
+    background-color: $primary;
     text-align: end;
 
     font-size: 12px;

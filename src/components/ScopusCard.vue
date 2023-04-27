@@ -4,16 +4,16 @@
     :to="{ name: 'students_id', params: { id: checkId }, query: { doi: publication?.doi } }"
     @click="sendCookie"
   >
-    <h2 class="scopus-card__title">{{ publication.title }}</h2>
-    <div class="scopus-card__id-info">
+    <h2 class="scopus-card__title h_md">{{ publication.title }}</h2>
+    <div class="scopus-card__id-info p_sm">
       <p v-if="publication?.issn">ISSN: {{ publication.issn }}</p>
       <p v-if="publication?.eIssn">EISSN: {{ publication.eIssn }}</p>
     </div>
-    <div class="scopus-card__creator-info">
+    <div class="scopus-card__creator-info p_md">
       <p>Автор: {{ publication.creator }}</p>
       <p>Издатель: {{ publication.publisher }}</p>
     </div>
-    <div class="scopus-card__publication-info">
+    <div class="scopus-card__publication-info p_sm">
       <p>Вид публикации: {{ publication.subtypeDescription }}</p>
       <p>Количество цитирований: {{ publication['citedby-count'] }}</p>
       <p class="scopus-card__openaccess">
@@ -77,13 +77,11 @@ export default defineComponent({
 
   cursor: pointer;
 
-  color: #000000;
+  color: $black;
 
   &__title {
     align-self: center;
     text-align: center;
-
-    font-size: 22px;
 
     margin-bottom: 20px;
   }
@@ -94,15 +92,11 @@ export default defineComponent({
 
     width: 50%;
 
-    font-size: 18px;
-
     margin-bottom: 20px;
   }
 
   &__creator-info {
     text-align: center;
-    font-size: 20px;
-
     margin-bottom: 25px;
 
     line-height: 30px;
@@ -114,7 +108,6 @@ export default defineComponent({
     align-items: center;
 
     width: 100%;
-    font-size: 20px;
   }
 
   &__openaccess {

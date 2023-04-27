@@ -1,37 +1,52 @@
 <template>
-  <div class="main">
+  <div class="main content">
     <nav class="main__navigation">
       <figure class="main__news">
-        <figcaption class="main__news-caption">Новости образования</figcaption>
+        <figcaption class="main__news-caption h_lg">Новости образования</figcaption>
         <ul class="main__news-list">
-          <li class="main__news-list-item main__news-list-item--minobr">
-            <router-link :to="{ name: 'region_news', params: { tableName: 'news_rus_mno' } }">
-              <h2 class="main__route">Министерство науки и высшего образования РФ</h2>
+          <li>
+            <router-link
+              class="main__news-list-item main__news-list-item--minobr"
+              :to="{ name: 'region_news', params: { tableName: 'news_rus_mno' } }"
+            >
+              <h2 class="main__route h_md">Министерство науки и высшего образования РФ</h2>
             </router-link>
           </li>
-          <li class="main__news-list-item main__news-list-item--minpros">
-            <router-link :to="{ name: 'region_news', params: { tableName: 'news_rus_minprof' } }">
-              <h2 class="main__route">Министерство просвещения РФ</h2>
+          <li>
+            <router-link
+              class="main__news-list-item main__news-list-item--minpros"
+              :to="{ name: 'region_news', params: { tableName: 'news_rus_minprof' } }"
+            >
+              <h2 class="main__route h_md">Министерство просвещения РФ</h2>
             </router-link>
           </li>
-          <li class="main__news-list-item main__news-list-item--regions">
-            <router-link :to="{ name: 'regions_list' }">
-              <h2 class="main__route">Регионы</h2>
+          <li>
+            <router-link
+              class="main__news-list-item main__news-list-item--regions"
+              :to="{ name: 'regions_list' }"
+            >
+              <h2 class="main__route h_md">Регионы</h2>
             </router-link>
           </li>
         </ul>
       </figure>
       <figure class="main__services">
-        <figcaption class="main__services-caption">Информация и сервисы</figcaption>
+        <figcaption class="main__services-caption h_lg">Информация и сервисы</figcaption>
         <ul class="main__services-list">
-          <li class="main__services-list-item main__services-list-item--school">
-            <router-link :to="{ name: 'school' }">
-              <h2 class="main__route">Школьникам</h2>
+          <li>
+            <router-link
+              class="main__services-list-item main__services-list-item--school"
+              :to="{ name: 'school' }"
+            >
+              <h2 class="main__route h_md">Школьникам</h2>
             </router-link>
           </li>
-          <li class="main__services-list-item main__services-list-item--student">
-            <router-link :to="{ name: 'students' }">
-              <h2 class="main__route">Студентам</h2>
+          <li>
+            <router-link
+              class="main__services-list-item main__services-list-item--student"
+              :to="{ name: 'students' }"
+            >
+              <h2 class="main__route h_md">Студентам</h2>
             </router-link>
           </li>
         </ul>
@@ -54,13 +69,9 @@ export default defineComponent({
     display: flex;
     align-items: center;
 
-    height: 320px;
+    height: 330px;
 
     margin-bottom: 55px;
-  }
-
-  &__news-caption {
-    font-size: 36px;
   }
 
   &__news-list {
@@ -70,6 +81,7 @@ export default defineComponent({
 
   &__news-list-item {
     position: relative;
+    display: block;
 
     width: 360px;
     height: 100%;
@@ -117,22 +129,19 @@ export default defineComponent({
 
     transform: translateX(50%);
 
-    font-size: 18px;
     width: 300px;
+
+    color: $black;
   }
 
   &__services {
     display: flex;
     align-items: center;
 
-    height: 250px;
+    height: 270px;
     width: 100%;
 
     text-align: center;
-  }
-
-  &__services-caption {
-    font-size: 32px;
   }
 
   &__services-list {
@@ -144,6 +153,7 @@ export default defineComponent({
 
   &__services-list-item {
     position: relative;
+    display: block;
 
     width: 340px;
     height: 100%;

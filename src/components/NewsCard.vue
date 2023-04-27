@@ -4,12 +4,7 @@
     :to="{ name: 'news', params: { tableName: route.params.tableName, id: news?.id } }"
   >
     <div class="news-card__info-wrapper">
-      <img
-        v-if="news?.image_url"
-        :src="news.image_url"
-        class="news-card__image"
-        :alt="news.title"
-      />
+      <img v-if="news?.image_url" :src="news.image_url" class="news-card__image" />
       <div class="news-card__date" :class="{ 'news-card__date--no-image': !news?.image_url }">
         <p class="news-card__date-day">
           {{ getDayGeneralFormat(news.date.replace(/(\r\n\t|\n|\r|\t)/gm, '').trim()) }}
@@ -20,8 +15,8 @@
       </div>
     </div>
     <div class="news-card__text-content">
-      <h3 class="news-card__title">{{ news.title }}</h3>
-      <p class="news-card__description">{{ news.teaser }}</p>
+      <h3 class="news-card__title h_md">{{ news.title }}</h3>
+      <p class="news-card__description p_sm">{{ news.teaser }}</p>
     </div>
   </router-link>
 </template>
@@ -54,7 +49,7 @@ export default defineComponent({
   width: 100%;
   border-radius: 4px;
 
-  background-color: rgb(255 255 255);
+  background-color: $white;
 
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
   cursor: pointer;
@@ -69,15 +64,14 @@ export default defineComponent({
     position: absolute;
     top: -2px;
     left: -3px;
-
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
 
     border-radius: 0 10px 0 10px;
 
-    padding: 5px;
+    padding: 10px;
 
-    color: rgb(255 255 255);
+    color: $white;
     background: linear-gradient(
       150deg,
       rgb(72 110 242) 0%,
@@ -97,16 +91,18 @@ export default defineComponent({
   }
 
   &__date-day {
+    font-family: sans-serif;
     font-size: 24px;
   }
 
   &__date-month {
-    font-size: 18px;
+    font-size: 22px;
+    font-weight: 600;
   }
 
   &__image {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
 
     border-radius: 2px;
 
@@ -119,9 +115,11 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
 
-    margin-left: 30px;
+    margin-left: 45px;
 
     width: 80%;
+
+    color: $black;
   }
 
   &__title {
@@ -143,6 +141,7 @@ export default defineComponent({
     box-orient: vertical;
 
     text-align: left;
+    color: $black;
 
     &::before {
       content: '';

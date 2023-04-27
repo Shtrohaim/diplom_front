@@ -8,7 +8,7 @@
       :src="`http://localhost:3000/img/${region?.img}`"
       :alt="`Герб ${region?.name}`"
     />
-    <h3>{{ region.name }}</h3>
+    <h3 class="h_sm region-card__name">{{ region.name }}</h3>
   </router-link>
 </template>
 
@@ -39,6 +39,8 @@ export default defineComponent({
   width: 95%;
   padding: 20px;
 
+  color: $black;
+
   order: 999;
 
   border-radius: 2px;
@@ -50,6 +52,11 @@ export default defineComponent({
 
   &__image {
     width: 100px;
+    margin-bottom: 20px;
+  }
+
+  &__name {
+    text-align: center;
   }
 
   &:hover {

@@ -1,5 +1,5 @@
 <template>
-  <div class="regions">
+  <div class="regions content">
     <input
       class="regions__search-bar"
       type="text"

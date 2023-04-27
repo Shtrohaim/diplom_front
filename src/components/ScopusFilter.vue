@@ -1,7 +1,7 @@
 <template>
   <div class="filter">
     <div class="filter__selector-wrapper">
-      <label class="filter__label">
+      <label class="filter__label p_sm">
         Тип предмета:
         <multi-select
           class="filter__multiselector"
@@ -13,7 +13,7 @@
           placeholder="Выберите предметы"
         />
       </label>
-      <label class="filter__label">
+      <label class="filter__label p_sm">
         Тип источника:
         <multi-select
           class="filter__multiselector"
@@ -25,7 +25,7 @@
           placeholder="Выберите источники"
         />
       </label>
-      <label class="filter__label">
+      <label class="filter__label p_sm">
         Тип публикации:
         <multi-select
           class="filter__multiselector"
@@ -39,7 +39,7 @@
       </label>
     </div>
     <div class="filter__year-wrapper">
-      <label class="filter__label">
+      <label class="filter__label p_sm">
         Опубликован:
         <multi-select
           class="filter__multiselector filter__multiselector--operator"
@@ -48,17 +48,17 @@
           :options="{ equal: 'в', greater: 'после', less: 'до' }"
         />
       </label>
-      <label class="filter__label">
+      <label class="filter__label p_sm">
         <input
           placeholder="Введите год"
-          class="filter__input filter__input--year"
+          class="filter__input filter__input--year p_sm"
           v-model="pubYear['year']"
           type="number"
         />
         {{ declensionWord }}
       </label>
     </div>
-    <label class="filter__label">
+    <label class="filter__label p_sm">
       В открытом доступе:
       <checkbox-tristate class="filter__check-access" v-model="hasOpenAccess" />
     </label>
@@ -237,6 +237,9 @@ export default defineComponent({
     --ms-ring-color: none;
     --ms-option-bg-selected: #486ef2;
     --ms-option-bg-selected-pointed: #486ef2;
+    --ms-font-size: 18px;
+    --ms-option-font-size: 18px;
+    --ms-tag-font-size: 18px;
 
     &--operator {
       width: 170px;
@@ -247,15 +250,14 @@ export default defineComponent({
     min-height: 20px;
     line-height: 20px;
     border-radius: 5px;
-    background: #fff;
+    background: $white;
     transition: border 0.1s ease;
     box-sizing: border-box;
     margin-bottom: 8px;
     vertical-align: top;
 
     padding: 10px;
-    border: 1px solid #d1d5db;
-    font-size: inherit;
+    border: 1px solid $gray-light;
     outline: none;
 
     &--year {
@@ -263,7 +265,7 @@ export default defineComponent({
     }
 
     &--year::placeholder {
-      color: #9ca3af;
+      color: $gray-placeholder;
     }
 
     &--year::-webkit-outer-spin-button,

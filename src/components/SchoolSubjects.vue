@@ -1,7 +1,7 @@
 <template>
   <div class="school-subjects">
-    <h2 class="school-subjects__title">{{ data.title }}</h2>
-    <p class="school-subjects__description">{{ data.description }}</p>
+    <h2 class="school-subjects__title h_lg">{{ data.title }}</h2>
+    <p class="school-subjects__description p_md">{{ data.description }}</p>
     <ul class="school-subjects__list">
       <li class="school-subjects__list-item" v-for="(value, index) in data?.info" :key="index">
         <subject-card class="school-subjects__card" :data="value" :subject="index.toString()" />
@@ -46,9 +46,8 @@ export default defineComponent({
   }
 
   &__description {
-    margin: 0 auto;
     width: 80%;
-    margin-bottom: 50px;
+    margin: 0 auto 50px;
     font-size: 24px;
   }
 }

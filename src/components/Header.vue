@@ -49,7 +49,7 @@ export default defineComponent({
 
     transform: translateY(-50%);
 
-    color: #486ef2;
+    color: $primary;
   }
 
   &__navigation {
@@ -75,9 +75,7 @@ export default defineComponent({
     border: 1px transparent;
     border-radius: 50%;
 
-    background-color: #486ef2;
-    mask-repeat: no-repeat;
-    mask-position: center;
+    background-color: $primary;
 
     cursor: pointer;
 

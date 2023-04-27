@@ -1,5 +1,5 @@
 <template>
-  <div class="scopus-info">
+  <div class="scopus-info content">
     <scopus-article-card class="scopus-info__article-card" />
     <scopus-score-card :publisherInfo="publisherInfo" class="scopus-info__score-card" />
     <scopus-coverage-card :publisherInfo="publisherInfo" class="scopus-info__coverage-card" />
@@ -50,7 +50,6 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 54% 46%;
   grid-row-gap: 20px;
-  padding: 20px;
 
   &__article-card {
     grid-column-start: 1;

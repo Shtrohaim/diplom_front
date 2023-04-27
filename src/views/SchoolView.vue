@@ -1,9 +1,9 @@
 <template>
-  <div class="school-page">
+  <div class="school-page content">
     <nav class="school-page__nav">
       <ul class="school-page__list">
         <li
-          class="school-page__list-item"
+          class="school-page__list-item p_sm"
           :class="{ 'school-page__list-item--active': item.title === this.propData.title }"
           v-for="item in data"
           :key="item.id"
@@ -46,11 +46,7 @@ export default defineComponent({
     }
 
     const tabulation = (item: SchoolData) => {
-      if (typeof item.info !== 'object') {
-        hasInfo.value = true
-      } else {
-        hasInfo.value = false
-      }
+      hasInfo.value = typeof item.info !== 'object'
       propData.value = item
     }
 
@@ -73,13 +69,11 @@ export default defineComponent({
 
   &__nav {
     width: 80%;
-    margin: 0 auto;
-
     text-align: center;
 
     padding: 0;
 
-    margin-bottom: 60px;
+    margin: 0 auto 60px;
   }
 
   &__list-item {
@@ -101,7 +95,7 @@ export default defineComponent({
       box-shadow: 0 15px 20px -5px rgb(0 0 0 / 0.5);
       cursor: default;
 
-      background: #fbfbfb;
+      background: $white;
       z-index: 12;
     }
   }

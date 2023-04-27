@@ -2,9 +2,30 @@
   box-sizing: border-box;
 }
 
+input {
+  font-family: "Cormorant Garamond", sans-serif;
+}
+
+input::-webkit-input-placeholder {
+    font-size: 18px
+}
+
+input:-ms-input-placeholder {
+  font-size: 18px
+}
+
+input:-moz-placeholder {
+  font-size: 18px
+}
+
+input::-moz-placeholder {
+  font-size: 18px
+}
+
 body {
-  font-family: sans-serif;
-  color: #000;
+  font-family: "Cormorant Garamond", sans-serif;
+  color: $black;
+  background-color: $bg-white;
 }
 
 button {
@@ -18,14 +39,12 @@ button {
 
 a {
   text-decoration: none;
-  color: #486ef2;
+  color: $primary;
 }
 
-.container {
-  padding: 0 20px;
-  max-width: 1300px;
-  width: 100%;
-  margin: 0 auto;
+.content {
+  padding: 32px;
+  flex-grow: 1;
 }
 
 .visually-hidden {
@@ -41,9 +60,29 @@ a {
   overflow: hidden;
 }
 
-.content {
-  padding: 64px 0;
-  flex-grow: 1;
+.h_sm {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.h_md {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.h_lg {
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.p_sm {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.p_md {
+  font-size: 28px;
+  font-weight: 400;
 }
 
 .icon28 {
@@ -57,13 +96,13 @@ a {
 }
 
 .fill-white {
-  fill: #ffffff;
+  fill: $white;
 }
 
 .fill-primary {
-  fill: #486ef2;
+  fill: $primary;
 }
 
 .fill-disabled {
-  fill: rgb(160, 160, 160);
+  fill: $gray;
 }

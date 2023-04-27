@@ -30,7 +30,7 @@ export default defineComponent({
 
   padding: 20px;
 
-  background-color: #ffffff;
+  background-color: $white;
 
   border-radius: 2px;
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);

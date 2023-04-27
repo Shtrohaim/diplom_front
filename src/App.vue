@@ -51,7 +51,7 @@ export default defineComponent({
 
   border-radius: 50%;
 
-  background-color: #486ef2;
+  background-color: $primary;
 
   background-image: url('@/assets/images/top_icon.svg');
   background-repeat: no-repeat;

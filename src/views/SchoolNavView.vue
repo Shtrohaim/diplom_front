@@ -1,5 +1,5 @@
 <template>
-  <div class="school-navigation">
+  <div class="school-navigation content">
     <router-link
       class="school-navigation__button school-navigation__button--oge"
       :to="{ name: 'exam', params: { examName: 'oge' } }"
@@ -38,8 +38,8 @@ export default defineComponent({
     margin-bottom: 130px;
 
     font-size: 46px;
-    background-color: #ffffff;
-    color: #486ef2;
+    background-color: $white;
+    color: $primary;
 
     cursor: pointer;
 

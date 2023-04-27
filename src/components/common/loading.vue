@@ -20,10 +20,7 @@ export default defineComponent({
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 
-  margin: auto;
-
-  margin-top: 10vh;
-  margin-bottom: 190vh;
+  margin: 10vh auto 190vh;
 
   @keyframes spin {
     0% {

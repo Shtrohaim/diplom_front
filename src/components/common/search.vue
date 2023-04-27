@@ -2,7 +2,7 @@
   <div class="search">
     <form class="search__form" @submit="search">
       <div class="search__bar">
-        <input ref="searchInput" class="search__input" type="text" placeholder="Искать..." />
+        <input ref="searchInput" class="search__input p_sm" type="text" placeholder="Искать..." />
         <button class="search__form-button"></button>
       </div>
       <div v-if="$route.query.search" @click="dropSearch" class="search__drop">
@@ -84,8 +84,7 @@ export default defineComponent({
     text-align: center;
 
     &::placeholder {
-      font-weight: bold;
-      opacity: 0.4;
+      color: $gray-placeholder;
       text-align: center;
     }
   }
