@@ -7,19 +7,23 @@ input {
 }
 
 input::-webkit-input-placeholder {
-    font-size: 18px
+    font-size: 0.65rem;
+    transform: translateX(0.3rem);
 }
 
 input:-ms-input-placeholder {
-  font-size: 18px
+  font-size: 0.65rem;
+  transform: translateX(0.3rem);
 }
 
 input:-moz-placeholder {
-  font-size: 18px
+  font-size: 0.65rem;
+  transform: translateX(0.3rem);
 }
 
 input::-moz-placeholder {
-  font-size: 18px
+  font-size: 0.65rem;
+  transform: translateX(0.3rem);
 }
 
 body {
@@ -60,28 +64,32 @@ a {
   overflow: hidden;
 }
 
+html {
+  font-size: 28px;
+}
+
 .h_sm {
-  font-size: 22px;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .h_md {
-  font-size: 28px;
+  font-size: 1.08rem;
   font-weight: 600;
 }
 
 .h_lg {
-  font-size: 34px;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
 .p_sm {
-  font-size: 20px;
+  font-size: 0.79rem;
   font-weight: 300;
 }
 
 .p_md {
-  font-size: 28px;
+  font-size: 1rem;
   font-weight: 400;
 }
 

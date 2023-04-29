@@ -1,7 +1,7 @@
 <template>
   <div class="regions content">
     <input
-      class="regions__search-bar"
+      class="regions__search-bar p_sm"
       type="text"
       v-model="search"
       placeholder="Республика Хакасия"
@@ -63,9 +63,11 @@ export default defineComponent({
 
   &__search-bar {
     width: 30%;
-    height: 30px;
+    height: 40px;
 
     margin-bottom: 25px;
+
+    padding: 10px;
 
     border-radius: 100px;
     border-color: rgb(0 102 150);

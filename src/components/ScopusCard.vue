@@ -9,7 +9,7 @@
       <p v-if="publication?.issn">ISSN: {{ publication.issn }}</p>
       <p v-if="publication?.eIssn">EISSN: {{ publication.eIssn }}</p>
     </div>
-    <div class="scopus-card__creator-info p_md">
+    <div class="scopus-card__creator-info p_sm">
       <p>Автор: {{ publication.creator }}</p>
       <p>Издатель: {{ publication.publisher }}</p>
     </div>

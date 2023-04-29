@@ -25,13 +25,11 @@ export default defineComponent({
   &__title {
     text-align: center;
     margin-bottom: 40px;
-    font-size: 28px;
   }
 
   &__description {
     text-align: left;
     margin: 0 auto;
-    font-size: 24px;
     width: 75%;
 
     a {

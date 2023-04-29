@@ -1,13 +1,15 @@
 <template>
   <div v-if="publication.title && $route.query.doi" class="article-card">
-    <h3 class="article-card__title">Информация о публикации</h3>
-    <p class="article-card__info">Название публикации: {{ publication.title }}</p>
-    <p class="article-card__info">Автор: {{ publication.creator }}</p>
-    <p class="article-card__info">DOI: {{ publication.doi }}</p>
-    <p class="article-card__info">Количество цитирований: {{ publication['citedby-count'] }}</p>
-    <p class="article-card__info">Тип публикации: {{ publication.subtypeDescription }}</p>
-    <p class="article-card__info">Том: {{ publication.volume }}</p>
-    <p class="article-card__info">Доступ: {{ openAccessText }}</p>
+    <h3 class="article-card__title h_md">Информация о публикации</h3>
+    <p class="article-card__info p_sm">Название публикации: {{ publication.title }}</p>
+    <p class="article-card__info p_sm">Автор: {{ publication.creator }}</p>
+    <p class="article-card__info p_sm">DOI: {{ publication.doi }}</p>
+    <p class="article-card__info p_sm">
+      Количество цитирований: {{ publication['citedby-count'] }}
+    </p>
+    <p class="article-card__info p_sm">Тип публикации: {{ publication.subtypeDescription }}</p>
+    <p class="article-card__info p_sm">Том: {{ publication.volume }}</p>
+    <p class="article-card__info p_sm">Доступ: {{ openAccessText }}</p>
   </div>
 </template>
 
@@ -51,14 +53,11 @@ export default defineComponent({
     text-align: center;
 
     margin-bottom: 50px;
-
-    font-size: 26px;
   }
 
   &__info {
     margin-bottom: 15px;
 
-    font-size: 22px;
     text-align: left;
     text-indent: 40px;
   }

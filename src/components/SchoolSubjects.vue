@@ -41,14 +41,12 @@ export default defineComponent({
 
   &__title {
     margin-bottom: 40px;
-    font-size: 28px;
     text-align: center;
   }
 
   &__description {
     width: 80%;
     margin: 0 auto 50px;
-    font-size: 24px;
   }
 }
 </style>

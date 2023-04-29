@@ -89,7 +89,7 @@ export default defineComponent({
   }
 
   &__filter {
-    width: 500px;
+    width: 100%;
 
     margin: 0 auto 40px;
   }
@@ -99,8 +99,6 @@ export default defineComponent({
     height: 70vh;
     justify-content: center;
     align-items: center;
-
-    font-size: 26px;
   }
 
   &__pagination {

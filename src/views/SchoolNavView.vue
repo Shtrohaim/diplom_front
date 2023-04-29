@@ -31,17 +31,22 @@ export default defineComponent({
   height: 89vh;
 
   &__button {
-    width: 300px;
-    min-height: 310px;
+    width: 360px;
+    height: 360px;
 
     margin-left: 70px;
     margin-bottom: 130px;
 
-    font-size: 46px;
-    background-color: $white;
-    color: $primary;
+    text-align: center;
 
-    cursor: pointer;
+    background-color: $white;
+    color: $black;
+
+    background-image: url('@/assets/images/exam_icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: 5px;
+    background-size: 300px;
 
     border: 1px transparent;
     border-radius: 4px;

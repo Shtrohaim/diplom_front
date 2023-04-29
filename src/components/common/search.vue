@@ -64,7 +64,12 @@ export default defineComponent({
 
 <style lang="scss">
 .search {
+  width: 100%;
   &__form {
+    display: grid;
+    grid-template-columns: 35% 30% 35%;
+    align-items: center;
+
     margin-right: 10px;
     width: 100%;
   }
@@ -72,14 +77,21 @@ export default defineComponent({
   &__bar {
     position: relative;
     width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: start;
   }
 
   &__input {
     width: 100%;
-    height: 35px;
+    height: 50px;
 
     border-radius: 100px;
     border-color: rgb(0 102 150);
+
+    padding: 10px 45px 10px 20px;
 
     text-align: center;
 
@@ -90,15 +102,26 @@ export default defineComponent({
   }
 
   &__drop {
+    margin-right: 10px;
+
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    justify-self: end;
+
     position: relative;
     display: inline-block;
 
-    padding: 15px 35px 15px 15px;
+    padding: 12px 35px 15px 15px;
 
     border-radius: 25px;
 
     background-color: rgb(72 110 242);
     color: rgb(255 255 255);
+
+    font-size: 20px;
 
     cursor: pointer;
 
@@ -108,7 +131,7 @@ export default defineComponent({
 
     span {
       position: absolute;
-      right: 15px;
+      right: 10px;
       top: 15px;
       width: 10px;
       height: 10px;
@@ -132,14 +155,16 @@ export default defineComponent({
 
   &__form-button {
     position: absolute;
-    top: 3px;
+    top: 50%;
     right: 12px;
+
+    transform: translateY(-50%);
 
     border-radius: 8px;
     border: 0 solid;
 
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 
     background-color: rgba(210 210 210 / 0);
     background-image: url('@/assets/images/search.svg');

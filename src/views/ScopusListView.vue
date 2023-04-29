@@ -1,7 +1,7 @@
 <template>
   <div
     class="scopus-list content"
-    :class="{ 'scopus-list--no-publication': publications.length === 0 }"
+    :class="{ 'scopus-list--no-publication': publications === null || publications?.length === 0 }"
     v-if="Object.keys(subjectsList).length > 0"
   >
     <base-search class="scopus-list__search" :has-filter="true" :filter-data="queryFilter">
@@ -11,14 +11,7 @@
         :canDeselect="false"
         placeholder="Не выбрано"
         v-model="queryFilter.type"
-        :options="{
-          ALL: 'Все',
-          DOI: 'DOI',
-          ISSN: 'ISSN',
-          EISSN: 'EISSN',
-          AUTH: 'Автор',
-          PUBLISHER: 'Издатель'
-        }"
+        :options="searchType"
       />
       <label class="scopus-list__open-filter p_sm">
         {{ hasFilter ? 'Скрыть фильтр' : 'Показать фильтр' }}
@@ -31,10 +24,11 @@
         @filter="getFilter"
       />
     </base-search>
-    <div v-if="route.query.search && publications.length === 0">
-      По вашему запросу {{ route.query.search }}, ничего не найдено!
-    </div>
     <loading-screen v-if="isLoading" />
+    <div class="scopus-list__no-found" v-else-if="route.query.search && publications === null">
+      По вашему запросу {{ route.query.search }}, в категории {{ searchType[route.query.type] }},
+      ничего не найдено!
+    </div>
     <ul v-else class="scopus-list__list">
       <li class="scopus-list__list-item" v-for="item in publications" :key="item.eid">
         <students-scopus-card :publication="item" />
@@ -80,6 +74,14 @@ export default defineComponent({
 
     const publications = ref([] as ScopusListType[])
     const subjectsList = ref({} as { [key: string]: { [key: string]: { abbrev: string } }[] })
+    const searchType = {
+      ALL: 'Все',
+      DOI: 'DOI',
+      ISSN: 'ISSN',
+      EISSN: 'EISSN',
+      AUTH: 'Автор',
+      PUBLISHER: 'Издатель'
+    }
 
     const currentPage = ref(1)
     const size = 25 as number
@@ -98,7 +100,7 @@ export default defineComponent({
       scopusService
         .getScopusData({ size, page, qSearch, qFilter })
         .then((res: ResponseData) => {
-          publications.value = res.data.data
+          publications.value = Object.keys(res.data.data?.[0]).length !== 0 ? res.data.data : null
           totalPages.value = res.data.totalPages
           isLoading.value = false
         })
@@ -150,7 +152,8 @@ export default defineComponent({
       onPagination,
       route,
       subjectsList,
-      queryFilter
+      queryFilter,
+      searchType
     }
   }
 })
@@ -166,34 +169,8 @@ export default defineComponent({
     height: 85vh;
   }
 
-  &__search {
-    width: 100%;
+  &__no-found {
     margin-bottom: 50px;
-    form {
-      display: grid;
-      grid-template-columns: 35% 30% 35%;
-      align-items: center;
-    }
-    .search__bar {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 1;
-      grid-row-end: 2;
-      justify-self: start;
-    }
-
-    .search__drop {
-      width: 180px;
-
-      margin-right: 10px;
-
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 1;
-      grid-row-end: 2;
-
-      justify-self: end;
-    }
   }
 
   &__list {
@@ -201,7 +178,7 @@ export default defineComponent({
   }
 
   &__select {
-    width: 150px;
+    width: 205px;
 
     grid-column-start: 3;
     grid-column-end: 4;
@@ -241,6 +218,7 @@ export default defineComponent({
 
     justify-self: center;
     margin-top: 20px;
+    margin-bottom: 40px;
 
     &:hover {
       opacity: 75%;

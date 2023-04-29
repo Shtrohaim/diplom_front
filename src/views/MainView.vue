@@ -3,13 +3,13 @@
     <nav class="main__navigation">
       <figure class="main__news">
         <figcaption class="main__news-caption h_lg">Новости образования</figcaption>
-        <ul class="main__news-list">
+        <ul class="main__news-list h_sm">
           <li>
             <router-link
               class="main__news-list-item main__news-list-item--minobr"
               :to="{ name: 'region_news', params: { tableName: 'news_rus_mno' } }"
             >
-              <h2 class="main__route h_md">Министерство науки и высшего образования РФ</h2>
+              <h2 class="main__route">Министерство науки и высшего образования РФ</h2>
             </router-link>
           </li>
           <li>
@@ -17,7 +17,7 @@
               class="main__news-list-item main__news-list-item--minpros"
               :to="{ name: 'region_news', params: { tableName: 'news_rus_minprof' } }"
             >
-              <h2 class="main__route h_md">Министерство просвещения РФ</h2>
+              <h2 class="main__route">Министерство просвещения РФ</h2>
             </router-link>
           </li>
           <li>
@@ -25,20 +25,20 @@
               class="main__news-list-item main__news-list-item--regions"
               :to="{ name: 'regions_list' }"
             >
-              <h2 class="main__route h_md">Регионы</h2>
+              <h2 class="main__route">Регионы</h2>
             </router-link>
           </li>
         </ul>
       </figure>
       <figure class="main__services">
         <figcaption class="main__services-caption h_lg">Информация и сервисы</figcaption>
-        <ul class="main__services-list">
+        <ul class="main__services-list h_sm">
           <li>
             <router-link
               class="main__services-list-item main__services-list-item--school"
               :to="{ name: 'school' }"
             >
-              <h2 class="main__route h_md">Школьникам</h2>
+              <h2 class="main__route">Школьникам</h2>
             </router-link>
           </li>
           <li>
@@ -46,7 +46,7 @@
               class="main__services-list-item main__services-list-item--student"
               :to="{ name: 'students' }"
             >
-              <h2 class="main__route h_md">Студентам</h2>
+              <h2 class="main__route">Студентам</h2>
             </router-link>
           </li>
         </ul>

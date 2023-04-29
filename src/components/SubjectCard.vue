@@ -97,7 +97,6 @@ export default defineComponent({
 
   &__title {
     margin-bottom: 32px;
-    font-size: 24px;
   }
 
   &__link {
@@ -108,7 +107,6 @@ export default defineComponent({
 
     margin-bottom: 10px;
 
-    font-size: 20px;
     overflow-wrap: anywhere;
   }
 

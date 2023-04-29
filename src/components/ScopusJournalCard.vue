@@ -1,22 +1,24 @@
 <template>
   <div v-if="publisherInfo?.['subject-area']" class="journal-card">
-    <h3 class="journal-card__title">Информация об издателе</h3>
-    <p class="journal-card__info">Название: {{ publisherInfo.title }}</p>
-    <p class="journal-card__info">Тип издателя: {{ publisherInfo.aggregationType }}</p>
-    <p class="journal-card__info">Публикуется в {{ publisherInfo.publisher }}</p>
-    <div class="journal-card__id-wrapper">
+    <h3 class="journal-card__title h_md">Информация об издателе</h3>
+    <p class="journal-card__info p_sm">Название: {{ publisherInfo.title }}</p>
+    <p class="journal-card__info p_sm">Тип издателя: {{ publisherInfo.aggregationType }}</p>
+    <p class="journal-card__info p_sm">Публикуется в {{ publisherInfo.publisher }}</p>
+    <div class="journal-card__id-wrapper p_sm">
       <p v-if="publisherInfo?.eIssn" class="journal-card__info">EISSN: {{ publisherInfo.eIssn }}</p>
       <p v-if="publisherInfo?.issn" class="journal-card__info">ISSN: {{ publisherInfo.issn }}</p>
     </div>
-    <p class="journal-card__info">Отрасль знаний: {{ publisherInfo['subject-area'][0]['$'] }}</p>
-    <p v-if="publisherInfo?.['subject-area'].length > 1" class="journal-card__info">
+    <p class="journal-card__info p_sm">
+      Отрасль знаний: {{ publisherInfo['subject-area'][0]['$'] }}
+    </p>
+    <p v-if="publisherInfo?.['subject-area'].length > 1" class="journal-card__info p_sm">
       Подотрасль:
       <span v-for="subarea in filteredAreas" :key="subarea['@code']">{{ subarea['$'] }}</span>
     </p>
     <a
       v-if="publisherInfo?.['origin-link']"
       :href="publisherInfo?.['origin-link']"
-      class="journal-card__link"
+      class="journal-card__link p_md"
     >
       Перейти на сайт издателя
     </a>
@@ -65,8 +67,6 @@ export default defineComponent({
 
     text-align: center;
 
-    font-size: 26px;
-
     transform: translateX(-5%);
   }
 
@@ -79,7 +79,6 @@ export default defineComponent({
   &__info {
     margin-bottom: 5px;
 
-    font-size: 22px;
     text-align: left;
 
     span {
@@ -99,7 +98,6 @@ export default defineComponent({
     display: block;
 
     margin-top: 35px;
-    font-size: 26px;
 
     text-align: center;
     transform: translateX(-5%);

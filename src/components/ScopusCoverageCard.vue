@@ -1,7 +1,7 @@
 <template>
   <div v-if="publisherInfo?.coverageEndYear" class="coverage-card">
-    <h3 class="coverage-card__title">Период покрытия Scopus</h3>
-    <div v-if="publisherInfo?.coverageEndYear >= currentYear" class="coverage-card__wrapper">
+    <h3 class="coverage-card__title h_md">Период покрытия Scopus</h3>
+    <div v-if="publisherInfo?.coverageEndYear >= currentYear" class="coverage-card__wrapper p_sm">
       <p>{{ publisherInfo.coverageStartYear }}</p>
       <div class="coverage-card__bar">
         <div class="coverage-card__progress" :style="{ width: progressBar + '%' }">
@@ -10,7 +10,7 @@
       </div>
       <p>{{ publisherInfo.coverageEndYear }}</p>
     </div>
-    <div v-else class="coverage-card__message">Более не поддерживается!</div>
+    <div v-else class="coverage-card__message p_md">Более не поддерживается!</div>
   </div>
 </template>
 
@@ -66,8 +66,6 @@ export default defineComponent({
     margin-bottom: 50px;
 
     text-align: center;
-
-    font-size: 26px;
   }
 
   &__wrapper {
@@ -90,23 +88,18 @@ export default defineComponent({
 
   &__progress {
     height: 100%;
-    padding-top: 6px;
+    padding-top: 1px;
     padding-right: 15px;
 
     color: $white;
+    font-size: 19px;
 
     background-color: $primary;
     text-align: end;
 
-    font-size: 12px;
-
     border-radius: 5px;
 
     z-index: 0;
-  }
-
-  &__message {
-    font-size: 32px;
   }
 }
 </style>
