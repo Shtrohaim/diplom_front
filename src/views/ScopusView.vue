@@ -1,11 +1,19 @@
 <template>
-  <div class="scopus-info content">
-    <scopus-article-card class="scopus-info__article-card" />
+  <div v-if="!isLoading" class="scopus-info content">
+    <scopus-article-card
+      class="scopus-info__article-card"
+      :class="{
+        'scopus-info__article-card--no-publisher': Object.keys(publisherInfo).length === 0
+      }"
+    />
     <scopus-score-card :publisherInfo="publisherInfo" class="scopus-info__score-card" />
     <scopus-coverage-card :publisherInfo="publisherInfo" class="scopus-info__coverage-card" />
     <scopus-journal-card :publisherInfo="publisherInfo" class="scopus-info__journal-card" />
-    <div v-if="Object.keys(publisherInfo).length === 0">Данные об издателе не найдены</div>
+    <div class="scopus-info__publisher-not-found" v-if="Object.keys(publisherInfo).length === 0">
+      Данные об издателе не найдены!
+    </div>
   </div>
+  <loading-screen v-else />
 </template>
 
 <script lang="ts">
@@ -18,10 +26,12 @@ import ScopusJournalCard from '@/components/ScopusJournalCard.vue'
 import scopusService from '@/services/scopusService'
 import type publisherInfoType from '@/types/publisherInfoType'
 import { useRoute } from 'vue-router'
+import LoadingScreen from '@/components/common/loading.vue'
 
 export default defineComponent({
   name: 'ScopusView',
   components: {
+    LoadingScreen,
     ScopusScoreCard,
     ScopusCoverageCard,
     ScopusArticleCard,
@@ -30,17 +40,26 @@ export default defineComponent({
   setup() {
     const publisherInfo = ref({} as publisherInfoType)
     const route = useRoute()
+
+    const isLoading = ref(true)
     const fetchData = () => {
-      scopusService.getScopusIssn(route.params.id).then((res) => {
-        publisherInfo.value = res.data
-      })
+      scopusService
+        .getScopusIssn(route.params.id)
+        .then((res) => {
+          publisherInfo.value = res.data
+          isLoading.value = false
+        })
+        .catch(() => {
+          isLoading.value = false
+        })
     }
 
     onMounted(async () => {
+      isLoading.value = true
       await fetchData()
     })
 
-    return { publisherInfo }
+    return { publisherInfo, isLoading }
   }
 })
 </script>
@@ -60,6 +79,11 @@ export default defineComponent({
     margin: 0 auto;
 
     width: 600px;
+
+    &--no-publisher {
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
   }
 
   &__journal-card {
@@ -71,6 +95,15 @@ export default defineComponent({
     margin: 0 auto;
 
     width: 900px;
+  }
+
+  &__publisher-not-found {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    margin: 50px auto 0;
   }
 
   &__score-card {

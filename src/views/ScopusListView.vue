@@ -135,7 +135,12 @@ export default defineComponent({
         requestFilter.value.PUBYEAR = data.PUBYEAR
         queryFilter.value.pubyear_yr = data.PUBYEAR['year']
         queryFilter.value.pubyear_op = data.PUBYEAR['operator']
+      } else {
+        delete queryFilter.value.pubyear_yr
+        delete queryFilter.value.pubyear_op
       }
+
+      console.log(queryFilter.value)
     }
 
     onMounted(() => {

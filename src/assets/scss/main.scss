@@ -46,9 +46,16 @@ a {
   color: $primary;
 }
 
+html {
+  font-size: 28px;
+}
+
 .content {
+  max-width: 1580px;
+
+  margin: 0 auto;
   padding: 32px;
-  flex-grow: 1;
+
 }
 
 .visually-hidden {
@@ -64,9 +71,6 @@ a {
   overflow: hidden;
 }
 
-html {
-  font-size: 28px;
-}
 
 .h_sm {
   font-size: 0.85rem;

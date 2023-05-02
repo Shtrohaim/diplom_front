@@ -30,8 +30,11 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .school-subjects {
+  display: flex;
+  flex-direction: column;
+
   &__list {
-    columns: 3 450px;
+    columns: 3 430px;
   }
 
   &__list-item {

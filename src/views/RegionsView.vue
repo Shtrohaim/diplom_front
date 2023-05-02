@@ -83,13 +83,12 @@ export default defineComponent({
 
   &__list {
     columns: 4 300px;
-    column-width: 300px;
   }
 
   &__list-item {
-    margin: 0 auto;
     width: 310px;
-    margin-bottom: 15px;
+
+    margin: 0 auto 15px;
   }
 }
 </style>

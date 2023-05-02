@@ -18,42 +18,53 @@
         </li>
       </ul>
     </nav>
-
     <h1 class="header__site-name">ПУПА</h1>
+    <h2 class="header__page-name h_lg">{{ route.meta.title }}</h2>
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 export default defineComponent({
-  name: 'SiteHeader'
+  name: 'SiteHeader',
+  setup() {
+    const route = useRoute()
+    return { route }
+  }
 })
 </script>
 
 <style lang="scss">
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
   align-items: center;
-
-  position: relative;
 
   width: 100%;
   min-height: 80px;
 
-  padding-left: 20px;
+  text-align: center;
+
+  padding: 20px;
 
   &__site-name {
-    position: absolute;
-    top: 50%;
-    right: 120px;
-
-    transform: translateY(-50%);
-
     color: $primary;
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+
+  &__page-name {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
   }
 
   &__navigation {
     padding: 0;
+    grid-column-start: 1;
+    grid-column-end: 2;
   }
 
   &__list {

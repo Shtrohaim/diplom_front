@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, watch } from 'vue'
+import { defineComponent, onMounted, ref, toRefs, watch } from 'vue'
 import type publisherInfoType from '@/types/publisherInfoType'
 
 export default defineComponent({
@@ -41,7 +41,7 @@ export default defineComponent({
       }
     }
 
-    watch(publisherInfo, () => {
+    onMounted(() => {
       progressYears()
     })
 
@@ -52,7 +52,7 @@ export default defineComponent({
 
 <style lang="scss">
 .coverage-card {
-  width: 700px;
+  width: 640px;
 
   padding-top: 20px;
   padding-bottom: 20px;
@@ -100,6 +100,10 @@ export default defineComponent({
     border-radius: 5px;
 
     z-index: 0;
+  }
+
+  &__message {
+    text-align: center;
   }
 }
 </style>

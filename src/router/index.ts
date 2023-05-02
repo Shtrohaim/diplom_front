@@ -29,42 +29,66 @@ const router = createRouter({
     {
       path: '/news/:tableName',
       name: MAIN_NEWS_ROUTE_NAME,
-      component: RegionNewsList
+      component: RegionNewsList,
+      meta: {
+        title: 'Новости'
+      }
     },
     {
       path: '/regions_list',
       name: REGIONS_LIST_ROUTE_NAME,
-      component: RegionsList
+      component: RegionsList,
+      meta: {
+        title: 'Регионы'
+      }
     },
     {
       path: '/region_news/:tableName',
       name: REGION_NEWS_ROUTE_NAME,
-      component: RegionNewsList
+      component: RegionNewsList,
+      meta: {
+        title: 'Новости'
+      }
     },
     {
       path: '/region_news/:tableName/:id',
       name: NEWS_ROUTE_NAME,
-      component: NewsView
+      component: NewsView,
+      meta: {
+        title: 'Новости'
+      }
     },
     {
       path: '/school',
       name: SCHOOL_ROUTE_NAME,
-      component: SchoolNavView
+      component: SchoolNavView,
+      meta: {
+        title: 'Школьникам'
+      }
     },
     {
       path: '/school/:examName',
       name: EXAM_ROUTE_NAME,
-      component: SchoolView
+      component: SchoolView,
+      meta: {
+        title: 'Школьникам'
+      }
     },
     {
       path: '/students',
       name: SCOPUS_LIST_ROUTE_NAME,
-      component: ScopusListView
+      component: ScopusListView,
+      meta: {
+        title: 'Студентам'
+      }
     },
     {
       path: '/students/:id',
       name: SCOPUS_ROUTE_NAME,
-      component: ScopusView
+      component: ScopusView,
+      meta: {
+        title: 'Студентам'
+      }
     }
   ]
 })

@@ -4,13 +4,14 @@
       class="school-navigation__button school-navigation__button--oge"
       :to="{ name: 'exam', params: { examName: 'oge' } }"
     >
-      ОГЭ
+      <h3 class="school-navigation__name h_lg">ОГЭ</h3>
     </router-link>
     <router-link
       class="school-navigation__button"
       :to="{ name: 'exam', params: { examName: 'ege' } }"
-      >ЕГЭ</router-link
     >
+      <h3 class="school-navigation__name h_lg">ЕГЭ</h3>
+    </router-link>
   </div>
 </template>
 
@@ -30,9 +31,20 @@ export default defineComponent({
 
   height: 89vh;
 
+  &__name {
+    position: absolute;
+    bottom: 20px;
+    right: 50%;
+
+    transform: translateX(50%);
+  }
+
   &__button {
-    width: 360px;
-    height: 360px;
+    position: relative;
+    display: block;
+
+    width: 320px;
+    height: 320px;
 
     margin-left: 70px;
     margin-bottom: 130px;
@@ -42,14 +54,14 @@ export default defineComponent({
     background-color: $white;
     color: $black;
 
-    background-image: url('@/assets/images/exam_icon.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-position-y: 5px;
-    background-size: 300px;
-
     border: 1px transparent;
     border-radius: 4px;
+
+    background-image: url('@/assets/images/ege_icon.png');
+    background-position: center;
+    background-position-y: 35px;
+    background-repeat: no-repeat;
+    background-size: 200px;
 
     box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
@@ -58,6 +70,7 @@ export default defineComponent({
     }
 
     &--oge {
+      background-image: url('@/assets/images/oge_icon.png');
       margin-left: 0;
     }
   }
