@@ -52,10 +52,9 @@ export default defineComponent({
 
 <style lang="scss">
 .coverage-card {
-  width: 640px;
+  width: 100%;
 
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
 
   background-color: $white;
   border-radius: 4px;
@@ -66,6 +65,10 @@ export default defineComponent({
     margin-bottom: 50px;
 
     text-align: center;
+
+    @media (max-width: 1024px) {
+      margin-bottom: 35px;
+    }
   }
 
   &__wrapper {

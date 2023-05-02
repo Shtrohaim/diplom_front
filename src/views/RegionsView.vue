@@ -62,7 +62,8 @@ export default defineComponent({
   align-items: center;
 
   &__search-bar {
-    width: 30%;
+    width: 100%;
+    max-width: 500px;
     height: 40px;
 
     margin-bottom: 25px;
@@ -73,6 +74,10 @@ export default defineComponent({
     border-color: rgb(0 102 150);
 
     text-align: center;
+
+    @media (max-width: 1024px) {
+      max-width: 400px;
+    }
 
     &::placeholder {
       font-weight: bold;

@@ -72,6 +72,10 @@ export default defineComponent({
 
     margin-right: 10px;
     width: 100%;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 27% 46% 27%;
+    }
   }
 
   &__bar {

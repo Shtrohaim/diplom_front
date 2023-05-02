@@ -53,7 +53,7 @@ export default defineComponent({
 
 <style lang="scss">
 .journal-card {
-  width: 400px;
+  width: 100%;
 
   padding: 40px 20px 55px 90px;
 
@@ -62,12 +62,20 @@ export default defineComponent({
   border-radius: 2px;
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
+  @media (max-width: 1024px) {
+    padding: 30px 10px 25px 60px;
+  }
+
   &__title {
     margin-bottom: 50px;
 
     text-align: center;
 
     transform: translateX(-5%);
+
+    @media (max-width: 1024px) {
+      margin-bottom: 35px;
+    }
   }
 
   &__id-wrapper {

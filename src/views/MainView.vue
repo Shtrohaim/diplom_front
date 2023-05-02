@@ -72,11 +72,19 @@ export default defineComponent({
     height: 330px;
 
     margin-bottom: 55px;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+    }
   }
 
   &__news-list {
     display: flex;
     height: 100%;
+
+    @media (max-width: 1024px) {
+      margin-top: 50px;
+    }
   }
 
   &__news-list-item {
@@ -99,22 +107,38 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-position-x: center;
 
+    @media (max-width: 1024px) {
+      width: 300px;
+    }
+
     &--minobr {
       background-image: url('@/assets/images/minobr_icon.png');
       background-size: 220px;
       background-position-y: 10px;
+
+      @media (max-width: 1024px) {
+        background-size: 160px;
+      }
     }
 
     &--minpros {
       background-image: url('@/assets/images/minpros_icon.png');
       background-position-y: 20px;
       background-size: 250px;
+
+      @media (max-width: 1024px) {
+        background-size: 190px;
+      }
     }
 
     &--regions {
       background-size: 330px;
       background-position-y: 55px;
       background-image: url('@/assets/images/regions_icon.png');
+
+      @media (max-width: 1024px) {
+        background-size: 270px;
+      }
     }
 
     &:hover {
@@ -142,6 +166,10 @@ export default defineComponent({
     width: 100%;
 
     text-align: center;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+    }
   }
 
   &__services-list {
@@ -149,6 +177,10 @@ export default defineComponent({
     justify-content: center;
     height: 100%;
     width: 100%;
+
+    @media (max-width: 1024px) {
+      margin-top: 50px;
+    }
   }
 
   &__services-list-item {
@@ -169,16 +201,28 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-position-x: center;
 
+    @media (max-width: 1024px) {
+      width: 270px;
+    }
+
     &--school {
       background-image: url('@/assets/images/school.png');
       background-size: 180px;
       background-position-y: 20px;
+
+      @media (max-width: 1024px) {
+        background-size: 110px;
+      }
     }
 
     &--student {
       background-image: url('@/assets/images/student.png');
       background-position-y: 15px;
       background-size: 190px;
+
+      @media (max-width: 1024px) {
+        background-size: 130px;
+      }
     }
 
     &:hover {

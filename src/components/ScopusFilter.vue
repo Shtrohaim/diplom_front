@@ -242,7 +242,7 @@ export default defineComponent({
     --ms-tag-font-size: 18px;
 
     &--operator {
-      width: 180px;
+      max-width: 180px;
     }
   }
 

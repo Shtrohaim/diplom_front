@@ -39,8 +39,16 @@ export default defineComponent({
 
   text-align: center;
 
+  @media (max-width: 1024px) {
+    padding: 30px 30px 15px 30px;
+  }
+
   &__title {
     margin-bottom: 50px;
+
+    @media (max-width: 1024px) {
+      margin-bottom: 35px;
+    }
   }
 
   &__info {

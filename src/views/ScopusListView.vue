@@ -179,7 +179,12 @@ export default defineComponent({
   }
 
   &__list {
-    width: 70%;
+    width: 100%;
+    max-width: 1200px;
+
+    @media (max-width: 1024px) {
+      max-width: 900px;
+    }
   }
 
   &__select {

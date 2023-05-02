@@ -46,9 +46,6 @@ export default defineComponent({
     width: 320px;
     height: 320px;
 
-    margin-left: 70px;
-    margin-bottom: 130px;
-
     text-align: center;
 
     background-color: $white;
@@ -71,7 +68,7 @@ export default defineComponent({
 
     &--oge {
       background-image: url('@/assets/images/oge_icon.png');
-      margin-left: 0;
+      margin-right: 70px;
     }
   }
 }

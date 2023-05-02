@@ -70,6 +70,11 @@ export default defineComponent({
   grid-template-columns: 54% 46%;
   grid-row-gap: 20px;
 
+  @media (max-width: 1024px) {
+    grid-template-columns: 50% 50%;
+    grid-row-gap: 15px;
+  }
+
   &__article-card {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -78,11 +83,15 @@ export default defineComponent({
 
     margin: 0 auto;
 
-    width: 600px;
+    max-width: 600px;
 
     &--no-publisher {
       grid-column-start: 1;
       grid-column-end: 4;
+    }
+
+    @media (max-width: 1024px) {
+      max-width: 420px;
     }
   }
 
@@ -94,7 +103,11 @@ export default defineComponent({
 
     margin: 0 auto;
 
-    width: 900px;
+    max-width: 900px;
+
+    @media (max-width: 1024px) {
+      max-width: 800px;
+    }
   }
 
   &__publisher-not-found {
@@ -106,12 +119,25 @@ export default defineComponent({
     margin: 50px auto 0;
   }
 
-  &__score-card {
-    margin: 0 auto;
+  &__coverage-card {
+    max-width: 650px;
+
+    margin-left: 20px;
+
+    @media (max-width: 1024px) {
+      margin-left: 10px;
+
+      max-width: 480px;
+    }
   }
 
-  &__journal-card {
+  &__score-card {
     margin: 0 auto;
+    max-width: 600px;
+
+    @media (max-width: 1024px) {
+      max-width: 350px;
+    }
   }
 }
 </style>

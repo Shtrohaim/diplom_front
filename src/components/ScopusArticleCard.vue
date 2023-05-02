@@ -40,7 +40,7 @@ export default defineComponent({
 
 <style lang="scss">
 .article-card {
-  width: 400px;
+  width: 100%;
 
   padding: 40px 20px 55px 40px;
 
@@ -49,10 +49,18 @@ export default defineComponent({
   border-radius: 2px;
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
+  @media (max-width: 1024px) {
+    padding: 30px 10px 25px 30px;
+  }
+
   &__title {
     text-align: center;
 
     margin-bottom: 50px;
+
+    @media (max-width: 1024px) {
+      margin-bottom: 35px;
+    }
   }
 
   &__info {

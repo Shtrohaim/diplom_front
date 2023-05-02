@@ -84,8 +84,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 .news {
   &__list-item {
-    width: 65%;
+    width: 100%;
+    max-width: 1000px;
     margin: 0 auto 10px;
+
+    @media (max-width: 1024px) {
+      max-width: 800px;
+    }
   }
 
   &__filter {
