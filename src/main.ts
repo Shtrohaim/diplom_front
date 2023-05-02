@@ -1,6 +1,20 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import VueCookies from 'vue3-cookies'
 
-createApp(App).use(store).use(router).mount('#app')
+import '../src/assets/scss/style.scss'
+
+const app = createApp(App)
+app.use(router)
+app.use(VueCookies)
+
+app.use(VueCookies, {
+  expireTimes: '3d',
+  path: '/',
+  domain: '',
+  secure: true,
+  sameSite: 'None'
+})
+
+app.mount('#app')

@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: "Cormorant Garamond", sans-serif;
+}
+
+input::-webkit-input-placeholder {
+    font-size: 0.65rem;
+    transform: translateX(0.3rem);
+}
+
+input:-ms-input-placeholder {
+  font-size: 0.65rem;
+  transform: translateX(0.3rem);
+}
+
+input:-moz-placeholder {
+  font-size: 0.65rem;
+  transform: translateX(0.3rem);
+}
+
+input::-moz-placeholder {
+  font-size: 0.65rem;
+  transform: translateX(0.3rem);
+}
+
+body {
+  font-family: "Cormorant Garamond", sans-serif;
+  color: $black;
+  background-color: $bg-white;
+}
+
+button {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: $primary;
+}
+
+html {
+  font-size: 28px;
+}
+
+.content {
+  max-width: 1580px;
+
+  margin: 0 auto;
+  padding: 32px;
+
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+
+.h_sm {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.h_md {
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.h_lg {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.p_sm {
+  font-size: 0.79rem;
+  font-weight: 300;
+}
+
+.p_md {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.icon28 {
+  width: 28px;
+  height: 28px;
+}
+
+.icon36 {
+  width: 36px;
+  height: 36px;
+}
+
+.fill-white {
+  fill: $white;
+}
+
+.fill-primary {
+  fill: $primary;
+}
+
+.fill-disabled {
+  fill: $gray;
+}
