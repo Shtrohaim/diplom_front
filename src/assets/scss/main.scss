@@ -52,6 +52,10 @@ html {
   @media (max-width: 1024px)  {
     font-size: 24px;
   }
+
+  @media (max-width: 769px)  {
+    font-size: 20px;
+  }
 }
 
 
@@ -66,6 +70,10 @@ html {
     padding: 26px;
   }
 
+  @media (max-width: 769px)  {
+    max-width: 749px;
+    padding: 20px;
+  }
 }
 
 .visually-hidden {

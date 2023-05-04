@@ -122,7 +122,9 @@ export default defineComponent({
 
     margin: 40px 40px 10px 15%;
 
-    width: 400px;
+    width: 35%;
+    max-width: 400px;
+    min-width: 200px;
 
     cursor: pointer;
   }

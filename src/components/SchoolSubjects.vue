@@ -35,11 +35,19 @@ export default defineComponent({
 
   &__list {
     columns: 3 430px;
+
+    @media (max-width: 769px) {
+      column-width: 330px;
+    }
   }
 
   &__list-item {
     width: 450px;
     margin: 0 auto;
+
+    @media (max-width: 769px) {
+      width: 350px;
+    }
   }
 
   &__title {

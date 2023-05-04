@@ -61,6 +61,10 @@ export default defineComponent({
 
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
+  @media (max-width: 769px) {
+    padding: 15px;
+  }
+
   &__title {
     margin-bottom: 50px;
 
@@ -87,6 +91,10 @@ export default defineComponent({
     border-radius: 10px;
 
     z-index: 10;
+
+    @media (max-width: 769px) {
+      height: 20px;
+    }
   }
 
   &__progress {
@@ -103,6 +111,11 @@ export default defineComponent({
     border-radius: 5px;
 
     z-index: 0;
+
+    @media (max-width: 769px) {
+      padding-top: 0;
+      font-size: 12px;
+    }
   }
 
   &__message {

@@ -4,25 +4,25 @@
       <figure class="main__news">
         <figcaption class="main__news-caption h_lg">Новости образования</figcaption>
         <ul class="main__news-list h_sm">
-          <li>
+          <li class="main__news-list-item">
             <router-link
-              class="main__news-list-item main__news-list-item--minobr"
+              class="main__news-card main__news-card--minobr"
               :to="{ name: 'region_news', params: { tableName: 'news_rus_mno' } }"
             >
               <h2 class="main__route">Министерство науки и высшего образования РФ</h2>
             </router-link>
           </li>
-          <li>
+          <li class="main__news-list-item">
             <router-link
-              class="main__news-list-item main__news-list-item--minpros"
+              class="main__news-card main__news-card--minpros"
               :to="{ name: 'region_news', params: { tableName: 'news_rus_minprof' } }"
             >
               <h2 class="main__route">Министерство просвещения РФ</h2>
             </router-link>
           </li>
-          <li>
+          <li class="main__news-list-item">
             <router-link
-              class="main__news-list-item main__news-list-item--regions"
+              class="main__news-card main__news-card--regions"
               :to="{ name: 'regions_list' }"
             >
               <h2 class="main__route">Регионы</h2>
@@ -33,17 +33,17 @@
       <figure class="main__services">
         <figcaption class="main__services-caption h_lg">Информация и сервисы</figcaption>
         <ul class="main__services-list h_sm">
-          <li>
+          <li class="main__services-list-item">
             <router-link
-              class="main__services-list-item main__services-list-item--school"
+              class="main__services-card main__services-card--school"
               :to="{ name: 'school' }"
             >
               <h2 class="main__route">Школьникам</h2>
             </router-link>
           </li>
-          <li>
+          <li class="main__services-list-item">
             <router-link
-              class="main__services-list-item main__services-list-item--student"
+              class="main__services-card main__services-card--student"
               :to="{ name: 'students' }"
             >
               <h2 class="main__route">Студентам</h2>
@@ -69,17 +69,25 @@ export default defineComponent({
     display: flex;
     align-items: center;
 
-    height: 330px;
+    height: 300px;
 
     margin-bottom: 55px;
 
     @media (max-width: 1024px) {
       flex-direction: column;
+      height: 340px;
+    }
+
+    @media (max-width: 769px) {
+      height: 300px;
     }
   }
 
   &__news-list {
     display: flex;
+    justify-content: space-around;
+
+    width: 100%;
     height: 100%;
 
     @media (max-width: 1024px) {
@@ -88,15 +96,29 @@ export default defineComponent({
   }
 
   &__news-list-item {
+    width: 32%;
+    min-width: 200px;
+    height: 100%;
+
+    @media (max-width: 1024px) {
+      min-width: 220px;
+    }
+
+    @media (max-width: 769px) {
+      min-width: 180px;
+    }
+  }
+
+  &__news-card {
     position: relative;
     display: block;
 
-    width: 360px;
+    width: 100%;
     height: 100%;
+    padding: 10px;
 
     text-align: center;
 
-    margin-left: 20px;
     border-radius: 2px;
 
     background-color: rgb(255 255 255);
@@ -107,38 +129,22 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-position-x: center;
 
-    @media (max-width: 1024px) {
-      width: 300px;
-    }
-
     &--minobr {
       background-image: url('@/assets/images/minobr_icon.png');
-      background-size: 220px;
-      background-position-y: 10px;
-
-      @media (max-width: 1024px) {
-        background-size: 160px;
-      }
+      background-position-y: 20%;
+      background-size: 53%;
     }
 
     &--minpros {
       background-image: url('@/assets/images/minpros_icon.png');
-      background-position-y: 20px;
-      background-size: 250px;
-
-      @media (max-width: 1024px) {
-        background-size: 190px;
-      }
+      background-position-y: 20%;
+      background-size: 65%;
     }
 
     &--regions {
-      background-size: 330px;
-      background-position-y: 55px;
+      background-size: 90%;
+      background-position-y: 40%;
       background-image: url('@/assets/images/regions_icon.png');
-
-      @media (max-width: 1024px) {
-        background-size: 270px;
-      }
     }
 
     &:hover {
@@ -153,7 +159,10 @@ export default defineComponent({
 
     transform: translateX(50%);
 
-    width: 300px;
+    width: 100%;
+
+    padding-left: 10px;
+    padding-right: 10px;
 
     color: $black;
   }
@@ -162,19 +171,25 @@ export default defineComponent({
     display: flex;
     align-items: center;
 
-    height: 270px;
+    height: 250px;
     width: 100%;
 
     text-align: center;
 
     @media (max-width: 1024px) {
       flex-direction: column;
+      height: 310px;
+    }
+
+    @media (max-width: 769px) {
+      height: 270px;
     }
   }
 
   &__services-list {
     display: flex;
     justify-content: center;
+
     height: 100%;
     width: 100%;
 
@@ -184,13 +199,28 @@ export default defineComponent({
   }
 
   &__services-list-item {
+    width: 25%;
+    min-width: 200px;
+    height: 100%;
+
+    margin: 10px;
+
+    @media (max-width: 1024px) {
+      min-width: 180px;
+    }
+
+    @media (max-width: 769px) {
+      min-width: 140px;
+    }
+  }
+
+  &__services-card {
     position: relative;
     display: block;
 
-    width: 340px;
+    width: 100%;
     height: 100%;
 
-    margin-left: 20px;
     border-radius: 2px;
 
     background-color: rgb(255 255 255);
@@ -200,29 +230,15 @@ export default defineComponent({
 
     background-repeat: no-repeat;
     background-position-x: center;
-
-    @media (max-width: 1024px) {
-      width: 270px;
-    }
+    background-position-y: 25%;
+    background-size: 60%;
 
     &--school {
       background-image: url('@/assets/images/school.png');
-      background-size: 180px;
-      background-position-y: 20px;
-
-      @media (max-width: 1024px) {
-        background-size: 110px;
-      }
     }
 
     &--student {
       background-image: url('@/assets/images/student.png');
-      background-position-y: 15px;
-      background-size: 190px;
-
-      @media (max-width: 1024px) {
-        background-size: 130px;
-      }
     }
 
     &:hover {

@@ -60,6 +60,11 @@ export default defineComponent({
 
   background: transparent;
 
+  @media (max-width: 769px) {
+    width: 22px;
+    height: 22px;
+  }
+
   &::before,
   &::after {
     display: none;
@@ -72,6 +77,11 @@ export default defineComponent({
     background-color: $white;
     border-radius: 4px;
     transition: 0.2s linear 0.2s;
+
+    @media (max-width: 769px) {
+      width: 16px;
+      height: 2px;
+    }
   }
 
   &::before {
@@ -106,12 +116,22 @@ export default defineComponent({
       display: inline;
       width: 10px;
       transform: translate(-50%, -50%) translate(-4px, 3px) rotate(45deg);
+
+      @media (max-width: 769px) {
+        width: 7px;
+        transform: translate(-50%, -50%) translate(-3px, 2px) rotate(45deg);
+      }
     }
 
     &::after {
       display: inline;
       width: 18px;
       transform: translate(-50%, -50%) translate(4px, 0) rotate(-45deg);
+
+      @media (max-width: 769px) {
+        width: 12px;
+        transform: translate(-50%, -50%) translate(3px, 0) rotate(-45deg);
+      }
     }
   }
 }

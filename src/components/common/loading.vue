@@ -22,6 +22,13 @@ export default defineComponent({
 
   margin: 10vh auto 190vh;
 
+  @media (max-width: 769px) {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid rgb(72 110 242);
+    width: 60px;
+    height: 60px;
+  }
+
   @keyframes spin {
     0% {
       transform: rotate(0deg);

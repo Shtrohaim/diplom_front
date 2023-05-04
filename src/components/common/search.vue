@@ -5,7 +5,7 @@
         <input ref="searchInput" class="search__input p_sm" type="text" placeholder="Искать..." />
         <button class="search__form-button"></button>
       </div>
-      <div v-if="$route.query.search" @click="dropSearch" class="search__drop">
+      <div v-if="$route.query.search" @click="dropSearch" class="search__drop p_sm">
         Сбросить поиск <span></span>
       </div>
       <slot></slot>
@@ -99,6 +99,10 @@ export default defineComponent({
 
     text-align: center;
 
+    @media (max-width: 769px) {
+      height: 35px;
+    }
+
     &::placeholder {
       color: $gray-placeholder;
       text-align: center;
@@ -125,9 +129,11 @@ export default defineComponent({
     background-color: rgb(72 110 242);
     color: rgb(255 255 255);
 
-    font-size: 20px;
-
     cursor: pointer;
+
+    @media (max-width: 769px) {
+      padding-top: 14px;
+    }
 
     &:hover {
       opacity: 0.9;
@@ -175,6 +181,11 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-size: 70%;
     background-position: center;
+
+    @media (max-width: 769px) {
+      width: 30px;
+      height: 30px;
+    }
 
     &:hover {
       background-color: rgba(210 210 210 / 20%);

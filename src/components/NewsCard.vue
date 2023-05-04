@@ -81,8 +81,12 @@ export default defineComponent({
 
     box-shadow: 5px 5px 15px rgba(0 0 0 / 50%);
 
-    font-weight: bold;
     text-align: center;
+
+    @media (max-width: 769px) {
+      width: 55px;
+      height: 55px;
+    }
 
     &--no-image {
       position: relative;
@@ -92,12 +96,21 @@ export default defineComponent({
 
   &__date-day {
     font-family: sans-serif;
+    font-weight: bold;
     font-size: 24px;
+
+    @media (max-width: 769px) {
+      font-size: 22px;
+    }
   }
 
   &__date-month {
     font-size: 22px;
     font-weight: 600;
+
+    @media (max-width: 769px) {
+      font-size: 16px;
+    }
   }
 
   &__image {
@@ -107,6 +120,11 @@ export default defineComponent({
     border-radius: 2px;
 
     object-fit: cover;
+
+    @media (max-width: 769px) {
+      width: 160px;
+      height: 160px;
+    }
   }
 
   &__text-content {

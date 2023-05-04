@@ -1,10 +1,13 @@
 <template>
-  <div
-    class="scopus-list content"
-    :class="{ 'scopus-list--no-publication': publications === null || publications?.length === 0 }"
-    v-if="Object.keys(subjectsList).length > 0"
-  >
-    <base-search class="scopus-list__search" :has-filter="true" :filter-data="queryFilter">
+  <div class="scopus-list content" v-if="Object.keys(subjectsList).length > 0">
+    <base-search
+      class="scopus-list__search"
+      :class="{
+        'scopus-list__search--no-publication': publications === null || publications?.length === 0
+      }"
+      :has-filter="true"
+      :filter-data="queryFilter"
+    >
       <multi-select
         class="scopus-list__select"
         :canClear="false"
@@ -170,10 +173,6 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
-  &--no-publication {
-    height: 85vh;
-  }
-
   &__no-found {
     margin-bottom: 50px;
   }
@@ -184,6 +183,16 @@ export default defineComponent({
 
     @media (max-width: 1024px) {
       max-width: 900px;
+    }
+  }
+
+  &__search {
+    &--no-publication {
+      margin-top: 130px;
+
+      @media (max-width: 1024px) {
+        margin-top: 70px;
+      }
     }
   }
 
@@ -203,6 +212,12 @@ export default defineComponent({
     --ms-option-bg-selected-pointed: #486ef2;
     --ms-font-size: 18px;
     --ms-option-font-size: 18px;
+
+    @media (max-width: 769px) {
+      width: 150px;
+      --ms-font-size: 14px;
+      --ms-option-font-size: 14px;
+    }
   }
 
   &__filter {

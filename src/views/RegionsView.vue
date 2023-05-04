@@ -79,6 +79,11 @@ export default defineComponent({
       max-width: 400px;
     }
 
+    @media (max-width: 769px) {
+      height: 30px;
+      max-width: 300px;
+    }
+
     &::placeholder {
       font-weight: bold;
       opacity: 0.4;
@@ -88,12 +93,20 @@ export default defineComponent({
 
   &__list {
     columns: 4 300px;
+
+    @media (max-width: 769px) {
+      column-width: 220px;
+    }
   }
 
   &__list-item {
     width: 310px;
 
     margin: 0 auto 15px;
+
+    @media (max-width: 769px) {
+      width: 240px;
+    }
   }
 }
 </style>

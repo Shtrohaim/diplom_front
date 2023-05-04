@@ -62,6 +62,13 @@ export default defineComponent({
 
   cursor: pointer;
 
+  @media (max-width: 769px) {
+    width: 45px;
+    height: 45px;
+
+    background-size: 35px;
+  }
+
   &:hover {
     opacity: 90%;
   }

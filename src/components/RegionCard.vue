@@ -53,6 +53,10 @@ export default defineComponent({
   &__image {
     width: 100px;
     margin-bottom: 20px;
+
+    @media (max-width: 769px) {
+      width: 80px;
+    }
   }
 
   &__name {

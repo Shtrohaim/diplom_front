@@ -43,11 +43,19 @@ export default defineComponent({
     padding: 30px 30px 15px 30px;
   }
 
+  @media (max-width: 769px) {
+    padding: 15px 25px 15px 25px;
+  }
+
   &__title {
     margin-bottom: 50px;
 
     @media (max-width: 1024px) {
       margin-bottom: 35px;
+    }
+
+    @media (max-width: 769px) {
+      margin-bottom: 25px;
     }
   }
 

@@ -93,6 +93,10 @@ export default defineComponent({
     @media (max-width: 1024px) {
       max-width: 420px;
     }
+
+    @media (max-width: 769px) {
+      max-width: 330px;
+    }
   }
 
   &__journal-card {
@@ -107,6 +111,10 @@ export default defineComponent({
 
     @media (max-width: 1024px) {
       max-width: 800px;
+    }
+
+    @media (max-width: 769px) {
+      max-width: 650px;
     }
   }
 
@@ -137,6 +145,10 @@ export default defineComponent({
 
     @media (max-width: 1024px) {
       max-width: 350px;
+    }
+
+    @media (max-width: 769px) {
+      max-width: 250px;
     }
   }
 }

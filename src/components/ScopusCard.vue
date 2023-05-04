@@ -79,6 +79,10 @@ export default defineComponent({
 
   color: $black;
 
+  @media (max-width: 769px) {
+    padding: 30px;
+  }
+
   &__title {
     align-self: center;
     text-align: center;

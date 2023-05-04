@@ -74,6 +74,10 @@ export default defineComponent({
     padding: 0;
 
     margin: 0 auto 60px;
+
+    @media (max-width: 769px) {
+      width: 100%;
+    }
   }
 
   &__list-item {

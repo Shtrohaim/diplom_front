@@ -29,8 +29,6 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
-  height: 89vh;
-
   &__name {
     position: absolute;
     bottom: 20px;
@@ -51,6 +49,8 @@ export default defineComponent({
     background-color: $white;
     color: $black;
 
+    margin-top: 80px;
+
     border: 1px transparent;
     border-radius: 4px;
 
@@ -61,6 +61,15 @@ export default defineComponent({
     background-size: 200px;
 
     box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
+
+    @media (max-width: 769px) {
+      width: 220px;
+      height: 220px;
+
+      margin-top: 30px;
+
+      background-size: 130px;
+    }
 
     &:hover {
       box-shadow: 0 0 25px rgb(0 0 0 / 0.5);

@@ -241,20 +241,31 @@ export default defineComponent({
     --ms-option-font-size: 18px;
     --ms-tag-font-size: 18px;
 
+    @media (max-width: 769px) {
+      width: 380px;
+
+      --ms-font-size: 14px;
+      --ms-option-font-size: 14px;
+      --ms-tag-font-size: 14px;
+    }
+
     &--operator {
       max-width: 180px;
+
+      @media (max-width: 769px) {
+        max-width: 130px;
+      }
     }
   }
 
   &__input {
     min-height: 20px;
+    max-width: 180px;
+
     line-height: 20px;
     border-radius: 5px;
+
     background: $white;
-    transition: border 0.1s ease;
-    box-sizing: border-box;
-    margin-bottom: 8px;
-    vertical-align: top;
 
     padding: 10px;
     border: 1px solid $gray-light;
@@ -262,6 +273,10 @@ export default defineComponent({
 
     &--year {
       margin: 10px;
+
+      @media (max-width: 769px) {
+        max-width: 130px;
+      }
     }
 
     &--year::placeholder {
