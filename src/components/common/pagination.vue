@@ -83,7 +83,7 @@ export default defineComponent({
 
     const filteredItems = computed(() => {
       let begin = 1
-      let step = 6
+      let step = window.innerWidth <= 640 ? 4 : 6
       let end = step
       if (page.value - 1 > 1 && page.value + 2 < totalPages.value) {
         begin = page.value - step / 2 === 0 ? 1 : page.value - step / 2
@@ -160,8 +160,23 @@ export default defineComponent({
     color: rgb(255 255 255);
     background: $primary;
 
+    @media (min-width: 320px) and (max-width: 640px) {
+      height: 35px;
+
+      font-size: 18px;
+
+      padding-left: 9px;
+      padding-right: 9px;
+
+      margin-right: 6px;
+    }
+
     &:first-child {
       margin-left: 10px;
+
+      @media (min-width: 320px) and (max-width: 640px) {
+        margin-left: 6px;
+      }
     }
 
     &:hover {

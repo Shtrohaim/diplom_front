@@ -25,12 +25,20 @@ export default defineComponent({
   &__title {
     text-align: center;
     margin-bottom: 40px;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-bottom: 20px;
+    }
   }
 
   &__description {
     text-align: left;
     margin: 0 auto;
     width: 75%;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 90%;
+    }
 
     a {
       color: rgb(72 110 242);

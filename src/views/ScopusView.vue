@@ -75,6 +75,11 @@ export default defineComponent({
     grid-row-gap: 15px;
   }
 
+  @media (min-width: 320px) and (max-width: 640px) {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__article-card {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -137,6 +142,10 @@ export default defineComponent({
 
       max-width: 480px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin: 0 auto;
+    }
   }
 
   &__score-card {
@@ -149,6 +158,10 @@ export default defineComponent({
 
     @media (max-width: 769px) {
       max-width: 250px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      max-width: 220px;
     }
   }
 }

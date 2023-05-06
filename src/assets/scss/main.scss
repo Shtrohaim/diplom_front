@@ -9,21 +9,37 @@ input {
 input::-webkit-input-placeholder {
     font-size: 0.65rem;
     transform: translateX(0.3rem);
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    transform: translateX(0.1rem);
+  }
 }
 
 input:-ms-input-placeholder {
   font-size: 0.65rem;
   transform: translateX(0.3rem);
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    transform: translateX(0.1rem);
+  }
 }
 
 input:-moz-placeholder {
   font-size: 0.65rem;
   transform: translateX(0.3rem);
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    transform: translateX(0.1rem);
+  }
 }
 
 input::-moz-placeholder {
   font-size: 0.65rem;
   transform: translateX(0.3rem);
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    transform: translateX(0.1rem);
+  }
 }
 
 body {
@@ -74,6 +90,13 @@ html {
     max-width: 749px;
     padding: 20px;
   }
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    min-width: 300px;
+    max-width: 620px;
+    padding: 15px;
+  }
+
 }
 
 .visually-hidden {
@@ -98,16 +121,28 @@ html {
 .h_md {
   font-size: 1.08rem;
   font-weight: 600;
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 0.7rem;
+  }
 }
 
 .h_lg {
   font-size: 1.3rem;
   font-weight: 600;
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 1.05rem;
+  }
 }
 
 .p_sm {
   font-size: 0.79rem;
   font-weight: 300;
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 0.6rem;
+  }
 }
 
 .p_md {

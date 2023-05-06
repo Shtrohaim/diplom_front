@@ -78,6 +78,10 @@ export default defineComponent({
     @media (max-width: 769px) {
       width: 100%;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-bottom: 30px;
+    }
   }
 
   &__list-item {

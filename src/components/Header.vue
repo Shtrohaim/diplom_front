@@ -48,6 +48,11 @@ export default defineComponent({
 
   padding: 20px;
 
+  @media (min-width: 320px) and (max-width: 640px) {
+    grid-template-columns: 20% 60% 20%;
+    padding: 10px;
+  }
+
   &__site-name {
     color: $primary;
     grid-column-start: 3;
@@ -93,6 +98,11 @@ export default defineComponent({
     @media (max-width: 769px) {
       width: 40px;
       height: 40px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 30px;
+      height: 30px;
     }
 
     &:hover {

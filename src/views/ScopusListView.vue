@@ -218,6 +218,22 @@ export default defineComponent({
       --ms-font-size: 14px;
       --ms-option-font-size: 14px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 100px;
+
+      grid-column-start: 2;
+      grid-column-end: 3;
+
+      --ms-font-size: 12px;
+      --ms-option-font-size: 14px;
+
+      .multiselect-multiple-label,
+      .multiselect-placeholder,
+      .multiselect-single-label {
+        max-width: 200px;
+      }
+    }
   }
 
   &__filter {
@@ -226,6 +242,15 @@ export default defineComponent({
     grid-row-start: 2;
     grid-row-end: 3;
     justify-self: center;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 100px;
+
+      grid-row-start: 3;
+      grid-row-end: 4;
+
+      margin-top: 25px;
+    }
   }
 
   &__open-filter {
@@ -244,6 +269,11 @@ export default defineComponent({
     justify-self: center;
     margin-top: 20px;
     margin-bottom: 40px;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      grid-row-start: 4;
+      grid-row-end: 5;
+    }
 
     &:hover {
       opacity: 75%;

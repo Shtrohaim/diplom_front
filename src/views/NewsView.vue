@@ -10,12 +10,12 @@
       :modules="modules"
       effect="coverflow"
       :centeredSlides="true"
-      :slides-per-view="2"
+      :slides-per-view="changeSlides"
       :space-between="50"
       :coverflowEffect="{
         rotate: 0,
         stretch: 0,
-        depth: 400,
+        depth: 500,
         modifier: 1,
         slideShadows: true
       }"
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import regionsService from '@/services/regionsService'
 import type News from '@/types/newsType'
 import type ResponseData from '@/types/responseData'
@@ -67,6 +67,10 @@ export default defineComponent({
     const news = ref({} as News)
     const route = useRoute()
     const rendered = ref(false as boolean)
+
+    const changeSlides = computed(() => {
+      return window.innerWidth <= 769 ? 1 : 2
+    })
     const fetchNews = () => {
       regionsService.getNews(route.params.tableName, route.params.id).then((res: ResponseData) => {
         news.value = res.data[0]
@@ -101,6 +105,7 @@ export default defineComponent({
     return {
       rendered,
       news,
+      changeSlides,
       modules: [Pagination, Autoplay, A11y, EffectCoverflow]
     }
   }
@@ -127,12 +132,22 @@ export default defineComponent({
     min-width: 200px;
 
     cursor: pointer;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      float: none;
+      margin: 20px auto 0;
+    }
   }
 
   &__text-content {
     width: 70%;
     margin: 50px auto 0;
     text-align: left;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 90%;
+      margin-top: 20px;
+    }
 
     &--no-image {
       margin-top: 0;
@@ -165,6 +180,10 @@ export default defineComponent({
     margin-top: 40px;
 
     width: 70%;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 100%;
+    }
 
     .swiper-pagination-bullet-active {
       background-color: rgb(0 102 150);

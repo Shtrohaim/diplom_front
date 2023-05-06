@@ -62,7 +62,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .search {
   width: 100%;
   &__form {
@@ -76,6 +76,10 @@ export default defineComponent({
     @media (max-width: 1024px) {
       grid-template-columns: 27% 46% 27%;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      grid-template-columns: 66% 34%;
+    }
   }
 
   &__bar {
@@ -86,6 +90,11 @@ export default defineComponent({
     grid-row-start: 1;
     grid-row-end: 2;
     justify-self: start;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      grid-column-start: 1;
+      grid-column-end: 2;
+    }
   }
 
   &__input {
@@ -133,6 +142,16 @@ export default defineComponent({
 
     @media (max-width: 769px) {
       padding-top: 14px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      margin: 0 auto;
+
+      padding: 16px 35px 16px 15px;
     }
 
     &:hover {

@@ -48,6 +48,7 @@ export default defineComponent({
 
   width: 100%;
   border-radius: 4px;
+  height: 100%;
 
   background-color: $white;
 
@@ -55,6 +56,10 @@ export default defineComponent({
   cursor: pointer;
 
   padding: 25px;
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    padding: 25px 10px 10px 25px;
+  }
 
   &__info-wrapper {
     position: relative;
@@ -88,6 +93,12 @@ export default defineComponent({
       height: 55px;
     }
 
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 40px;
+      height: 40px;
+      padding: 5px;
+    }
+
     &--no-image {
       position: relative;
       margin-right: 10px;
@@ -102,6 +113,10 @@ export default defineComponent({
     @media (max-width: 769px) {
       font-size: 22px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      font-size: 16px;
+    }
   }
 
   &__date-month {
@@ -110,6 +125,10 @@ export default defineComponent({
 
     @media (max-width: 769px) {
       font-size: 16px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      font-size: 14px;
     }
   }
 
@@ -125,6 +144,11 @@ export default defineComponent({
       width: 160px;
       height: 160px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 100px;
+      height: 100px;
+    }
   }
 
   &__text-content {
@@ -138,10 +162,19 @@ export default defineComponent({
     width: 80%;
 
     color: $black;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-left: 15px;
+      justify-content: start;
+    }
   }
 
   &__title {
     margin-bottom: 30px;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-bottom: 10px;
+    }
   }
 
   &__description {

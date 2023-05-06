@@ -78,6 +78,10 @@ export default defineComponent({
     &--oge {
       background-image: url('@/assets/images/oge_icon.png');
       margin-right: 70px;
+
+      @media (min-width: 320px) and (max-width: 640px) {
+        margin-right: 10px;
+      }
     }
   }
 }

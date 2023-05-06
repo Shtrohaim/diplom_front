@@ -95,6 +95,10 @@ export default defineComponent({
     @media (max-width: 769px) {
       max-width: 650px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      height: 180px;
+    }
   }
 
   &__filter {

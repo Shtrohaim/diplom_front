@@ -70,6 +70,10 @@ export default defineComponent({
     padding: 15px 10px 15px 55px;
   }
 
+  @media (min-width: 320px) and (max-width: 640px) {
+    padding: 15px 10px 15px 35px;
+  }
+
   &__title {
     margin-bottom: 50px;
 
@@ -83,6 +87,10 @@ export default defineComponent({
 
     @media (max-width: 769px) {
       margin-bottom: 25px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-bottom: 15px;
     }
   }
 
@@ -117,6 +125,10 @@ export default defineComponent({
 
     text-align: center;
     transform: translateX(-5%);
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-top: 20px;
+    }
   }
 }
 </style>

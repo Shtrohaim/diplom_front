@@ -39,7 +39,7 @@
       </label>
     </div>
     <div class="filter__year-wrapper">
-      <label class="filter__label p_sm">
+      <label class="filter__label p_sm filter__label--row">
         Опубликован:
         <multi-select
           class="filter__multiselector filter__multiselector--operator"
@@ -48,7 +48,7 @@
           :options="{ equal: 'в', greater: 'после', less: 'до' }"
         />
       </label>
-      <label class="filter__label p_sm">
+      <label class="filter__label p_sm filter__label--row">
         <input
           placeholder="Введите год"
           class="filter__input filter__input--year p_sm"
@@ -58,7 +58,7 @@
         {{ declensionWord }}
       </label>
     </div>
-    <label class="filter__label p_sm">
+    <label class="filter__label filter__label--row p_sm">
       В открытом доступе:
       <checkbox-tristate class="filter__check-access" v-model="hasOpenAccess" />
     </label>
@@ -219,10 +219,22 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
+  width: 100%;
+
   &__label {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+
+    width: 100%;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      flex-direction: column;
+    }
+
+    &--row {
+      flex-direction: row;
+    }
   }
 
   &__year-wrapper {
@@ -249,11 +261,20 @@ export default defineComponent({
       --ms-tag-font-size: 14px;
     }
 
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 260px;
+      --ms-tag-font-size: 8px;
+    }
+
     &--operator {
       max-width: 180px;
 
       @media (max-width: 769px) {
         max-width: 130px;
+      }
+
+      @media (min-width: 320px) and (max-width: 640px) {
+        margin-right: 0;
       }
     }
   }
@@ -276,6 +297,11 @@ export default defineComponent({
 
       @media (max-width: 769px) {
         max-width: 130px;
+      }
+
+      @media (min-width: 320px) and (max-width: 640px) {
+        max-width: 95px;
+        margin: 5px;
       }
     }
 

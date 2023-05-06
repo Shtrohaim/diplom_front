@@ -81,6 +81,10 @@ export default defineComponent({
     @media (max-width: 769px) {
       height: 300px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      height: 800px;
+    }
   }
 
   &__news-list {
@@ -92,6 +96,12 @@ export default defineComponent({
 
     @media (max-width: 1024px) {
       margin-top: 50px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -106,6 +116,10 @@ export default defineComponent({
 
     @media (max-width: 769px) {
       min-width: 180px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      min-width: 250px;
     }
   }
 
@@ -128,6 +142,10 @@ export default defineComponent({
 
     background-repeat: no-repeat;
     background-position-x: center;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      height: 90%;
+    }
 
     &--minobr {
       background-image: url('@/assets/images/minobr_icon.png');
@@ -184,6 +202,10 @@ export default defineComponent({
     @media (max-width: 769px) {
       height: 270px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      height: 500px;
+    }
   }
 
   &__services-list {
@@ -195,6 +217,11 @@ export default defineComponent({
 
     @media (max-width: 1024px) {
       margin-top: 50px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      flex-direction: column;
+      align-items: center;
     }
   }
 
@@ -211,6 +238,10 @@ export default defineComponent({
 
     @media (max-width: 769px) {
       min-width: 140px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      min-width: 210px;
     }
   }
 

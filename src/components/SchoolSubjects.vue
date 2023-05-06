@@ -48,16 +48,30 @@ export default defineComponent({
     @media (max-width: 769px) {
       width: 350px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 300px;
+    }
   }
 
   &__title {
+    width: 100%;
     margin-bottom: 40px;
     text-align: center;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-bottom: 20px;
+      overflow-wrap: break-word;
+    }
   }
 
   &__description {
     width: 80%;
     margin: 0 auto 50px;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 90%;
+    }
   }
 }
 </style>

@@ -57,6 +57,10 @@ export default defineComponent({
     @media (max-width: 769px) {
       margin-bottom: 25px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      margin-bottom: 15px;
+    }
   }
 
   &__info {

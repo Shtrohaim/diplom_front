@@ -83,6 +83,10 @@ export default defineComponent({
     padding: 30px;
   }
 
+  @media (min-width: 320px) and (max-width: 640px) {
+    padding: 30px 15px;
+  }
+
   &__title {
     align-self: center;
     text-align: center;
@@ -112,6 +116,10 @@ export default defineComponent({
     align-items: center;
 
     width: 100%;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      text-align: center;
+    }
   }
 
   &__openaccess {
