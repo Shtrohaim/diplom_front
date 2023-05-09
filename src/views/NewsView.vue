@@ -133,6 +133,11 @@ export default defineComponent({
 
     cursor: pointer;
 
+    @media (min-width: 641px) and (max-width: 1023px) {
+      margin: 50px 20px 0 10%;
+      width: 30%;
+    }
+
     @media (min-width: 320px) and (max-width: 640px) {
       float: none;
       margin: 20px auto 0;
@@ -144,9 +149,14 @@ export default defineComponent({
     margin: 50px auto 0;
     text-align: left;
 
+    @media (min-width: 641px) and (max-width: 1023px) {
+      width: 80%;
+    }
+
     @media (min-width: 320px) and (max-width: 640px) {
       width: 90%;
       margin-top: 20px;
+      overflow-wrap: anywhere;
     }
 
     &--no-image {
@@ -204,6 +214,7 @@ export default defineComponent({
 
   &__source {
     text-align-last: end;
+    overflow-wrap: anywhere;
   }
 }
 </style>

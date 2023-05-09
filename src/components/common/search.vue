@@ -2,7 +2,7 @@
   <div class="search">
     <form class="search__form" @submit="search">
       <div class="search__bar">
-        <input ref="searchInput" class="search__input p_sm" type="text" placeholder="Искать..." />
+        <input ref="searchInput" class="search__input" type="text" placeholder="Искать..." />
         <button class="search__form-button"></button>
       </div>
       <div v-if="$route.query.search" @click="dropSearch" class="search__drop p_sm">
@@ -69,6 +69,7 @@ export default defineComponent({
     display: grid;
     grid-template-columns: 35% 30% 35%;
     align-items: center;
+    grid-row-gap: 5px;
 
     margin-right: 10px;
     width: 100%;
@@ -89,17 +90,18 @@ export default defineComponent({
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
-    justify-self: start;
+    justify-self: end;
 
     @media (min-width: 320px) and (max-width: 640px) {
       grid-column-start: 1;
       grid-column-end: 2;
+      max-width: 300px;
     }
   }
 
   &__input {
     width: 100%;
-    height: 50px;
+    height: 40px;
 
     border-radius: 100px;
     border-color: rgb(0 102 150);
@@ -108,8 +110,15 @@ export default defineComponent({
 
     text-align: center;
 
-    @media (max-width: 769px) {
+    font-size: 24px;
+
+    @media (max-width: 1023px) {
       height: 35px;
+      font-size: 20px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      font-size: 16px;
     }
 
     &::placeholder {
@@ -140,7 +149,7 @@ export default defineComponent({
 
     cursor: pointer;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       padding-top: 14px;
     }
 
@@ -151,7 +160,7 @@ export default defineComponent({
       grid-row-end: 3;
       margin: 0 auto;
 
-      padding: 16px 35px 16px 15px;
+      padding: 12px 35px 12px 15px;
     }
 
     &:hover {
@@ -164,6 +173,10 @@ export default defineComponent({
       top: 15px;
       width: 10px;
       height: 10px;
+
+      @media (min-width: 320px) and (max-width: 640px) {
+        top: 11px;
+      }
     }
 
     span:before,
@@ -201,7 +214,7 @@ export default defineComponent({
     background-size: 70%;
     background-position: center;
 
-    @media (max-width: 769px) {
+    @media (max-width: 1023px) {
       width: 30px;
       height: 30px;
     }

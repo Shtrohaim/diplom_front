@@ -66,7 +66,7 @@ export default defineComponent({
     padding: 30px 10px 25px 60px;
   }
 
-  @media (max-width: 769px) {
+  @media (min-width: 641px) and (max-width: 1023px) {
     padding: 15px 10px 15px 55px;
   }
 
@@ -85,7 +85,7 @@ export default defineComponent({
       margin-bottom: 35px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       margin-bottom: 25px;
     }
 

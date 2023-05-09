@@ -95,7 +95,7 @@ export default defineComponent({
   page-break-inside: avoid;
   break-inside: avoid;
 
-  @media (max-width: 769px) {
+  @media (max-width: 1023px) {
     background-size: 75px;
 
     padding: 25px 25px 25px 25px;

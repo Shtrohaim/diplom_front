@@ -81,7 +81,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .news {
   &__list-item {
     width: 100%;
@@ -92,7 +92,7 @@ export default defineComponent({
       max-width: 800px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       max-width: 650px;
     }
 
@@ -105,6 +105,12 @@ export default defineComponent({
     width: 100%;
 
     margin: 0 auto 40px;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      .search__bar {
+        transform: translateX(25%);
+      }
+    }
   }
 
   &__not-found {

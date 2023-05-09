@@ -51,7 +51,7 @@
       <label class="filter__label p_sm filter__label--row">
         <input
           placeholder="Введите год"
-          class="filter__input filter__input--year p_sm"
+          class="filter__input filter__input--year"
           v-model="pubYear['year']"
           type="number"
         />
@@ -212,7 +212,7 @@ export default defineComponent({
 
 <style src="@vueform/multiselect/themes/default.css"></style>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .filter {
   display: flex;
   flex-direction: column;
@@ -244,37 +244,41 @@ export default defineComponent({
 
   &__multiselector {
     margin: 10px;
-    width: 550px;
+
+    width: 500px;
+
     --ms-tag-bg: #486ef2;
     --ms-ring-color: none;
     --ms-option-bg-selected: #486ef2;
     --ms-option-bg-selected-pointed: #486ef2;
-    --ms-font-size: 18px;
+    --ms-font-size: 20px;
     --ms-option-font-size: 18px;
     --ms-tag-font-size: 18px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 380px;
 
-      --ms-font-size: 14px;
+      --ms-font-size: 18px;
       --ms-option-font-size: 14px;
       --ms-tag-font-size: 14px;
     }
 
     @media (min-width: 320px) and (max-width: 640px) {
       width: 260px;
-      --ms-tag-font-size: 8px;
+      --ms-font-size: 14px;
+      --ms-tag-font-size: 9px;
+      --ms-option-font-size: 14px;
+
+      .multiselect-placeholder {
+        font-size: 14px;
+      }
     }
 
     &--operator {
-      max-width: 180px;
+      max-width: 170px;
 
-      @media (max-width: 769px) {
+      @media (max-width: 1023px) {
         max-width: 130px;
-      }
-
-      @media (min-width: 320px) and (max-width: 640px) {
-        margin-right: 0;
       }
     }
   }
@@ -294,14 +298,17 @@ export default defineComponent({
 
     &--year {
       margin: 10px;
+      font-size: 24px;
 
-      @media (max-width: 769px) {
+      @media (min-width: 641px) and (max-width: 1023px) {
         max-width: 130px;
+        font-size: 20px;
       }
 
       @media (min-width: 320px) and (max-width: 640px) {
+        font-size: 16px;
         max-width: 95px;
-        margin: 5px;
+        margin: 0 5px 0 0;
       }
     }
 

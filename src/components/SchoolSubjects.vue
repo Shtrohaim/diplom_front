@@ -36,7 +36,7 @@ export default defineComponent({
   &__list {
     columns: 3 430px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       column-width: 330px;
     }
   }
@@ -45,7 +45,7 @@ export default defineComponent({
     width: 450px;
     margin: 0 auto;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 350px;
     }
 

@@ -5,7 +5,7 @@
       type="button"
       @click="pagination(1)"
     >
-      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === 1 }">
+      <svg class="fill-primary pagination__svg-step" :class="{ 'fill-disabled': page === 1 }">
         <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
       </svg>
     </button>
@@ -14,7 +14,7 @@
       type="button"
       @click="pagination(page - 1)"
     >
-      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === 1 }">
+      <svg class="fill-primary pagination__svg-step" :class="{ 'fill-disabled': page === 1 }">
         <use href="@/assets/images/arrow_enable.svg#icon"></use>
       </svg>
     </button>
@@ -34,7 +34,10 @@
       type="button"
       @click="pagination(page + 1)"
     >
-      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === totalPages }">
+      <svg
+        class="fill-primary pagination__svg-step"
+        :class="{ 'fill-disabled': page === totalPages }"
+      >
         <use href="@/assets/images/arrow_enable.svg#icon"></use>
       </svg>
     </button>
@@ -43,7 +46,10 @@
       type="button"
       @click="pagination(Number(totalPages))"
     >
-      <svg class="fill-primary icon36" :class="{ 'fill-disabled': page === totalPages }">
+      <svg
+        class="fill-primary pagination__svg-step"
+        :class="{ 'fill-disabled': page === totalPages }"
+      >
         <use href="@/assets/images/double_arrow_enable.svg#icon"></use>
       </svg>
     </button>
@@ -137,6 +143,14 @@ export default defineComponent({
     display: flex;
 
     font-family: sans-serif;
+  }
+
+  &__svg-step {
+    @include icon36;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      @include icon28;
+    }
   }
 
   &__page {

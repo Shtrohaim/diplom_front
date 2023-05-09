@@ -14,6 +14,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
+              @import "@/assets/scss/mixins.scss";
               @import "@/assets/scss/variables.scss";
             `
       }

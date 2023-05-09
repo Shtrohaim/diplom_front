@@ -28,7 +28,7 @@
       />
     </base-search>
     <loading-screen v-if="isLoading" />
-    <div class="scopus-list__no-found" v-else-if="route.query.search && publications === null">
+    <div class="scopus-list__no-found h_md" v-else-if="route.query.search && publications === null">
       По вашему запросу {{ route.query.search }}, в категории {{ searchType[route.query.type] }},
       ничего не найдено!
     </div>
@@ -142,8 +142,6 @@ export default defineComponent({
         delete queryFilter.value.pubyear_yr
         delete queryFilter.value.pubyear_op
       }
-
-      console.log(queryFilter.value)
     }
 
     onMounted(() => {
@@ -197,7 +195,7 @@ export default defineComponent({
   }
 
   &__select {
-    width: 205px;
+    width: 150px;
 
     grid-column-start: 3;
     grid-column-end: 4;
@@ -213,7 +211,7 @@ export default defineComponent({
     --ms-font-size: 18px;
     --ms-option-font-size: 18px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 150px;
       --ms-font-size: 14px;
       --ms-option-font-size: 14px;
@@ -243,9 +241,9 @@ export default defineComponent({
     grid-row-end: 3;
     justify-self: center;
 
-    @media (min-width: 320px) and (max-width: 640px) {
-      width: 100px;
+    width: 100%;
 
+    @media (min-width: 320px) and (max-width: 640px) {
       grid-row-start: 3;
       grid-row-end: 4;
 
@@ -267,7 +265,6 @@ export default defineComponent({
     grid-row-end: 4;
 
     justify-self: center;
-    margin-top: 20px;
     margin-bottom: 40px;
 
     @media (min-width: 320px) and (max-width: 640px) {

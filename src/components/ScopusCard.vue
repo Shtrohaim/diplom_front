@@ -18,7 +18,7 @@
       <p>Количество цитирований: {{ publication['citedby-count'] }}</p>
       <p class="scopus-card__openaccess">
         Открытый доступ:
-        <svg class="icon28">
+        <svg class="scopus-card__svg-access">
           <use
             v-if="publication?.openaccessFlag"
             href="@/assets/images/icon_correct.svg#icon"
@@ -79,7 +79,15 @@ export default defineComponent({
 
   color: $black;
 
-  @media (max-width: 769px) {
+  &__svg-access {
+    @include icon28;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      @include icon16;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1023px) {
     padding: 30px;
   }
 

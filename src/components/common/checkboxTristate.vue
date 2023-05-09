@@ -53,14 +53,14 @@ export default defineComponent({
   -webkit-appearance: none;
   appearance: none;
 
-  transition: 0.3s linear;
+  transition: 0.125s linear;
 
   border-radius: 4px;
   border: 3px solid $gray-light;
 
   background: transparent;
 
-  @media (max-width: 769px) {
+  @media (max-width: 1023px) {
     width: 22px;
     height: 22px;
   }
@@ -76,9 +76,9 @@ export default defineComponent({
     height: 3px;
     background-color: $white;
     border-radius: 4px;
-    transition: 0.2s linear 0.2s;
+    transition: 0.125s linear 0.125s;
 
-    @media (max-width: 769px) {
+    @media (max-width: 1023px) {
       width: 16px;
       height: 2px;
     }
@@ -117,7 +117,7 @@ export default defineComponent({
       width: 10px;
       transform: translate(-50%, -50%) translate(-4px, 3px) rotate(45deg);
 
-      @media (max-width: 769px) {
+      @media (max-width: 1023px) {
         width: 7px;
         transform: translate(-50%, -50%) translate(-3px, 2px) rotate(45deg);
       }
@@ -128,7 +128,7 @@ export default defineComponent({
       width: 18px;
       transform: translate(-50%, -50%) translate(4px, 0) rotate(-45deg);
 
-      @media (max-width: 769px) {
+      @media (max-width: 1023px) {
         width: 12px;
         transform: translate(-50%, -50%) translate(3px, 0) rotate(-45deg);
       }

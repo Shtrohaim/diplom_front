@@ -4,14 +4,14 @@
       <ul class="header__list">
         <li class="header__list-item">
           <a class="header__button" @click="$router.go(-1)" title="Вернутся на предыдущую страницу">
-            <svg class="fill-white icon36">
+            <svg class="fill-white header__svg-back">
               <use href="@/assets/images/back_icon.svg#icon"></use>
             </svg>
           </a>
         </li>
         <li class="header__list-item">
           <router-link class="header__button" :to="{ name: 'main' }" title="На главную страницу">
-            <svg class="fill-white icon28">
+            <svg class="fill-white header__svg-home">
               <use href="@/assets/images/home_icon.svg#icon"></use>
             </svg>
           </router-link>
@@ -51,6 +51,26 @@ export default defineComponent({
   @media (min-width: 320px) and (max-width: 640px) {
     grid-template-columns: 20% 60% 20%;
     padding: 10px;
+  }
+
+  @media (min-width: 641px) and (max-width: 1023px) {
+    grid-template-columns: 15% 70% 15%;
+  }
+
+  &__svg-home {
+    @include icon28;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      @include icon22;
+    }
+  }
+
+  &__svg-back {
+    @include icon36;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      @include icon26;
+    }
   }
 
   &__site-name {
@@ -95,14 +115,14 @@ export default defineComponent({
 
     cursor: pointer;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 40px;
       height: 40px;
     }
 
     @media (min-width: 320px) and (max-width: 640px) {
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
     }
 
     &:hover {

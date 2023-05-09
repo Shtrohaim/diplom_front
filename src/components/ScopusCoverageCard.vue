@@ -61,7 +61,7 @@ export default defineComponent({
 
   box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
-  @media (max-width: 769px) {
+  @media (min-width: 641px) and (max-width: 1023px) {
     padding: 15px;
   }
 
@@ -96,7 +96,7 @@ export default defineComponent({
 
     z-index: 10;
 
-    @media (max-width: 769px) {
+    @media (max-width: 1023px) {
       height: 20px;
     }
   }
@@ -116,7 +116,7 @@ export default defineComponent({
 
     z-index: 0;
 
-    @media (max-width: 769px) {
+    @media (max-width: 1023px) {
       padding-top: 0;
       font-size: 12px;
     }

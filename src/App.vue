@@ -62,11 +62,21 @@ export default defineComponent({
 
   cursor: pointer;
 
-  @media (max-width: 769px) {
+  @media (min-width: 641px) and (max-width: 1023px) {
     width: 45px;
     height: 45px;
 
     background-size: 35px;
+  }
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    width: 40px;
+    height: 40px;
+
+    background-size: 35px;
+
+    bottom: 10px;
+    right: 20px;
   }
 
   &:hover {

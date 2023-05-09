@@ -99,7 +99,7 @@ export default defineComponent({
       max-width: 420px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       max-width: 330px;
     }
   }
@@ -118,7 +118,7 @@ export default defineComponent({
       max-width: 800px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       max-width: 650px;
     }
   }
@@ -156,7 +156,7 @@ export default defineComponent({
       max-width: 350px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       max-width: 250px;
     }
 

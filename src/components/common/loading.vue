@@ -22,7 +22,7 @@ export default defineComponent({
 
   margin: 10vh auto 190vh;
 
-  @media (max-width: 769px) {
+  @media (min-width: 320px) and (max-width: 769px) {
     border: 8px solid #f3f3f3;
     border-top: 8px solid rgb(72 110 242);
     width: 60px;

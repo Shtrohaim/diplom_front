@@ -78,7 +78,7 @@ export default defineComponent({
       height: 340px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       height: 300px;
     }
 
@@ -114,7 +114,7 @@ export default defineComponent({
       min-width: 220px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       min-width: 180px;
     }
 
@@ -199,7 +199,7 @@ export default defineComponent({
       height: 310px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       height: 270px;
     }
 
@@ -236,7 +236,7 @@ export default defineComponent({
       min-width: 180px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       min-width: 140px;
     }
 

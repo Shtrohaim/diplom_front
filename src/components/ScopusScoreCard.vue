@@ -54,7 +54,7 @@ export default defineComponent({
       margin-bottom: 35px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       margin-bottom: 25px;
     }
 

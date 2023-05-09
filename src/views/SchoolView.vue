@@ -75,7 +75,7 @@ export default defineComponent({
 
     margin: 0 auto 60px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 100%;
     }
 

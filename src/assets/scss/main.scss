@@ -7,37 +7,53 @@ input {
 }
 
 input::-webkit-input-placeholder {
-    font-size: 0.65rem;
+    font-size: 18px;
     transform: translateX(0.3rem);
 
-  @media (min-width: 320px) and (max-width: 640px) {
+  @media (max-width: 1023px) {
+    font-size: 14px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
     transform: translateX(0.1rem);
   }
 }
 
 input:-ms-input-placeholder {
-  font-size: 0.65rem;
+  font-size: 18px;
   transform: translateX(0.3rem);
 
-  @media (min-width: 320px) and (max-width: 640px) {
+  @media (max-width: 1023px) {
+    font-size: 14px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
     transform: translateX(0.1rem);
   }
 }
 
 input:-moz-placeholder {
-  font-size: 0.65rem;
+  font-size: 18px;
   transform: translateX(0.3rem);
 
-  @media (min-width: 320px) and (max-width: 640px) {
+  @media (max-width: 1023px) {
+    font-size: 14px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
     transform: translateX(0.1rem);
   }
 }
 
 input::-moz-placeholder {
-  font-size: 0.65rem;
+  font-size: 18px;
   transform: translateX(0.3rem);
 
-  @media (min-width: 320px) and (max-width: 640px) {
+  @media (max-width: 1023px) {
+    font-size: 14px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
     transform: translateX(0.1rem);
   }
 }
@@ -62,19 +78,6 @@ a {
   color: $primary;
 }
 
-html {
-  font-size: 28px;
-
-  @media (max-width: 1024px)  {
-    font-size: 24px;
-  }
-
-  @media (max-width: 769px)  {
-    font-size: 20px;
-  }
-}
-
-
 .content {
   max-width: 1580px;
 
@@ -86,12 +89,13 @@ html {
     padding: 26px;
   }
 
-  @media (max-width: 769px)  {
-    max-width: 749px;
+   @media (min-width: 641px) and (max-width: 1023px)   {
+    min-width: 621px;
+    max-width: 1003px;
     padding: 20px;
   }
 
-  @media (min-width: 320px) and (max-width: 640px) {
+    @media (min-width: 320px) and (max-width: 640px) {
     min-width: 300px;
     max-width: 620px;
     padding: 15px;
@@ -114,50 +118,81 @@ html {
 
 
 .h_sm {
-  font-size: 0.85rem;
+  font-size: 24px;
   font-weight: 600;
+
+  @media (max-width: 1024px) {
+    font-size: 22px;
+  }
+
+   @media (min-width: 641px) and (max-width: 1023px)  {
+    font-size: 18px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 16px;
+  }
+
 }
 
 .h_md {
-  font-size: 1.08rem;
+  font-size: 30px;
   font-weight: 600;
 
-  @media (min-width: 320px) and (max-width: 640px) {
-    font-size: 0.7rem;
+  @media (max-width: 1024px) {
+    font-size: 26px;
+  }
+
+   @media (min-width: 641px) and (max-width: 1023px)  {
+    font-size: 20px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 14px;
   }
 }
 
 .h_lg {
-  font-size: 1.3rem;
+  font-size: 36px;
   font-weight: 600;
 
-  @media (min-width: 320px) and (max-width: 640px) {
-    font-size: 1.05rem;
+   @media (min-width: 641px) and (max-width: 1023px)  {
+    font-size: 28px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 24px;
   }
 }
 
 .p_sm {
-  font-size: 0.79rem;
+  font-size: 22px;
   font-weight: 300;
 
-  @media (min-width: 320px) and (max-width: 640px) {
-    font-size: 0.6rem;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+
+   @media (min-width: 641px) and (max-width: 1023px)  {
+    font-size: 18px;
+  }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 12px;
   }
 }
 
 .p_md {
-  font-size: 1rem;
+  font-size: 28px;
   font-weight: 400;
-}
 
-.icon28 {
-  width: 28px;
-  height: 28px;
-}
+   @media (min-width: 641px) and (max-width: 1023px)  {
+    font-size: 22px;
+  }
 
-.icon36 {
-  width: 36px;
-  height: 36px;
+    @media (min-width: 320px) and (max-width: 640px) {
+    font-size: 18px;
+  }
 }
 
 .fill-white {

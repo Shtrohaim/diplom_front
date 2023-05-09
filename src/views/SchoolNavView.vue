@@ -62,7 +62,7 @@ export default defineComponent({
 
     box-shadow: 0 0 12px rgb(0 0 0 / 0.5);
 
-    @media (max-width: 769px) {
+    @media (max-width: 1023px) {
       width: 220px;
       height: 220px;
 

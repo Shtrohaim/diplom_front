@@ -88,7 +88,7 @@ export default defineComponent({
 
     text-align: center;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 55px;
       height: 55px;
     }
@@ -110,7 +110,7 @@ export default defineComponent({
     font-weight: bold;
     font-size: 24px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       font-size: 22px;
     }
 
@@ -123,7 +123,7 @@ export default defineComponent({
     font-size: 22px;
     font-weight: 600;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       font-size: 16px;
     }
 
@@ -140,7 +140,7 @@ export default defineComponent({
 
     object-fit: cover;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 160px;
       height: 160px;
     }
@@ -162,6 +162,10 @@ export default defineComponent({
     width: 80%;
 
     color: $black;
+
+    @media (min-width: 641px) and (max-width: 1023px) {
+      margin-left: 25px;
+    }
 
     @media (min-width: 320px) and (max-width: 640px) {
       margin-left: 15px;
@@ -190,6 +194,8 @@ export default defineComponent({
     -webkit-box-orient: vertical;
     line-clamp: 5;
     box-orient: vertical;
+
+    overflow-wrap: anywhere;
 
     text-align: left;
     color: $black;

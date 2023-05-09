@@ -79,7 +79,7 @@ export default defineComponent({
       max-width: 400px;
     }
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       height: 30px;
       max-width: 300px;
     }
@@ -94,7 +94,7 @@ export default defineComponent({
   &__list {
     columns: 4 300px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       column-width: 220px;
     }
   }
@@ -104,7 +104,7 @@ export default defineComponent({
 
     margin: 0 auto 15px;
 
-    @media (max-width: 769px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       width: 240px;
     }
   }
