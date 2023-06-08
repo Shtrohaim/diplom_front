@@ -109,6 +109,10 @@ export default defineComponent({
     width: 50%;
 
     margin-bottom: 20px;
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      width: 70%;
+    }
   }
 
   &__creator-info {

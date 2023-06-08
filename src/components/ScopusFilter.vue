@@ -43,7 +43,7 @@
         Опубликован:
         <multi-select
           class="filter__multiselector filter__multiselector--operator"
-          placeholder="Не выбрано"
+          placeholder="Выбрать"
           v-model="pubYear['operator']"
           :options="{ equal: 'в', greater: 'после', less: 'до' }"
         />

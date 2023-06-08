@@ -97,6 +97,10 @@ export default defineComponent({
     @media (min-width: 641px) and (max-width: 1023px) {
       column-width: 220px;
     }
+
+    @media (min-width: 320px) and (max-width: 640px) {
+      column-width: 200px;
+    }
   }
 
   &__list-item {
@@ -105,6 +109,10 @@ export default defineComponent({
     margin: 0 auto 15px;
 
     @media (min-width: 641px) and (max-width: 1023px) {
+      width: 240px;
+    }
+
+    @media (min-width: 320px) and (max-width: 640px) {
       width: 240px;
     }
   }

@@ -69,6 +69,8 @@ export default defineComponent({
     width: 80%;
     margin: 0 auto 50px;
 
+    text-align: center;
+
     @media (min-width: 320px) and (max-width: 640px) {
       width: 90%;
     }

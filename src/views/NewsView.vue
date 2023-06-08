@@ -23,10 +23,16 @@
       :pagination="{ clickable: true }"
     >
       <swiper-slide class="news__swiper-slide" v-for="slide in news.image_url" :key="slide">
-        <img class="news__swiper-image" :src="slide" alt="" />
+        <img class="news__swiper-image" :src="slide" alt="" @click="openModal(slide)" />
       </swiper-slide>
     </Swiper>
-    <img v-else-if="news.image_url[0]" class="news__image" :src="news.image_url[0]" alt="" />
+    <img
+      v-else-if="news.image_url[0]"
+      class="news__image"
+      :src="news.image_url[0]"
+      alt=""
+      @click="openModal(news.image_url[0])"
+    />
     <div
       class="news__text-content"
       :class="{ 'news__text-content--no-image': news.image_url?.length === 0 }"
@@ -43,6 +49,9 @@
       <a :href="news.url">{{ news.url }}</a>
     </div>
   </div>
+  <modal-window class="modal" :modal-show="modalShow" @close-modal="closeModal">
+    <img class="modal__image" :src="imageModal" alt="" />
+  </modal-window>
 </template>
 
 <script lang="ts">
@@ -59,18 +68,30 @@ import 'swiper/scss/pagination'
 import 'swiper/scss/autoplay'
 import 'swiper/scss/effect-coverflow'
 import { useRoute } from 'vue-router'
+import ModalWindow from '@/components/common/modalWindow.vue'
 
 export default defineComponent({
   name: 'NewsPage',
-  components: { Swiper, SwiperSlide },
+  components: { ModalWindow, Swiper, SwiperSlide },
   setup() {
     const news = ref({} as News)
     const route = useRoute()
     const rendered = ref(false as boolean)
+    const modalShow = ref(false as boolean)
+    const imageModal = ref('' as string)
 
     const changeSlides = computed(() => {
       return window.innerWidth <= 769 ? 1 : 2
     })
+    const openModal = (newImage: string) => {
+      imageModal.value = newImage
+      modalShow.value = true
+    }
+
+    const closeModal = () => {
+      modalShow.value = false
+      imageModal.value = ''
+    }
     const fetchNews = () => {
       regionsService.getNews(route.params.tableName, route.params.id).then((res: ResponseData) => {
         news.value = res.data[0]
@@ -106,6 +127,10 @@ export default defineComponent({
       rendered,
       news,
       changeSlides,
+      modalShow,
+      imageModal,
+      openModal,
+      closeModal,
       modules: [Pagination, Autoplay, A11y, EffectCoverflow]
     }
   }
@@ -148,6 +173,7 @@ export default defineComponent({
     width: 70%;
     margin: 50px auto 0;
     text-align: left;
+    overflow-wrap: anywhere;
 
     @media (min-width: 641px) and (max-width: 1023px) {
       width: 80%;
@@ -156,7 +182,6 @@ export default defineComponent({
     @media (min-width: 320px) and (max-width: 640px) {
       width: 90%;
       margin-top: 20px;
-      overflow-wrap: anywhere;
     }
 
     &--no-image {
@@ -215,6 +240,15 @@ export default defineComponent({
   &__source {
     text-align-last: end;
     overflow-wrap: anywhere;
+  }
+}
+
+.modal {
+  &__image {
+    width: 100%;
+
+    border-radius: 4px;
+    max-height: 700px;
   }
 }
 </style>

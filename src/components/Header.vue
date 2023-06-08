@@ -18,7 +18,7 @@
         </li>
       </ul>
     </nav>
-    <h1 class="header__site-name">ПУПА</h1>
+    <h1 class="header__site-name h_lg">D.E.S</h1>
     <h2 class="header__page-name h_lg">{{ route.meta.title }}</h2>
   </header>
 </template>

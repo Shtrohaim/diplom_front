@@ -22,7 +22,7 @@
       </label>
       <scopus-filter
         class="scopus-list__filter"
-        :class="{ 'visually-hidden': !hasFilter }"
+        v-show="hasFilter"
         :subjectsList="subjectsList"
         @filter="getFilter"
       />
@@ -103,7 +103,7 @@ export default defineComponent({
       scopusService
         .getScopusData({ size, page, qSearch, qFilter })
         .then((res: ResponseData) => {
-          publications.value = Object.keys(res.data.data?.[0]).length !== 0 ? res.data.data : null
+          publications.value = res.data.totalItems !== 0 ? res.data.data : null
           totalPages.value = res.data.totalPages
           isLoading.value = false
         })

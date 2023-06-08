@@ -38,7 +38,11 @@
               class="main__services-card main__services-card--school"
               :to="{ name: 'school' }"
             >
-              <h2 class="main__route">Школьникам</h2>
+              <div class="main__route main__route--with-tip">
+                <v-tooltip text="Информация о гос. экзаменах">
+                  <h2>Школьникам</h2>
+                </v-tooltip>
+              </div>
             </router-link>
           </li>
           <li class="main__services-list-item">
@@ -46,7 +50,11 @@
               class="main__services-card main__services-card--student"
               :to="{ name: 'students' }"
             >
-              <h2 class="main__route">Студентам</h2>
+              <div class="main__route main__route--with-tip">
+                <v-tooltip text="Сервис по поиску научных публикаций">
+                  <h2>Студентам</h2>
+                </v-tooltip>
+              </div>
             </router-link>
           </li>
         </ul>
@@ -57,9 +65,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import VTooltip from '@/components/common/tooltip.vue'
 
 export default defineComponent({
-  name: 'MainPage'
+  name: 'MainPage',
+  components: { VTooltip }
 })
 </script>
 
@@ -125,7 +135,9 @@ export default defineComponent({
 
   &__news-card {
     position: relative;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     width: 100%;
     height: 100%;
@@ -175,21 +187,25 @@ export default defineComponent({
     bottom: 20px;
     right: 50%;
 
-    transform: translateX(50%);
-
     width: 100%;
+
+    transform: translateX(50%);
 
     padding-left: 10px;
     padding-right: 10px;
 
     color: $black;
+
+    &--with-tip {
+      width: auto;
+    }
   }
 
   &__services {
     display: flex;
     align-items: center;
 
-    height: 250px;
+    height: 260px;
     width: 100%;
 
     text-align: center;
